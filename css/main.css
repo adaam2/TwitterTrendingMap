@@ -1,0 +1,614 @@
+@charset "UTF-8";
+/* line 5, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+  /* line 103, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none; }
+
+/* line 32, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+/*!
+TYPEPLATE
+URL ........... http://typeplate.com
+VERSION ....... 1.1.4
+Github ........ https://github.com/typeplate/bower
+AUTHORS ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+LICENSE ....... Creative Commmons Attribution 3.0 (http://creativecommons.org/licenses/by/3.0)
+LICENSE URL ... https://github.com/typeplate/bower/blob/master/license.txt
+*/
+@font-face {
+  font-family: "Ampersand";
+  src: local("Georgia"), local("Garamond"), local("Palatino"), local("Book Antiqua");
+  unicode-range: U+0026; }
+@font-face {
+  font-family: "Ampersand";
+  src: local("Georgia");
+  unicode-range: U+270C; }
+/* line 397, ../sass/_typeplate.scss */
+body {
+  word-wrap: break-word; }
+
+/* line 401, ../sass/_typeplate.scss */
+pre code {
+  word-wrap: normal; }
+
+/**
+ * Dropcap Sass @include
+ * Use the following Sass @include with any selector you feel necessary.
+ *
+	@include dropcap($dropcap-float-position, $dropcap-font-size, $dropcap-font-family, $dropcap-txt-indent, $dropcap-margin, $dropcap-padding, $dropcap-color, $dropcap-line-height, $dropcap-bg);
+ *
+ * Extend this object into your custom stylesheet. Let the variables do the work.
+ *
+ */
+/* line 526, ../sass/_typeplate.scss */
+html {
+  font: normal 112.5%/1.65 serif; }
+
+/* line 534, ../sass/_typeplate.scss */
+body {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+  hyphens: auto;
+  color: #444444; }
+
+/* line 545, ../sass/_typeplate.scss */
+small {
+  font-size: 65%; }
+
+/* line 569, ../sass/_typeplate.scss */
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+  line-height: 1;
+  margin-top: 0; }
+
+/* line 584, ../sass/_typeplate.scss */
+.tera {
+  font-size: 117px;
+  font-size: 6.5rem;
+  margin-bottom: 4.56923px;
+  margin-bottom: 0.25385rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.giga {
+  font-size: 90px;
+  font-size: 5rem;
+  margin-bottom: 5.94px;
+  margin-bottom: 0.33rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.mega {
+  font-size: 72px;
+  font-size: 4rem;
+  margin-bottom: 7.425px;
+  margin-bottom: 0.4125rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.alpha, h1 {
+  font-size: 60px;
+  font-size: 3.33333rem;
+  margin-bottom: 8.91px;
+  margin-bottom: 0.495rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.beta, h2 {
+  font-size: 48px;
+  font-size: 2.66667rem;
+  margin-bottom: 11.1375px;
+  margin-bottom: 0.61875rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.gamma, h3 {
+  font-size: 36px;
+  font-size: 2rem;
+  margin-bottom: 14.85px;
+  margin-bottom: 0.825rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.delta, h4 {
+  font-size: 24px;
+  font-size: 1.33333rem;
+  margin-bottom: 22.275px;
+  margin-bottom: 1.2375rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.epsilon, h5 {
+  font-size: 21px;
+  font-size: 1.16667rem;
+  margin-bottom: 25.45714px;
+  margin-bottom: 1.41429rem; }
+
+/* line 584, ../sass/_typeplate.scss */
+.zeta, h6 {
+  font-size: 18px;
+  font-size: 1rem;
+  margin-bottom: 29.7px;
+  margin-bottom: 1.65rem; }
+
+/* line 624, ../sass/_typeplate.scss */
+p {
+  margin: auto auto 0.5em; }
+  /* line 629, ../sass/_typeplate.scss */
+  p + p {
+    /*text-indent: $indent-val;*/
+    /*margin-top: -$indent-val;*/ }
+
+/* line 642, ../sass/_typeplate.scss */
+abbr,
+acronym,
+blockquote,
+code,
+dir,
+kbd,
+listing,
+plaintext,
+q,
+samp,
+tt,
+var,
+xmp {
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  -o-hyphens: none;
+  hyphens: none; }
+
+/* line 662, ../sass/_typeplate.scss */
+pre code {
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap; }
+
+/* line 667, ../sass/_typeplate.scss */
+pre {
+  white-space: pre; }
+
+/* line 671, ../sass/_typeplate.scss */
+code {
+  white-space: pre;
+  font-family: monospace; }
+
+/**
+ * Abbreviations Markup
+ *
+	<abbr title="hyper text markup language">HMTL</abbr>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/* line 687, ../sass/_typeplate.scss */
+abbr {
+  font-variant: small-caps;
+  font-weight: 600;
+  text-transform: lowercase;
+  color: gray; }
+  /* line 689, ../sass/_typeplate.scss */
+  abbr[title]:hover {
+    cursor: help; }
+
+/* line 698, ../sass/_typeplate.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222222; }
+
+/* line 713, ../sass/_typeplate.scss */
+p + .drop-cap {
+  text-indent: 0;
+  margin-top: 0; }
+
+/* line 428, ../sass/_typeplate.scss */
+.drop-cap:first-letter {
+  float: left;
+  margin: inherit;
+  padding: inherit;
+  font-size: 4em;
+  font-family: inherit;
+  line-height: 1;
+  text-indent: 0;
+  background: transparent;
+  color: inherit; }
+
+/**
+ * Lining Definition Style Markup
+ *
+	<dl class="lining">
+		<dt><b></b></dt>
+		<dd></dd>
+	</dl>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/* line 466, ../sass/_typeplate.scss */
+.lining dt,
+.lining dd {
+  display: inline;
+  margin: 0; }
+/* line 474, ../sass/_typeplate.scss */
+.lining dt + dt:before,
+.lining dd + dt:before {
+  content: "\A";
+  white-space: pre; }
+/* line 482, ../sass/_typeplate.scss */
+.lining dd + dd:before {
+  content: ", "; }
+/* line 486, ../sass/_typeplate.scss */
+.lining dd:before {
+  content: ": ";
+  margin-left: -0.2rem; }
+
+/**
+ * Dictionary Definition Style Markup
+ *
+	<dl class="dictionary-style">
+		<dt><b></b></dt>
+			<dd></dd>
+	</dl>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/* line 494, ../sass/_typeplate.scss */
+.dictionary-style dt {
+  display: inline;
+  counter-reset: definitions; }
+  /* line 498, ../sass/_typeplate.scss */
+  .dictionary-style dt + dt:before {
+    content: ", ";
+    margin-left: -0.2rem; }
+/* line 504, ../sass/_typeplate.scss */
+.dictionary-style dd {
+  display: block;
+  counter-increment: definitions; }
+  /* line 507, ../sass/_typeplate.scss */
+  .dictionary-style dd:before {
+    content: counter(definitions,decimal) ". "; }
+
+/**
+ * Blockquote Markup
+ *
+		<figure>
+			<blockquote cite="">
+				<p></p>
+			</blockquote>
+			<figcaption>
+				<cite>
+					<small><a href=""></a></small>
+				</cite>
+			</figcaption>
+		</figure>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/**
+ * Pull Quotes Markup
+ *
+	<aside class="pull-quote">
+		<blockquote>
+			<p></p>
+		</blockquote>
+	</aside>
+ *
+ * Extend this object into your custom stylesheet.
+ *
+ */
+/* line 797, ../sass/_typeplate.scss */
+.pull-quote {
+  position: relative;
+  padding: 1em; }
+  /* line 368, ../sass/_typeplate.scss */
+  .pull-quote:before, .pull-quote:after {
+    height: 1em;
+    opacity: 0.5;
+    position: absolute;
+    font-size: 4em;
+    color: #dc976e; }
+  /* line 376, ../sass/_typeplate.scss */
+  .pull-quote:before {
+    content: '“';
+    top: 0;
+    left: 0; }
+  /* line 381, ../sass/_typeplate.scss */
+  .pull-quote:after {
+    content: '”';
+    bottom: 0;
+    right: 0; }
+
+/**
+ * Figures Markup
+ *
+	<figure>
+		<figcaption>
+			<strong>Fig. 4.2 | </strong>Type Anatomy, an excerpt from Mark Boulton's book<cite title="http://designingfortheweb.co.uk/book/part3/part3_chapter11.php">"Designing for the Web"</cite>
+		</figcaption>
+	</figure>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/**
+ * Footnote Markup : Replace 'X' with your unique number for each footnote
+ *
+	<article>
+		<p><sup><a href="#fn-itemX" id="fn-returnX"></a></sup></p>
+		<footer>
+			<ol class="foot-notes">
+				<li id="fn-itemX"><a href="#fn-returnX">↩</a></li>
+			</ol>
+		</footer>
+	</article>
+ *
+ * Extend this object into your markup.
+ *
+ */
+/* line 10, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/layout/_sticky-footer.scss */
+html, body {
+  height: 100%; }
+
+/* line 12, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/layout/_sticky-footer.scss */
+#layout {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -150px; }
+  /* line 18, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/layout/_sticky-footer.scss */
+  #layout #layout_footer {
+    height: 150px; }
+
+/* line 20, ../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/compass-core/stylesheets/compass/layout/_sticky-footer.scss */
+#footer {
+  clear: both;
+  position: relative;
+  height: 150px; }
+
+/* Twitter Colours - https://about.twitter.com/press/brand-assets */
+/* Box sizing - select all elements */
+/* line 21, ../sass/main.scss */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* GoogleMaps remove attribution */
+/* line 25, ../sass/main.scss */
+a[href^="http://maps.google.com/maps"] {
+  display: none !important; }
+
+/* line 27, ../sass/main.scss */
+.gmnoprint a, .gmnoprint span {
+  display: none; }
+
+/* line 30, ../sass/main.scss */
+.gmnoprint div {
+  background: none !important; }
+
+/* Inputs */
+/* line 36, ../sass/main.scss */
+input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"] {
+  padding: 1rem;
+  margin: 1em;
+  color: #666;
+  background: #eeeeee;
+  border: 1px solid #e2e2e2;
+  width: 400px;
+  font-size: 1.2em; }
+
+/* line 50, ../sass/main.scss */
+input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus {
+  border: 1px solid #8899a6; }
+
+/* line 54, ../sass/main.scss */
+input[type="button"], input[type="reset"], input[type="submit"] {
+  background: #55acee;
+  padding: 1rem;
+  margin: 1em;
+  border: none;
+  color: #e1e8ed;
+  font-size: 22px;
+  border-radius: 10px;
+  font-family: 'Lato',sans-serif; }
+
+/* line 65, ../sass/main.scss */
+input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+  cursor: pointer; }
+
+/* line 69, ../sass/main.scss */
+input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus {
+  /*background: white;*/ }
+
+/* line 73, ../sass/main.scss */
+input[type="button"]:active, input[type="reset"]:active, input[type="submit"]:active {
+  /*background: blue;*/ }
+
+/* Nested */
+/* line 79, ../sass/main.scss */
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  background-color: #55acee;
+  color: #f5f8fa;
+  -webkit-font-smoothing: antialiased; }
+  /* line 86, ../sass/main.scss */
+  body i {
+    font-style: italic; }
+  /* line 90, ../sass/main.scss */
+  body blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C" "\201D" "\2018" "\2019"; }
+  /* line 97, ../sass/main.scss */
+  body blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em; }
+  /* line 105, ../sass/main.scss */
+  body blockquote cite {
+    display: block;
+    color: #8899a6;
+    line-height: 2.2em;
+    font-size: 0.8em; }
+  /* line 111, ../sass/main.scss */
+  body blockquote a {
+    color: #55ACEE; }
+  /* line 114, ../sass/main.scss */
+  body blockquote p {
+    display: inline;
+    color: #666; }
+  /* line 118, ../sass/main.scss */
+  body a {
+    text-decoration: none;
+    color: #f5f8fa; }
+  /* line 126, ../sass/main.scss */
+  body .container {
+    width: 100%; }
+    /* line 129, ../sass/main.scss */
+    body .container nav {
+      background: #666;
+      padding: 1.1em; }
+      /* line 132, ../sass/main.scss */
+      body .container nav ul {
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px; }
+        /* line 137, ../sass/main.scss */
+        body .container nav ul li {
+          display: inline-block;
+          margin: .6em; }
+          /* line 141, ../sass/main.scss */
+          body .container nav ul li a:hover {
+            color: #55acee; }
+    /* line 149, ../sass/main.scss */
+    body .container header {
+      background: #8899a6; }
+      /* line 151, ../sass/main.scss */
+      body .container header h1 {
+        color: #fff;
+        line-height: 1.2em; }
+        /* line 154, ../sass/main.scss */
+        body .container header h1 span {
+          font-size: 2rem;
+          display: block;
+          font-style: italic; }
+    /* line 161, ../sass/main.scss */
+    body .container header, body .container footer, body .container article {
+      padding: 5em; }
+    /* line 164, ../sass/main.scss */
+    body .container main {
+      width: 100%; }
+      /* line 167, ../sass/main.scss */
+      body .container main div.geocode {
+        background: #ccd6dd; }
+      /* line 170, ../sass/main.scss */
+      body .container main #map-canvas {
+        width: 100%;
+        height: 800px; }
+        /* line 174, ../sass/main.scss */
+        body .container main #map-canvas div.tweet {
+          color: #666; }
+          /* line 177, ../sass/main.scss */
+          body .container main #map-canvas div.tweet img {
+            vertical-align: middle; }
+          /* line 180, ../sass/main.scss */
+          body .container main #map-canvas div.tweet div.tweet-body {
+            padding: 1em;
+            float: right; }
+      /* line 186, ../sass/main.scss */
+      body .container main ul.tabs {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        background: #e1e8ed; }
+        /* line 191, ../sass/main.scss */
+        body .container main ul.tabs li {
+          display: inline-block;
+          background: #55acee;
+          border: 1px solid #e1e8ed;
+          border-radius: 25px;
+          border-bottom: none;
+          width: 49%;
+          text-align: center; }
+          /* line 199, ../sass/main.scss */
+          body .container main ul.tabs li.active {
+            background: #fff;
+            color: #666; }
+          /* line 203, ../sass/main.scss */
+          body .container main ul.tabs li a {
+            width: 100%;
+            display: block;
+            position: relative; }
+      /* line 210, ../sass/main.scss */
+      body .container main #trends, body .container main #console {
+        height: 300px;
+        background: #66757f; }
+      /* line 215, ../sass/main.scss */
+      body .container main article.panel-2 .twitter-logo {
+        font-size: 3em;
+        vertical-align: middle;
+        text-align: center; }
+      /* line 220, ../sass/main.scss */
+      body .container main article.panel-2 > div {
+        float: left;
+        width: 49.99999%; }
+    /* line 226, ../sass/main.scss */
+    body .container footer {
+      background: #666; }

@@ -1,0 +1,230 @@
+﻿@import 'compass/reset';
+@import 'compass/layout/sticky-footer';
+@import '_typeplate.scss';
+@import 'compass/css3/box-sizing';
+@import 'bourbon';
+
+@include sticky-footer(150px,"#layout","#layout_footer","#footer");
+
+/* Twitter Colours - https://about.twitter.com/press/brand-assets */
+$primary: #55ACEE;
+$secondary-1: #292f33;
+$secondary-2: #66757f;
+$secondary-3: #8899a6;
+$secondary-4: #ccd6dd;
+$secondary-5: #e1e8ed;
+$primary-text: #f5f8fa;
+$input-bg: #eee;
+$input-border:#e2e2e2;
+$heading-color:#8899A6;
+/* Box sizing - select all elements */
+* {
+    @include box-sizing(border-box);
+}
+/* GoogleMaps remove attribution */
+a[href^="http://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+
+/* Inputs */
+
+#{$all-text-inputs} {
+  padding:1rem;
+  margin:1em;
+  color:#666;
+  background:$input-bg;
+  border:1px solid $input-border;
+  width:400px;
+  font-size:1.2em;
+}
+
+#{$all-text-inputs-hover} { // Target the :hover pseudo-class
+  
+}
+
+#{$all-text-inputs-focus} { // Target the :focus pseudo-class
+  border:1px solid $heading-color;
+}
+
+#{$all-button-inputs} {
+  background:$primary;
+  padding:1rem;
+  margin:1em;
+  border:none;
+  color:$secondary-5;
+  font-size:22px;
+  border-radius:10px;
+  font-family:'Lato',sans-serif;
+}
+
+#{$all-button-inputs-hover} { // Target the :hover pseudo-class
+  cursor:pointer;
+}
+
+#{$all-button-inputs-focus} { // Target the :focus pseudo-class
+  /*background: white;*/
+}
+
+#{$all-button-inputs-active} { // Target the :active pseudo-class
+  /*background: blue;*/
+}
+
+
+/* Nested */
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight:300;
+    background-color:$primary;
+    color:$primary-text;
+    -webkit-font-smoothing: antialiased;
+
+    i {
+        font-style:italic;
+    }
+
+    blockquote {
+          background: #f9f9f9;
+          border-left: 10px solid #ccc;
+          margin: 1.5em 10px;
+          padding: 0.5em 10px;
+          quotes: "\201C""\201D""\2018""\2019";
+    }
+    blockquote:before {
+      color: #ccc;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote cite {
+        display:block;
+        color:#8899a6;
+        line-height:2.2em;
+        font-size:0.8em;
+    }
+    blockquote a {
+        color:#55ACEE;
+    }
+    blockquote p {
+      display: inline;
+      color:#666;
+    }
+    a {
+        text-decoration:none;
+        color:$primary-text;
+        &:hover,&:active {
+           
+        }
+    }
+
+    .container {
+        width:100%;
+
+       nav {
+           background:#666;
+           padding:1.1em;
+           ul {
+               margin-left:auto;
+               margin-right:auto;
+               width:500px;
+
+               li {
+                   display:inline-block;
+                   margin:.6em;
+                   a {
+                       &:hover {
+                           color:$primary;
+                       }
+                   }  
+               }
+           }
+       }
+
+       header {
+            background:$heading-color;
+            h1 {
+                color:#fff;
+                line-height:1.2em;
+                span {
+                    font-size:2rem;
+                    display:block;
+                    font-style:italic;
+                }
+            }
+        }
+        header,footer, article {
+            padding:5em;
+        }
+        main {
+            width:100%;
+
+            div.geocode {
+                background:$secondary-4;
+            }
+            #map-canvas {
+                width:100%;
+                height:800px;
+
+                div.tweet {
+                    color:#666;
+
+                    img {
+                        vertical-align:middle;
+                    }
+                    div.tweet-body {
+                        padding:1em;
+                        float:right;
+                    }
+                }
+            }
+            ul.tabs {
+                margin-left:auto;
+                margin-right:auto;
+                width:100%;
+                background:$secondary-5;
+                li {
+                    display:inline-block;
+                    background:$primary;
+                    border:1px solid $secondary-5;
+                    border-radius:25px;
+                    border-bottom:none;
+                    width:49%;
+                    text-align:center;
+                    &.active {
+                        background:#fff;
+                        color:#666;
+                    }
+                    a {
+                        width:100%;
+                        display:block;
+                        position:relative;
+                    }
+                }
+            }
+            #trends,#console {
+                height:300px;
+                background:$secondary-2;
+            }
+            article.panel-2 {
+                .twitter-logo {
+                    font-size:3em;
+                    vertical-align:middle;
+                    text-align:center;
+                }
+                & > div {
+                    float:left;
+                    width:49.99999%;
+                }
+            }
+        }
+        footer {
+            background:#666;
+        }
+    }
+}
