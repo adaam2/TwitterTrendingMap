@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=0" />
     <title>@ViewBag.Title</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css' />
-    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/animate.css" rel="stylesheet" type="text/css"/>
 
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -67,8 +69,13 @@
     </div>
     <script src="~/Scripts/jquery.signalR-2.0.3.min.js"></script>
     <script src="signalr/hubs"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/markerclustererplus.js"></script>
     <script src="~/Scripts/myJS/main.js"></script>
+    <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="~/Scripts/jquery.livequery.min.js"></script>
+    <script src="~/Scripts/jquery.timeago.js"></script>
+    <script src="~/Scripts/jquery.geocomplete.min.js"></script>
 </body>
 </html>

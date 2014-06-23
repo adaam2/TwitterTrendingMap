@@ -487,14 +487,14 @@ body {
   body i {
     font-style: italic; }
   /* line 90, ../sass/main.scss */
-  body blockquote {
+  body blockquote:not(.twitter-tweet) {
     background: #f9f9f9;
     border-left: 10px solid #ccc;
     margin: 1.5em 10px;
     padding: 0.5em 10px;
     quotes: "\201C" "\201D" "\2018" "\2019"; }
   /* line 97, ../sass/main.scss */
-  body blockquote:before {
+  body blockquote:not(.twitter-tweet):before {
     color: #ccc;
     content: open-quote;
     font-size: 4em;
@@ -502,16 +502,16 @@ body {
     margin-right: 0.25em;
     vertical-align: -0.4em; }
   /* line 105, ../sass/main.scss */
-  body blockquote cite {
+  body blockquote:not(.twitter-tweet) cite {
     display: block;
     color: #8899a6;
     line-height: 2.2em;
     font-size: 0.8em; }
   /* line 111, ../sass/main.scss */
-  body blockquote a {
+  body blockquote:not(.twitter-tweet) a {
     color: #55ACEE; }
   /* line 114, ../sass/main.scss */
-  body blockquote p {
+  body blockquote:not(.twitter-tweet) p {
     display: inline;
     color: #666; }
   /* line 118, ../sass/main.scss */
@@ -549,36 +549,72 @@ body {
           font-size: 2rem;
           display: block;
           font-style: italic; }
-    /* line 161, ../sass/main.scss */
+      /* line 160, ../sass/main.scss */
+      body .container header h3 {
+        color: #fff; }
+    /* line 164, ../sass/main.scss */
     body .container header, body .container footer, body .container article {
       padding: 5em; }
-    /* line 164, ../sass/main.scss */
+    /* line 167, ../sass/main.scss */
     body .container main {
       width: 100%; }
-      /* line 167, ../sass/main.scss */
+      /* line 170, ../sass/main.scss */
       body .container main div.geocode {
         background: #ccd6dd; }
-      /* line 170, ../sass/main.scss */
+      /* line 173, ../sass/main.scss */
       body .container main #map-canvas {
         width: 100%;
         height: 800px; }
-        /* line 174, ../sass/main.scss */
+        /* line 177, ../sass/main.scss */
         body .container main #map-canvas div.tweet {
-          color: #666; }
-          /* line 177, ../sass/main.scss */
-          body .container main #map-canvas div.tweet img {
-            vertical-align: middle; }
-          /* line 180, ../sass/main.scss */
-          body .container main #map-canvas div.tweet div.tweet-body {
-            padding: 1em;
-            float: right; }
-      /* line 186, ../sass/main.scss */
+          width: auto;
+          min-width: 300px; }
+          /* line 181, ../sass/main.scss */
+          body .container main #map-canvas div.tweet div.header .avatar, body .container main #map-canvas div.tweet div.header .screen-name {
+            display: inline-block;
+            vertical-align: top; }
+          /* line 185, ../sass/main.scss */
+          body .container main #map-canvas div.tweet div.header div.screen-name {
+            color: #000;
+            font-size: 18px;
+            font-weight: 700;
+            margin-left: 5px; }
+            /* line 190, ../sass/main.scss */
+            body .container main #map-canvas div.tweet div.header div.screen-name span.handle, body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
+              display: block;
+              height: 20px; }
+            /* line 194, ../sass/main.scss */
+            body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
+              color: #8899a6;
+              font-size: 16px;
+              line-height: 2; }
+          /* line 201, ../sass/main.scss */
+          body .container main #map-canvas div.tweet div.body {
+            color: #292F33;
+            font-weight: 400;
+            font-size: 16px;
+            /*border-bottom:1px solid #e2e2e2;*/ }
+            /* line 207, ../sass/main.scss */
+            body .container main #map-canvas div.tweet div.body p {
+              white-space: pre-wrap;
+              width: 340px;
+              line-height: 1.4;
+              border: 1px solid #e2e2e2;
+              border-radius: 10px;
+              padding: 10px;
+              background: #F8F8F8;
+              margin-top: 5px;
+              margin-bottom: 5px; }
+          /* line 219, ../sass/main.scss */
+          body .container main #map-canvas div.tweet div.footer {
+            color: #666; }
+      /* line 224, ../sass/main.scss */
       body .container main ul.tabs {
         margin-left: auto;
         margin-right: auto;
         width: 100%;
         background: #e1e8ed; }
-        /* line 191, ../sass/main.scss */
+        /* line 229, ../sass/main.scss */
         body .container main ul.tabs li {
           display: inline-block;
           background: #55acee;
@@ -587,28 +623,28 @@ body {
           border-bottom: none;
           width: 49%;
           text-align: center; }
-          /* line 199, ../sass/main.scss */
+          /* line 237, ../sass/main.scss */
           body .container main ul.tabs li.active {
             background: #fff;
             color: #666; }
-          /* line 203, ../sass/main.scss */
+          /* line 241, ../sass/main.scss */
           body .container main ul.tabs li a {
             width: 100%;
             display: block;
             position: relative; }
-      /* line 210, ../sass/main.scss */
+      /* line 248, ../sass/main.scss */
       body .container main #trends, body .container main #console {
         height: 300px;
         background: #66757f; }
-      /* line 215, ../sass/main.scss */
+      /* line 253, ../sass/main.scss */
       body .container main article.panel-2 .twitter-logo {
         font-size: 3em;
         vertical-align: middle;
         text-align: center; }
-      /* line 220, ../sass/main.scss */
+      /* line 258, ../sass/main.scss */
       body .container main article.panel-2 > div {
         float: left;
         width: 49.99999%; }
-    /* line 226, ../sass/main.scss */
+    /* line 264, ../sass/main.scss */
     body .container footer {
       background: #666; }

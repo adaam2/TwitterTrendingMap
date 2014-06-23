@@ -267,6 +267,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/css\/animate.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/animate.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/css\/font-awesome.css": {
 		"fileType": 16,
 		"ignore": 0,
@@ -1294,6 +1303,28 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/Scripts\/jquery.geocomplete.min.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/jquery.geocomplete.min.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/jquery.geocomplete.min-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/jquery.livequery.min.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/jquery.livequery.min.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/jquery.livequery.min-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/Scripts\/jquery.signalR-2.0.3.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -1311,6 +1342,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Scripts\/jquery.signalR-2.0.3.min.js",
 		"outputAbbreviatedPath": "\/Scripts\/min\/jquery.signalR-2.0.3.min-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/jquery.timeago.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/jquery.timeago.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/jquery.timeago-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -1421,6 +1463,39 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Scripts\/markerclustererplus.js",
 		"outputAbbreviatedPath": "\/Scripts\/min\/markerclustererplus-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/min\/jquery-ui-1.8.24.min-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/min\/jquery-ui-1.8.24.min-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/min\/jquery-ui-1.8.24.min-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/min\/jquery.geocomplete.min-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/min\/jquery.geocomplete.min-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/min\/jquery.geocomplete.min-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/min\/jquery.livequery.min-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/min\/jquery.livequery.min-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/min\/min\/jquery.livequery.min-ck-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

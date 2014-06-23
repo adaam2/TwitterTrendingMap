@@ -34,14 +34,18 @@ namespace FinalUniProject.Hubs
         public override Task OnConnected()
         {
             // add connection id to hashset
-            //ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
+            ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
             return base.OnConnected();
         }
         public override Task OnDisconnected()
         {
             // remove the client connection id from the hashset
-            //ClientsConnected.ConnectedIds.Remove(Context.ConnectionId);
+            ClientsConnected.ConnectedIds.Remove(Context.ConnectionId);
             return base.OnDisconnected();
+        }
+        public void getNumberOfClients()
+        {
+            Clients.All.numberOfClients(ClientsConnected.ConnectedIds.Count);
         }
     }
 }

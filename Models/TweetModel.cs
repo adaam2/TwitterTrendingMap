@@ -5,14 +5,13 @@ namespace FinalUniProject.Models
     public class TweetModel
     {
         public string User { get; set; }
-        //public UserModel User { get; set; }
-        //public TweetEntitiesModel Entities { get; set; }
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
         public int Length { get; set; }
         public string ImageUrl { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-        // add in entities and user models
+        public string RealName { get; set; }
+        public string ProfileUrl { get; set; }
     }
 }
