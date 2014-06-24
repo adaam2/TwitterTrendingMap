@@ -74,12 +74,14 @@ $(function () {
     // geocomplete
     $('#autocomplete').geocomplete().bind("geocode:result", function (e, result) {
         map.setCenter(result.geometry.location);
-        map.setZoom(11);
+        map.setZoom(13);
     });
            var twitterHub = $.connection.geoFeedHub,
                map;
 
            twitterHub.client.broadcastTweetMessage = function (tweet) {
+
+               // add marker to the map
                var marker = new google.maps.Marker({
                    map:map,
                    position: new google.maps.LatLng(tweet.Latitude, tweet.Longitude),
@@ -94,6 +96,16 @@ $(function () {
                    infowindow.open(map, marker);
                });
                mc.addMarker(marker);
+
+               // add to console
+               var list_size = $('ul.live-tweets li').size();
+               if (list_size < 10) {
+                   $('ul.live-tweets').prepend('<li>' + tweet.Text + '</li>');
+               } else {
+                   $('ul.live-tweets li:last-child').remove();
+                   $('ul.live-tweets').prepend('<li>' + tweet.Text + '</li>');
+               }
+               console.log(list_size);
            }
            twitterHub.client.broadcastStatus = function (status) {
                console.log(status.Message + '<br/>' + status.StackTrace);

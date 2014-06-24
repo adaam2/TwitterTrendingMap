@@ -11,10 +11,11 @@
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/animate.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/sky-tabs.css" rel="stylesheet" type="text/css"/>
 
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="pink">
     <div id="layout" class="container">
         <nav>
             <ul>
@@ -23,7 +24,7 @@
                 <li><a href="https://twitter.com/wherelionsroam">@@wherelionsroam</a></li>
             </ul>
         </nav>
-        <header>
+        @*<header>
             <h1>Twitter Data Visualization <span>Real-time "Trend" Calculation</span></h1>
             <div class="toggle">
                 <h3>About Twitter & Trending</h3>
@@ -41,7 +42,7 @@
                 <p>The criteria for tweets is that they are in English and have been geo-tagged with a set of latitude and longitudinal points.</p>
             </div>
             <a href="#" id="minimize">Less</a>
-        </header>
+        </header>*@
         <main>
             @RenderBody()
             <article class="panel-2" id="insignia">

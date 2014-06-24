@@ -6,13 +6,29 @@
     <input type="submit" id="search" value="Search" />
 </div>
 <div id="map-canvas"></div>
-<ul class="tabs">
-    <li><a href="#trends">Trends</a></li>
-    <li><a href="#console">Tweets</a></li>
-</ul>
-<div class="tab" id="trends">
-    <h2>Trends for London</h2>
-</div>
-<div class="tab" id="console">
-    <h2>Console</h2>
+<div class="sky-tabs sky-tabs-pos-top-left sky-tabs-anim-flip sky-tabs-response-to-icons">
+    <input type="radio" name="sky-tabs" checked="" id="sky-tab1" class="sky-tab-content-1">
+    <label for="sky-tab1"><span><span><i class="fa fa-terminal"></i>Tweet Console</span></span></label>
+
+    <input type="radio" name="sky-tabs" id="sky-tab2" class="sky-tab-content-2">
+    <label for="sky-tab2"><span><span><i class="fa fa-twitter"></i> Calculated Trends</span></span></label>
+
+    <ul>
+        <li class="sky-tab-content-1">
+            <div class="typography">
+                <h1>Live Tweets</h1>
+                <ul class="live-tweets"></ul>
+                <p class="text-right"><em>Tweets presented here represent 1% of the Twitter Firehose.</em></p>
+            </div>
+        </li>
+
+        <li class="sky-tab-content-2">
+            <div class="typography">
+                <h1>We have found 4 Trends for this area:</h1>
+                <p>Italian Renaissance polymath: painter, sculptor, architect, musician, mathematician, engineer, inventor, anatomist, geologist, cartographer, botanist, and writer. His genius, perhaps more than that of any other figure, epitomized the Renaissance humanist ideal. Leonardo has often been described as the archetype of the Renaissance Man, a man of "unquenchable curiosity" and "feverishly inventive imagination". He is widely considered to be one of the greatest painters of all time and perhaps the most diversely talented person ever to have lived. According to art historian Helen Gardner, the scope and depth of his interests were without precedent and "his mind and personality seem to us superhuman, the man himself mysterious and remote". Marco Rosci states that while there is much speculation about Leonardo, his vision of the world is essentially logical rather than mysterious, and that the empirical methods he employed were unusual for his time.</p>
+                <p>Born out of wedlock to a notary, Piero da Vinci, and a peasant woman, Caterina, at Vinci in the region of Florence, Leonardo was educated in the studio of the renowned Florentine painter, Verrocchio. Much of his earlier working life was spent in the service of Ludovico il Moro in Milan. He later worked in Rome, Bologna and Venice, and he spent his last years in France at the home awarded him by Francis I.</p>
+                <p class="text-right"><em>Find out more about Leonardo da Vinci from <a href="http://en.wikipedia.org/wiki/Leonardo_da_Vinci" target="_blank">Wikipedia</a>.</em></p>
+            </div>
+        </li>
+    </ul>
 </div>

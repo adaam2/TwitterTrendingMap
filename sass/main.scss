@@ -20,6 +20,11 @@ $heading-color:#8899A6;
 /* Box sizing - select all elements */
 * {
     @include box-sizing(border-box);
+    margin:0;
+    padding:0;
+    outline:none;
+    border:0;
+    background:none;
 }
 /* GoogleMaps remove attribution */
 a[href^="http://maps.google.com/maps"]{display:none !important}
@@ -82,7 +87,18 @@ body {
     background-color:$primary;
     color:$primary-text;
     -webkit-font-smoothing: antialiased;
-
+    &.pink {
+        background-image:url('../img/bg-pink.jpg');
+    }
+    &.blue {
+        background-image:url('../img/bg-blue.jpg');
+    }
+    &.cyan {
+        background-image:url('../img/bg-cyan.jpg');
+    }
+    &.green {
+        background-image:url('../img/bg-green.jpg');
+    }
     i {
         font-style:italic;
     }
@@ -161,10 +177,10 @@ body {
                 color:#fff;
             }
         }
-        header,footer, article {
+       header,footer, article {
             padding:5em;
         }
-        main {
+       main {
             width:100%;
 
             div.geocode {
@@ -220,34 +236,6 @@ body {
                         color:#666;
                     }
                 }
-            }
-            ul.tabs {
-                margin-left:auto;
-                margin-right:auto;
-                width:100%;
-                background:$secondary-5;
-                li {
-                    display:inline-block;
-                    background:$primary;
-                    border:1px solid $secondary-5;
-                    border-radius:25px;
-                    border-bottom:none;
-                    width:49%;
-                    text-align:center;
-                    &.active {
-                        background:#fff;
-                        color:#666;
-                    }
-                    a {
-                        width:100%;
-                        display:block;
-                        position:relative;
-                    }
-                }
-            }
-            #trends,#console {
-                height:300px;
-                background:$secondary-2;
             }
             article.panel-2 {
                 .twitter-logo {

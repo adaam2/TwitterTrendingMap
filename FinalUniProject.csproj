@@ -305,8 +305,13 @@
     <Content Include="css\ie.css" />
     <Content Include="css\print.css" />
     <Content Include="css\screen.css" />
+    <Content Include="css\sky-tabs.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\bg-blue.jpg" />
+    <Content Include="img\bg-cyan.jpg" />
+    <Content Include="img\bg-green.jpg" />
+    <Content Include="img\bg-pink.jpg" />
     <Content Include="img\marker.png" />
     <Content Include="img\marker.svg" />
     <Content Include="sass\main.scss" />

@@ -66,8 +66,6 @@ namespace FinalUniProject.TwitterLogic
                         Longitude = tweet.Coordinates.Longitude,
                         CreatedAt = tweet.CreatedAt,
                         ImageUrl = tweet.Creator.ProfileImageUrl,
-                        RealName = tweet.Creator.Name,
-                        Length = tweet.Length,
                         ProfileUrl = "https://twitter.com/" + tweet.Creator.ScreenName
                     });
                 }
@@ -95,11 +93,6 @@ namespace FinalUniProject.TwitterLogic
 
             // start the thread
             _thread.Start();
-        }
-        public void NotifyIfRateLimited()
-        {
-            // tweetinvi has a rate limiter class but not volume limiting class - need to write custom logic to detect that 1% is being reached. Or alternatively read headers
-            
         }
     }
 }
