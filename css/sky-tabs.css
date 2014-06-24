@@ -21,6 +21,7 @@
 	font-size: 0;
 	text-align: left;
 	color: #666;
+    padding:25px;
 }
 .sky-tabs > input {
 	position: absolute;
@@ -30,15 +31,11 @@
 	position: relative;
 	z-index: 1;
 	display: inline-block;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	padding: 1px;
-	padding-top: 0;
-	padding-left: 0;
+    padding:0px;
 	font-size: 13px;
 	line-height: 45px;
 	cursor: pointer;
-    width:50%; /* added this */
+    /*width:50%;*/ /* added this */
 }
 .sky-tabs > label.inverse {
 	float: right;
@@ -94,6 +91,7 @@
 	font-size: 13px;
 }
 .sky-tabs > ul > li {
+    min-height:650px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -551,7 +549,7 @@
 .sky-tabs .typography li ol {
 	margin-top: 5px;
 }
-.sky-tabs .typography ul li:before {
+/*.sky-tabs .typography ul li:before {
 	content: '';
 	position: absolute;
 	top: 8px;
@@ -559,7 +557,7 @@
 	width: 4px;
 	height: 4px;
 	background: #333;
-}
+}*/
 .sky-tabs .typography ol {
 	counter-reset: list1;
 }

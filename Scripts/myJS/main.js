@@ -21,7 +21,7 @@ var clusters = [
 ];
 $(function () {
     function initialize() {
-        var stylez = [{ "featureType": "landscape", "stylers": [{ "saturation": -100 }, { "lightness": 65 }, { "visibility": "on" }] }, { "featureType": "poi", "stylers": [{ "saturation": -100 }, { "lightness": 51 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "stylers": [{ "saturation": -100 }, { "visibility": "off" }] }, { "featureType": "road.arterial", "stylers": [{ "saturation": -100 }, { "lightness": 30 }, { "visibility": "off" }] }, { "featureType": "road.local", "stylers": [{ "saturation": -100 }, { "lightness": 40 }, { "visibility": "off" }] }, { "featureType": "transit", "stylers": [{ "saturation": -100 }, { "visibility": "simplified" }] }, { "featureType": "administrative.province", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "visibility": "on" }, { "lightness": -25 }, { "saturation": -100 }] }, { "featureType": "water", "elementType": "geometry", "stylers": [{ "hue": "#8899a6" }, { "lightness": -25 }, { "saturation": -100 }] }];
+        var stylez = [{ "featureType": "water", "stylers": [{ "saturation": 43 }, { "lightness": -11 }, { "hue": "#0088ff" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": 99 }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }, { "lightness": 54 }] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ece2d9" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#ccdca1" }] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#767676" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] }, { "featureType": "poi", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#b8cb93" }] }, { "featureType": "poi.park", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.sports_complex", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.medical", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.business", "stylers": [{ "visibility": "simplified" }] }];
         var map_options = {
             zoom: 5,
             backgroundColor: '#A3A3A3',
@@ -56,7 +56,7 @@ $(function () {
         var content = '<div class="tweet">\
         <div class="header">\
         <div class="avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></div>\
-        <div class="screen-name"><span class="handle">@' + tweet.User + '</span><span class="time-ago"><time class="timeago" datetime="' + tweet.CreatedAt + '">(you shouldnt see this)</time></span></div>\
+        <div class="screen-name"><span class="handle">@' + tweet.User + '</span><span class="time-ago"><time class="timeago" datetime="' + tweet.CreatedAt + '">' + tweet.CreatedAt + '</time></span></div>\
         </div>\
         <div class="body"><p>' + tweet.Text + '</p></div>\
         <div class="footer">' + formatted_date + ' ' + minutes + '</div>\
@@ -97,21 +97,22 @@ $(function () {
                });
                mc.addMarker(marker);
 
-               // add to console
+               // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
-               if (list_size < 10) {
-                   $('ul.live-tweets').prepend('<li>' + tweet.Text + '</li>');
+               var max_list_size = 10;
+               var list_item = '<li class="tweet-item"><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">' + tweet.User + '</span></li>';
+               if (list_size < max_list_size) {
+                   $('ul.live-tweets').prepend(list_item);
                } else {
                    $('ul.live-tweets li:last-child').remove();
-                   $('ul.live-tweets').prepend('<li>' + tweet.Text + '</li>');
+                   $('ul.live-tweets').prepend(list_item);
                }
-               console.log(list_size);
            }
            twitterHub.client.broadcastStatus = function (status) {
                console.log(status.Message + '<br/>' + status.StackTrace);
            };
            $.connection.hub.start()
                .done(function () {
-                   console.log('Now connected with connection ID = ' + $.connection.hub.id);
+                   $('#signalr-status').text('Now connected (connection ID ' + $.connection.hub.id + ')');
                });
        });

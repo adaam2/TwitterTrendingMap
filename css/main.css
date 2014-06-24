@@ -487,30 +487,31 @@ body {
   font-weight: 300;
   background-color: #55acee;
   color: #f5f8fa;
-  -webkit-font-smoothing: antialiased; }
-  /* line 90, ../sass/main.scss */
+  -webkit-font-smoothing: antialiased;
+  background-attachment: fixed; }
+  /* line 91, ../sass/main.scss */
   body.pink {
     background-image: url("../img/bg-pink.jpg"); }
-  /* line 93, ../sass/main.scss */
+  /* line 94, ../sass/main.scss */
   body.blue {
     background-image: url("../img/bg-blue.jpg"); }
-  /* line 96, ../sass/main.scss */
+  /* line 97, ../sass/main.scss */
   body.cyan {
     background-image: url("../img/bg-cyan.jpg"); }
-  /* line 99, ../sass/main.scss */
+  /* line 100, ../sass/main.scss */
   body.green {
     background-image: url("../img/bg-green.jpg"); }
-  /* line 102, ../sass/main.scss */
+  /* line 103, ../sass/main.scss */
   body i {
     font-style: italic; }
-  /* line 106, ../sass/main.scss */
+  /* line 107, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) {
     background: #f9f9f9;
     border-left: 10px solid #ccc;
     margin: 1.5em 10px;
     padding: 0.5em 10px;
     quotes: "\201C" "\201D" "\2018" "\2019"; }
-  /* line 113, ../sass/main.scss */
+  /* line 114, ../sass/main.scss */
   body blockquote:not(.twitter-tweet):before {
     color: #ccc;
     content: open-quote;
@@ -518,100 +519,80 @@ body {
     line-height: 0.1em;
     margin-right: 0.25em;
     vertical-align: -0.4em; }
-  /* line 121, ../sass/main.scss */
+  /* line 122, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) cite {
     display: block;
     color: #8899a6;
     line-height: 2.2em;
     font-size: 0.8em; }
-  /* line 127, ../sass/main.scss */
+  /* line 128, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) a {
     color: #55ACEE; }
-  /* line 130, ../sass/main.scss */
+  /* line 131, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) p {
     display: inline;
     color: #666; }
-  /* line 134, ../sass/main.scss */
+  /* line 135, ../sass/main.scss */
   body a {
     text-decoration: none;
     color: #f5f8fa; }
-  /* line 142, ../sass/main.scss */
+  /* line 143, ../sass/main.scss */
   body .container {
     width: 100%; }
-    /* line 145, ../sass/main.scss */
-    body .container nav {
-      background: #666;
-      padding: 1.1em; }
-      /* line 148, ../sass/main.scss */
-      body .container nav ul {
-        margin-left: auto;
-        margin-right: auto;
-        width: 500px; }
-        /* line 153, ../sass/main.scss */
-        body .container nav ul li {
-          display: inline-block;
-          margin: .6em; }
-          /* line 157, ../sass/main.scss */
-          body .container nav ul li a:hover {
-            color: #55acee; }
-    /* line 165, ../sass/main.scss */
-    body .container header {
-      background: #8899a6; }
-      /* line 167, ../sass/main.scss */
-      body .container header h1 {
-        color: #fff;
-        line-height: 1.2em; }
-        /* line 170, ../sass/main.scss */
-        body .container header h1 span {
-          font-size: 2rem;
-          display: block;
-          font-style: italic; }
-      /* line 176, ../sass/main.scss */
-      body .container header h3 {
-        color: #fff; }
-    /* line 180, ../sass/main.scss */
+    /* line 146, ../sass/main.scss */
     body .container header, body .container footer, body .container article {
       padding: 5em; }
-    /* line 183, ../sass/main.scss */
+    /* line 149, ../sass/main.scss */
     body .container main {
-      width: 100%; }
-      /* line 186, ../sass/main.scss */
-      body .container main div.geocode {
-        background: #ccd6dd; }
-      /* line 189, ../sass/main.scss */
+      width: 100%;
+      /* List Style for display of Tweets in Console */
+      /* Map Canvas Stylings */ }
+      /* line 153, ../sass/main.scss */
+      body .container main ul.live-tweets {
+        list-style-type: none !important; }
+        /* line 155, ../sass/main.scss */
+        body .container main ul.live-tweets span.tweet-content, body .container main ul.live-tweets span.tweet-author {
+          display: block; }
+        /* line 158, ../sass/main.scss */
+        body .container main ul.live-tweets span.tweet-content {
+          color: #292f33; }
+        /* line 161, ../sass/main.scss */
+        body .container main ul.live-tweets span.tweet-author {
+          color: #808080; }
+      /* line 166, ../sass/main.scss */
       body .container main #map-canvas {
         width: 100%;
         height: 800px; }
-        /* line 193, ../sass/main.scss */
+        /* line 170, ../sass/main.scss */
         body .container main #map-canvas div.tweet {
           width: auto;
           min-width: 300px; }
-          /* line 197, ../sass/main.scss */
+          /* line 174, ../sass/main.scss */
           body .container main #map-canvas div.tweet div.header .avatar, body .container main #map-canvas div.tweet div.header .screen-name {
             display: inline-block;
             vertical-align: top; }
-          /* line 201, ../sass/main.scss */
+          /* line 178, ../sass/main.scss */
           body .container main #map-canvas div.tweet div.header div.screen-name {
             color: #000;
             font-size: 18px;
             font-weight: 700;
             margin-left: 5px; }
-            /* line 206, ../sass/main.scss */
+            /* line 183, ../sass/main.scss */
             body .container main #map-canvas div.tweet div.header div.screen-name span.handle, body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
               display: block;
               height: 20px; }
-            /* line 210, ../sass/main.scss */
+            /* line 187, ../sass/main.scss */
             body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
               color: #8899a6;
               font-size: 16px;
               line-height: 2; }
-          /* line 217, ../sass/main.scss */
+          /* line 194, ../sass/main.scss */
           body .container main #map-canvas div.tweet div.body {
             color: #292F33;
             font-weight: 400;
             font-size: 16px;
             /*border-bottom:1px solid #e2e2e2;*/ }
-            /* line 223, ../sass/main.scss */
+            /* line 200, ../sass/main.scss */
             body .container main #map-canvas div.tweet div.body p {
               white-space: pre-wrap;
               width: 340px;
@@ -622,18 +603,53 @@ body {
               background: #F8F8F8;
               margin-top: 5px;
               margin-bottom: 5px; }
-          /* line 235, ../sass/main.scss */
+          /* line 212, ../sass/main.scss */
           body .container main #map-canvas div.tweet div.footer {
-            color: #666; }
-      /* line 241, ../sass/main.scss */
-      body .container main article.panel-2 .twitter-logo {
-        font-size: 3em;
-        vertical-align: middle;
-        text-align: center; }
-      /* line 246, ../sass/main.scss */
-      body .container main article.panel-2 > div {
-        float: left;
-        width: 49.99999%; }
-    /* line 252, ../sass/main.scss */
-    body .container footer {
-      background: #666; }
+            color: #666;
+            display: none; }
+      /* line 218, ../sass/main.scss */
+      body .container main article {
+        color: #666;
+        background: rgba(255, 255, 255, 0.8); }
+        /* line 221, ../sass/main.scss */
+        body .container main article:after {
+          content: " ";
+          /* Older browser do not support empty content */
+          visibility: hidden;
+          display: block;
+          height: 0;
+          clear: both; }
+        /* line 229, ../sass/main.scss */
+        body .container main article.panel-2 .twitter-logo {
+          font-size: 3em;
+          vertical-align: middle;
+          text-align: center;
+          color: #55acee; }
+        /* line 235, ../sass/main.scss */
+        body .container main article.panel-2 > div {
+          float: left;
+          width: 49.99999%; }
+    /* line 242, ../sass/main.scss */
+    body .container header, body .container footer {
+      background: rgba(255, 255, 255, 0.3); }
+    /* line 246, ../sass/main.scss */
+    body .container header div.connection-status-panel {
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      padding: 25px;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.5); }
+      /* line 252, ../sass/main.scss */
+      body .container header div.connection-status-panel h2 {
+        font-size: 1.2em;
+        font-weight: 700; }
+      /* line 256, ../sass/main.scss */
+      body .container header div.connection-status-panel label {
+        font-weight: 700;
+        color: #000; }
+        /* line 259, ../sass/main.scss */
+        body .container header div.connection-status-panel label + span {
+          display: block; }
+      /* line 263, ../sass/main.scss */
+      body .container header div.connection-status-panel span.status {
+        color: #666; }

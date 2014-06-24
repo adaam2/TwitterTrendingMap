@@ -87,6 +87,7 @@ body {
     background-color:$primary;
     color:$primary-text;
     -webkit-font-smoothing: antialiased;
+    background-attachment:fixed;
     &.pink {
         background-image:url('../img/bg-pink.jpg');
     }
@@ -142,50 +143,26 @@ body {
     .container {
         width:100%;
 
-       nav {
-           background:#666;
-           padding:1.1em;
-           ul {
-               margin-left:auto;
-               margin-right:auto;
-               width:500px;
-
-               li {
-                   display:inline-block;
-                   margin:.6em;
-                   a {
-                       &:hover {
-                           color:$primary;
-                       }
-                   }  
-               }
-           }
-       }
-
-       header {
-            background:$heading-color;
-            h1 {
-                color:#fff;
-                line-height:1.2em;
-                span {
-                    font-size:2rem;
-                    display:block;
-                    font-style:italic;
-                }
-            }
-            h3 {
-                color:#fff;
-            }
-        }
        header,footer, article {
             padding:5em;
         }
        main {
             width:100%;
 
-            div.geocode {
-                background:$secondary-4;
+            /* List Style for display of Tweets in Console */
+            ul.live-tweets {
+                  list-style-type:none !important;
+                  span.tweet-content,span.tweet-author {
+                      display:block;
+                  }
+                  span.tweet-content {
+                      color:#292f33;
+                  }
+                  span.tweet-author {
+                      color:#808080;
+                  }
             }
+            /* Map Canvas Stylings */
             #map-canvas {
                 width:100%;
                 height:800px;
@@ -234,23 +211,59 @@ body {
                     }
                     div.footer {
                         color:#666;
+                        display: none;
                     }
                 }
             }
-            article.panel-2 {
+            article {
+                color:#666;
+                background:rgba(255,255,255,.8);
+                &:after {
+                       content: " "; /* Older browser do not support empty content */
+                       visibility: hidden;
+                       display: block;
+                       height: 0;
+                       clear: both;
+                    }
+            &.panel-2 {
                 .twitter-logo {
                     font-size:3em;
                     vertical-align:middle;
                     text-align:center;
+                    color:$primary;
                 }
                 & > div {
                     float:left;
                     width:49.99999%;
                 }
             }
+            }
         }
-        footer {
-            background:#666;
+        header,footer {
+          background:rgba(255,255,255,.3);
+        }
+        header {
+            div.connection-status-panel {
+                border-radius: 10px;
+                border: 1px solid #e2e2e2;
+                padding: 25px;
+                margin-top: 30px;
+                background: rgba(255, 255, 255, 0.5);
+                h2 {
+                    font-size:1.2em;
+                    font-weight:700;
+                }
+                label {
+                    font-weight:700;
+                    color:#000;
+                    & + span {
+                        display:block;
+                    }
+                }
+                span.status {
+                    color:#666;
+                }
+            }
         }
     }
 }
