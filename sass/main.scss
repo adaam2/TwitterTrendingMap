@@ -152,8 +152,25 @@ body {
             /* List Style for display of Tweets in Console */
             ul.live-tweets {
                   list-style-type:none !important;
+                  li.tweet-item {
+                      border-bottom:1px solid #e2e2e2;
+                      &:after {
+                          content:' ';
+                          display:table;
+                          visibility:hidden;
+                          height:0;
+                          clear:both;
+                      }
+                  span.tweet-avatar {
+                      float:left;
+                      img {
+                          width:40px;
+                      }
+                  }
                   span.tweet-content,span.tweet-author {
                       display:block;
+                      left:10px;
+                      position:relative;
                   }
                   span.tweet-content {
                       color:#292f33;
@@ -161,6 +178,7 @@ body {
                   span.tweet-author {
                       color:#808080;
                   }
+               }
             }
             /* Map Canvas Stylings */
             #map-canvas {

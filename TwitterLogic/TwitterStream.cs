@@ -78,7 +78,9 @@ namespace FinalUniProject.TwitterLogic
                 // instantiate custom TwitterException class instance and send to client
                 client.All.broadcastStatus(new TwitterException() {
                     Message = args.Exception.Message,
-                    StackTrace = args.Exception.StackTrace
+                    StackTrace = args.Exception.StackTrace,
+                    TwitterCode = args.DisconnectMessage.Code,
+                    TwitterReason = args.DisconnectMessage.Reason
                 });
 
                 // Put the current Thread to sleep for 2 seconds
@@ -87,7 +89,15 @@ namespace FinalUniProject.TwitterLogic
                 // Restart Stream
                 _filteredStream.StartStreamMatchingAllConditions();
             };
-
+           
+            _filteredStream.StreamStarted += (sender, args) =>
+            {
+                client.All.twitterConnectionSuccess("Connected to Twitter API");
+            };
+            _filteredStream.StreamResumed += (sender, args) =>
+            {
+                client.All.twitterConnectionSuccess("Connected to Twitter API");
+            };
             // create thread with stream matching all conditions, keeping it open
             _thread = new Thread(_filteredStream.StartStreamMatchingAllConditions);
 

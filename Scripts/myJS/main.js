@@ -100,7 +100,7 @@ $(function () {
                // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
                var max_list_size = 10;
-               var list_item = '<li class="tweet-item"><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">' + tweet.User + '</span></li>';
+               var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">' + tweet.User + '</span></li>';
                if (list_size < max_list_size) {
                    $('ul.live-tweets').prepend(list_item);
                } else {
@@ -108,8 +108,12 @@ $(function () {
                    $('ul.live-tweets').prepend(list_item);
                }
            }
+           twitterHub.client.twitterConnectionSuccess = function (message) {
+               $('#twitterapi-status').text(message);
+           };
            twitterHub.client.broadcastStatus = function (status) {
-               console.log(status.Message + '<br/>' + status.StackTrace);
+               console.log(status);
+               console.log(status.Message + '<br/>' + status.StackTrace + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason);
            };
            $.connection.hub.start()
                .done(function () {

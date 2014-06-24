@@ -9,5 +9,7 @@ namespace FinalUniProject.TwitterLogic
     {
         public string StackTrace { get; set; }
         public string Message { get; set; }
+        public int TwitterCode { get; set; }
+        public string TwitterReason { get; set; }
     }
 }
