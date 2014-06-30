@@ -578,58 +578,68 @@ body {
           body .container main ul.live-tweets li.tweet-item span.tweet-author {
             color: #808080; }
       /* line 184, ../sass/main.scss */
-      body .container main #map-canvas {
-        width: 100%;
-        height: 800px; }
-        /* line 188, ../sass/main.scss */
-        body .container main #map-canvas div.tweet {
-          width: auto;
-          min-width: 300px; }
-          /* line 192, ../sass/main.scss */
-          body .container main #map-canvas div.tweet div.header .avatar, body .container main #map-canvas div.tweet div.header .screen-name {
-            display: inline-block;
-            vertical-align: top; }
-          /* line 196, ../sass/main.scss */
-          body .container main #map-canvas div.tweet div.header div.screen-name {
-            color: #000;
-            font-size: 18px;
-            font-weight: 700;
-            margin-left: 5px; }
+      body .container main div.map-wrapper {
+        margin: 0 1.3em; }
+        /* line 186, ../sass/main.scss */
+        body .container main div.map-wrapper #map-canvas {
+          width: 100%;
+          height: 800px;
+          border: 3px solid #e2e2e2; }
+          /* line 190, ../sass/main.scss */
+          body .container main div.map-wrapper #map-canvas div.tweet {
+            width: auto;
+            min-width: 300px; }
+            /* line 194, ../sass/main.scss */
+            body .container main div.map-wrapper #map-canvas div.tweet div.header .avatar, body .container main div.map-wrapper #map-canvas div.tweet div.header .screen-name {
+              display: inline-block;
+              vertical-align: top; }
+            /* line 198, ../sass/main.scss */
+            body .container main div.map-wrapper #map-canvas div.tweet div.header .avatar a img {
+              border-radius: 25px; }
             /* line 201, ../sass/main.scss */
-            body .container main #map-canvas div.tweet div.header div.screen-name span.handle, body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
-              display: block;
-              height: 20px; }
-            /* line 205, ../sass/main.scss */
-            body .container main #map-canvas div.tweet div.header div.screen-name span.time-ago {
-              color: #8899a6;
+            body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name {
+              color: #000;
+              font-size: 18px;
+              font-weight: 700;
+              margin-left: 5px; }
+              /* line 206, ../sass/main.scss */
+              body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.handle, body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.time-ago {
+                display: block;
+                height: 20px; }
+              /* line 210, ../sass/main.scss */
+              body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.time-ago {
+                color: #8899a6;
+                font-size: 16px;
+                line-height: 2; }
+            /* line 217, ../sass/main.scss */
+            body .container main div.map-wrapper #map-canvas div.tweet div.body {
+              color: #292F33;
+              font-weight: 400;
               font-size: 16px;
-              line-height: 2; }
-          /* line 212, ../sass/main.scss */
-          body .container main #map-canvas div.tweet div.body {
-            color: #292F33;
-            font-weight: 400;
-            font-size: 16px;
-            /*border-bottom:1px solid #e2e2e2;*/ }
-            /* line 218, ../sass/main.scss */
-            body .container main #map-canvas div.tweet div.body p {
-              white-space: pre-wrap;
-              width: 340px;
-              line-height: 1.4;
-              border: 1px solid #e2e2e2;
-              border-radius: 10px;
-              padding: 10px;
-              background: #F8F8F8;
-              margin-top: 5px;
-              margin-bottom: 5px; }
-          /* line 230, ../sass/main.scss */
-          body .container main #map-canvas div.tweet div.footer {
-            color: #666;
-            display: none; }
-      /* line 236, ../sass/main.scss */
+              /*border-bottom:1px solid #e2e2e2;*/ }
+              /* line 223, ../sass/main.scss */
+              body .container main div.map-wrapper #map-canvas div.tweet div.body p {
+                white-space: pre-wrap;
+                width: 340px;
+                line-height: 1.4;
+                border: 1px solid #e2e2e2;
+                border-radius: 10px;
+                padding: 10px;
+                background: #F8F8F8;
+                margin-top: 5px;
+                margin-bottom: 5px; }
+              /* line 234, ../sass/main.scss */
+              body .container main div.map-wrapper #map-canvas div.tweet div.body a {
+                color: #87C5FF; }
+            /* line 238, ../sass/main.scss */
+            body .container main div.map-wrapper #map-canvas div.tweet div.footer {
+              color: #666;
+              display: none; }
+      /* line 245, ../sass/main.scss */
       body .container main article {
         color: #666;
         background: rgba(255, 255, 255, 0.8); }
-        /* line 239, ../sass/main.scss */
+        /* line 248, ../sass/main.scss */
         body .container main article:after {
           content: " ";
           /* Older browser do not support empty content */
@@ -637,37 +647,37 @@ body {
           display: block;
           height: 0;
           clear: both; }
-        /* line 247, ../sass/main.scss */
+        /* line 256, ../sass/main.scss */
         body .container main article.panel-2 .twitter-logo {
           font-size: 3em;
           vertical-align: middle;
           text-align: center;
           color: #55acee; }
-        /* line 253, ../sass/main.scss */
+        /* line 262, ../sass/main.scss */
         body .container main article.panel-2 > div {
           float: left;
           width: 49.99999%; }
-    /* line 260, ../sass/main.scss */
+    /* line 269, ../sass/main.scss */
     body .container header, body .container footer {
       background: rgba(255, 255, 255, 0.3); }
-    /* line 264, ../sass/main.scss */
+    /* line 273, ../sass/main.scss */
     body .container header div.connection-status-panel {
       border-radius: 10px;
       border: 1px solid #e2e2e2;
       padding: 25px;
       margin-top: 30px;
       background: rgba(255, 255, 255, 0.5); }
-      /* line 270, ../sass/main.scss */
+      /* line 279, ../sass/main.scss */
       body .container header div.connection-status-panel h2 {
         font-size: 1.2em;
         font-weight: 700; }
-      /* line 274, ../sass/main.scss */
+      /* line 283, ../sass/main.scss */
       body .container header div.connection-status-panel label {
         font-weight: 700;
-        color: #000; }
-        /* line 277, ../sass/main.scss */
-        body .container header div.connection-status-panel label + span {
-          display: block; }
-      /* line 281, ../sass/main.scss */
+        color: #000;
+        display: block; }
+      /* line 288, ../sass/main.scss */
       body .container header div.connection-status-panel span.status {
-        color: #666; }
+        display: inline-block;
+        color: #75B6A1;
+        font-weight: 700; }

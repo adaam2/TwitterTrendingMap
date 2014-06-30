@@ -45,6 +45,12 @@
     <Reference Include="ejml-0.23">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.3.1.1\lib\ejml-0.23.dll</HintPath>
     </Reference>
+    <Reference Include="Geocoding">
+      <HintPath>..\packages\Geocoding.net.3.1.0\lib\net40\Geocoding.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="IKVM.AWT.WinForms">
       <HintPath>..\packages\IKVM.7.4.5196.0\lib\IKVM.AWT.WinForms.dll</HintPath>
     </Reference>
@@ -167,6 +173,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web.DynamicData" />
@@ -280,20 +287,34 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\StatsController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="helperClasses\ClientsConnected.cs" />
     <Compile Include="helperClasses\database.cs" />
-    <Compile Include="helperClasses\stringExtensions.cs" />
+    <Compile Include="helperClasses\DateExtensions.cs" />
+    <Compile Include="helperClasses\StringExtensions.cs" />
     <Compile Include="Hubs\GeoFeedHub.cs" />
     <Compile Include="Hubs\TrendsAnalysisHub.cs" />
+    <Compile Include="IKVM\Extensions\CollectionExtensions.cs" />
     <Compile Include="Models\TweetEntitiesModel.cs" />
     <Compile Include="Models\TweetMediaModel.cs" />
     <Compile Include="Models\TweetModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="NERModels\NamedEntity.cs" />
+    <Compile Include="NERModels\NamedEntityCollection.cs" />
+    <Compile Include="NERModels\TweetCollection.cs" />
+    <Compile Include="NERModels\Organisation.cs" />
+    <Compile Include="NERModels\Person.cs" />
+    <Compile Include="NERModels\Place.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="TwitterLogic\TweetParser.cs" />
     <Compile Include="TwitterLogic\TwitterException.cs" />
     <Compile Include="TwitterLogic\TwitterStream.cs" />
@@ -303,6 +324,7 @@
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\ie.css" />
+    <Content Include="css\morris.css" />
     <Content Include="css\print.css" />
     <Content Include="css\screen.css" />
     <Content Include="css\sky-tabs.css" />
@@ -312,6 +334,7 @@
     <Content Include="img\bg-cyan.jpg" />
     <Content Include="img\bg-green.jpg" />
     <Content Include="img\bg-pink.jpg" />
+    <Content Include="img\clustersprites.png" />
     <Content Include="img\marker.png" />
     <Content Include="img\marker.svg" />
     <Content Include="sass\main.scss" />
@@ -322,6 +345,10 @@
     <Content Include="sass\_vars-typeplate.scss" />
     <Content Include="sass\ie.scss" />
     <Content Include="sass\_typeplate.scss" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -343,6 +370,8 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\markerclustererplus.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\morris.js" />
+    <Content Include="Scripts\morris.min.js" />
     <Content Include="Scripts\myJS\main.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -358,6 +387,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Tests\Index.cshtml" />
+    <Content Include="Views\Stats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

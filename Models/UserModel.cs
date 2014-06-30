@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace FinalUniProject.Models
+﻿namespace FinalUniProject.Models
 {
     public class UserModel
     {

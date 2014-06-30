@@ -181,10 +181,12 @@ body {
                }
             }
             /* Map Canvas Stylings */
+            div.map-wrapper {
+                margin:0 1.3em;
             #map-canvas {
                 width:100%;
                 height:800px;
-
+                border:3px solid #e2e2e2;
                 div.tweet {
                     width:auto;
                     min-width:300px;
@@ -192,6 +194,9 @@ body {
                        .avatar,.screen-name {
                            display:inline-block;
                            vertical-align:top;
+                       }
+                       .avatar a img {
+                           border-radius: 25px;
                        }
                        div.screen-name {
                            color:#000;
@@ -225,13 +230,17 @@ body {
                             background:#F8F8F8;
                             margin-top:5px;
                             margin-bottom:5px;
-                        } 
+                        }
+                        a {
+                            color:#87C5FF;
+                        }
                     }
                     div.footer {
                         color:#666;
                         display: none;
                     }
                 }
+            }
             }
             article {
                 color:#666;
@@ -274,12 +283,12 @@ body {
                 label {
                     font-weight:700;
                     color:#000;
-                    & + span {
-                        display:block;
-                    }
+                    display:block;
                 }
                 span.status {
-                    color:#666;
+                    display:inline-block;
+                    color: #75B6A1;
+                    font-weight: 700;
                 }
             }
         }

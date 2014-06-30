@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Text.RegularExpressions;
+using System.Web;
 
-namespace FinalUniProject.helperClasses
+namespace System
 {
+
     internal static class StringExtensions
     {
 
@@ -40,7 +41,7 @@ namespace FinalUniProject.helperClasses
         {
             string x = m.ToString();
             string tag = x.Replace("#", "%23");
-            return x.Link("http://search.twitter.com/search?q=" + tag);
+            return x.Link("https://twitter.com/hashtag/" + tag);
         }
 
         private static string Username(Match m)
@@ -55,6 +56,35 @@ namespace FinalUniProject.helperClasses
 
             string x = m.ToString();
             return x.Link(x);
+        }
+        private static int WordCount(this string s)
+        {
+            return s.Split(new char[] { ' ', '.', '?' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+        private static bool IsLike(this string s, string wildcardPattern)
+        {
+            if (s == null || String.IsNullOrEmpty(wildcardPattern)) return false;
+            // turn into regex pattern, and match the whole string with ^$
+            var regexPattern = "^" + Regex.Escape(wildcardPattern) + "$";
+
+            // add support for ?, #, *, [], and [!]
+            regexPattern = regexPattern.Replace(@"\[!", "[^")
+                                       .Replace(@"\[", "[")
+                                       .Replace(@"\]", "]")
+                                       .Replace(@"\?", ".")
+                                       .Replace(@"\*", ".*")
+                                       .Replace(@"\#", @"\d");
+
+            var result = false;
+            try
+            {
+                result = Regex.IsMatch(s, regexPattern);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(String.Format("Invalid pattern: {0}", wildcardPattern), ex);
+            }
+            return result;
         }
     }
 }

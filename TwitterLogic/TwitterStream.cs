@@ -1,13 +1,13 @@
-﻿using Tweetinvi.Core.Interfaces.Streaminvi;
-using System.Threading;
-using System.Configuration;
-using Microsoft.AspNet.SignalR;
-using FinalUniProject.Hubs;
-using Tweetinvi;
+﻿using FinalUniProject.Hubs;
 using FinalUniProject.Models;
-using Tweetinvi.Logic.Model;
+using Microsoft.AspNet.SignalR;
+using System;
+using System.Configuration;
+using System.Threading;
+using Tweetinvi;
 using Tweetinvi.Core.Enum;
-using Tweetinvi.Core.Exceptions;
+using Tweetinvi.Core.Interfaces.Streaminvi;
+using Tweetinvi.Logic.Model;
 
 namespace FinalUniProject.TwitterLogic
 {
@@ -54,39 +54,39 @@ namespace FinalUniProject.TwitterLogic
             // Monitor tweets received and broadcast to client function
             _filteredStream.MatchingTweetReceived += (sender, args) =>
             {
-                var tweet = args.Tweet;
-                if (tweet != null) { 
-                    
+                var tweetargs = args.Tweet;
+                if (tweetargs != null) {
+                    TweetModel model = new TweetModel()
+                        {
+                            Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
+                            User = tweetargs.Creator.ScreenName,
+                            Latitude = tweetargs.Coordinates.Latitude,
+                            Longitude = tweetargs.Coordinates.Longitude,
+                            CreatedAt = tweetargs.CreatedAt,
+                            ImageUrl = tweetargs.Creator.ProfileImageUrl,
+                            ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
+                        };
                 // pass complex TweetModel object to the client
-                    client.All.broadcastTweetMessage(new TweetModel()
-                    {
-                        Text = tweet.Text,
-                        User = tweet.Creator.ScreenName,
-                        Latitude = tweet.Coordinates.Latitude,
-                        Longitude = tweet.Coordinates.Longitude,
-                        CreatedAt = tweet.CreatedAt,
-                        ImageUrl = tweet.Creator.ProfileImageUrl,
-                        ProfileUrl = "https://twitter.com/" + tweet.Creator.ScreenName
-                    });
+                    client.All.broadcastTweetMessage(model);
+
+                    TweetParser parse = new TweetParser(model);
                 }
             };
 
             // Lambda function with SignalR client broadcast function to detect if stream has ground to a halt. If this is the case, exception details are sent to the client and stream is restarted matching prior conditions
             _filteredStream.StreamStopped += (sender, args) =>
             {
-                var exceptionDescription = ExceptionHandler.GetLastException().TwitterDescription;
                 // instantiate custom TwitterException class instance and send to client
-                client.All.broadcastStatus(new TwitterException() {
-                    Message = args.Exception.Message,
-                    StackTrace = args.Exception.StackTrace,
-                    TwitterCode = args.DisconnectMessage.Code,
-                    TwitterReason = args.DisconnectMessage.Reason
-                });
-
+                //client.All.broadcastStatus(new TwitterException() {
+                //    Message = !String.IsNullOrEmpty(args.Exception.Message) ? args.Exception.Message : "no exception message",
+                //    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace",
+                //    TwitterCode = args.DisconnectMessage.Code != 0 ? args.DisconnectMessage.Code : 0,
+                //    TwitterReason = !String.IsNullOrEmpty(args.DisconnectMessage.Reason) ? args.DisconnectMessage.Reason : "no twitter reason"
+                //});
                 // Put the current Thread to sleep for 2 seconds
-                Thread.Sleep(2000);
+                Thread.Sleep(2000); //2500?
 
-                // Restart Stream
+                // Restart Stream matching all conditions
                 _filteredStream.StartStreamMatchingAllConditions();
             };
            

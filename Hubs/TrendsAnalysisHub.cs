@@ -8,9 +8,6 @@ namespace FinalUniProject.Hubs
 {
     public class TrendsAnalysisHub : Hub
     {
-        //public void Hello()
-        //{
-        //    Clients.All.hello();
-        //}
+        
     }
 }

@@ -1,24 +1,4 @@
 ﻿var map, mc;
-var clusters = [
-    {
-        textColor: 'white',
-        url: 'path/to/smallclusterimage.png',
-        height: 50,
-        width: 50
-    },
-    {
-        textColor: 'white',
-        url: 'path/to/smallclusterimage.png',
-        height: 50,
-        width: 50
-    },
-    {
-        textColor: 'white',
-        url: 'path/to/smallclusterimage.png',
-        height: 50,
-        width: 50
-    }
-];
 $(function () {
     function initialize() {
         var stylez = [{ "featureType": "water", "stylers": [{ "saturation": 43 }, { "lightness": -11 }, { "hue": "#0088ff" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": 99 }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }, { "lightness": 54 }] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ece2d9" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#ccdca1" }] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#767676" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] }, { "featureType": "poi", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#b8cb93" }] }, { "featureType": "poi.park", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.sports_complex", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.medical", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.business", "stylers": [{ "visibility": "simplified" }] }];
@@ -36,12 +16,13 @@ $(function () {
             styles: stylez
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), map_options);
+        map.set('streetViewControl', true);
         var clusterer_opts = {
             gridSize: 100,
             batchSize: 3000,
             batchSizeIE: 200,
             maxZoom: 12,
-            averageCenter:false
+            averageCenter: false
         };
         mc = new MarkerClusterer(map, [], clusterer_opts);
     }
@@ -52,11 +33,10 @@ $(function () {
         var yy = date.getFullYear();
         var minutes = date.toTimeString();
         var formatted_date = dd + '/' + mm + '/' + yy;
-        //var timeago = jQuery.timeago(tweet.CreatedAt);
         var content = '<div class="tweet">\
         <div class="header">\
         <div class="avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></div>\
-        <div class="screen-name"><span class="handle">@' + tweet.User + '</span><span class="time-ago"><time class="timeago" datetime="' + tweet.CreatedAt + '">' + tweet.CreatedAt + '</time></span></div>\
+        <div class="screen-name"><span class="handle">@' + tweet.User + '</span><span class="time-ago"><time class="timeago" datetime="' + tweet.CreatedAt + '">' + formatted_date + '</time></span></div>\
         </div>\
         <div class="body"><p>' + tweet.Text + '</p></div>\
         <div class="footer">' + formatted_date + ' ' + minutes + '</div>\
@@ -100,23 +80,36 @@ $(function () {
                // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
                var max_list_size = 10;
-               var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">' + tweet.User + '</span></li>';
+               var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">@' + tweet.User + '</span></li>';
+               //var random = Math.floor((Math.random() * 10) + 1);
+
+               // randomize selection of tweets for display to ensure that tweets can be read.
+               //if(3 > random) {
                if (list_size < max_list_size) {
                    $('ul.live-tweets').prepend(list_item);
                } else {
                    $('ul.live-tweets li:last-child').remove();
                    $('ul.live-tweets').prepend(list_item);
                }
+               //}
            }
            twitterHub.client.twitterConnectionSuccess = function (message) {
                $('#twitterapi-status').text(message);
            };
+           
            twitterHub.client.broadcastStatus = function (status) {
-               console.log(status);
                console.log(status.Message + '<br/>' + status.StackTrace + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason);
            };
            $.connection.hub.start()
                .done(function () {
-                   $('#signalr-status').text('Now connected (connection ID ' + $.connection.hub.id + ')');
+                   $('#signalr-status').html('Connected <i class="fa fa-check-circle"></i>');
                });
+
+           var trendsAnalysisHub = $.connection.trendsAnalysisHub;
+           trendsAnalysisHub.client.broadcastTrend = function (entity) {
+               $.each(entity, function (i) {
+                   console.log(entity[i]);
+               });
+               //console.log(entity + 'hey this is a test'); // should be of typeperson
+           };
        });

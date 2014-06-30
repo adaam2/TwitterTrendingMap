@@ -27,10 +27,6 @@ namespace FinalUniProject.Hubs
         private string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
         private string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
 
-        public void Send(string msg)
-        {
-            Clients.All.add(msg);
-        }
         public override Task OnConnected()
         {
             // add connection id to hashset
