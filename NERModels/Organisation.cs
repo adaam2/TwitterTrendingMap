@@ -16,16 +16,6 @@
                 _name = value;
             }
         }
-        public override string EntityName
-        {
-            get
-            {
-                return _entityName;
-            }
-            set
-            {
-                _entityName = "Organisation";
-            }
-        }
+        public string entityType = "Organisation";
     }
 }

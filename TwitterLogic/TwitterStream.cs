@@ -77,12 +77,13 @@ namespace FinalUniProject.TwitterLogic
             _filteredStream.StreamStopped += (sender, args) =>
             {
                 // instantiate custom TwitterException class instance and send to client
-                //client.All.broadcastStatus(new TwitterException() {
-                //    Message = !String.IsNullOrEmpty(args.Exception.Message) ? args.Exception.Message : "no exception message",
-                //    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace",
-                //    TwitterCode = args.DisconnectMessage.Code != 0 ? args.DisconnectMessage.Code : 0,
-                //    TwitterReason = !String.IsNullOrEmpty(args.DisconnectMessage.Reason) ? args.DisconnectMessage.Reason : "no twitter reason"
-                //});
+                client.All.broadcastStatus(new TwitterException()
+                {
+                    Message = !String.IsNullOrEmpty(args.Exception.Message) ? args.Exception.Message : "no exception message",
+                    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace",
+                    TwitterCode = args.DisconnectMessage.Code != 0 ? args.DisconnectMessage.Code : 0,
+                    TwitterReason = !String.IsNullOrEmpty(args.DisconnectMessage.Reason) ? args.DisconnectMessage.Reason : "no twitter reason"
+                });
                 // Put the current Thread to sleep for 2 seconds
                 Thread.Sleep(2000); //2500?
 

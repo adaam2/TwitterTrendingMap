@@ -35,17 +35,7 @@ namespace FinalUniProject.NERModels
                 _name = value;
             }
         }
-        public override string EntityName
-        {
-            get
-            {
-                return _entityName;
-            }
-            set
-            {
-                _entityName = "Place/Location";
-            }
-        }
+        public string entityType = "Place";
         //public GeoCoordinate Location;
     }
 }
