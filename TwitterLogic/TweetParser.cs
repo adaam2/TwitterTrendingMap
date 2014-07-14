@@ -20,10 +20,11 @@ namespace FinalUniProject.TwitterLogic
         public static StringTokenizer _tokenizer;
         public static List<NamedEntity<TweetModel>> namedEntityCollection = new List<NamedEntity<TweetModel>>(); // holds entities with tweets inside of them - i.e. inverted index of the collection above
         public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
+        public static TimeSpan maxAge = new TimeSpan(0,10,0);
         public const int thresholdNumber = 10; //number of matching tweets needed to broadcast "trend" to the hub
         public TweetParser(TweetModel tweet)
         {
-            //var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(3));
+            var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
             ProcessTweet(tweet);
         }
         private void ProcessTweet(TweetModel tweet)
@@ -162,20 +163,10 @@ namespace FinalUniProject.TwitterLogic
         {
             client.All.broadcastTrend(entity);
         }
-        //private void RemoveOldTweets()
-        //{
-        //    namedEntityCollection.ForEach(tweet =>
-        //        {
-        //            var now = DateTime.Now;
-        //            var then = tweet.CreatedAt;
-        //            var difference = now.Subtract(then); // finding out the difference between the tweet time and now
-        //            var maxage = new TimeSpan(1, 0, 0); // max age of tweets in the collection in one hour
-        //            if (difference > maxage)
-        //            {
-        //                // remove this tweet from the collection
-        //                tweets.Remove(tweet);
-        //            }
-        //        });
-        //}
+        private void RemoveOldTweets()
+        {
+            // This little LINQ expression removes entities whose latest updated tweet is more than the threshold max age value (for example.. latest tweet added to the "Rihanna" entity is more than an hour ago, therefore remove that entity)
+            namedEntityCollection.RemoveAll(entity => DateTime.Now.Subtract(entity.tweets.Max(t => t.CreatedAt)) >= maxAge);
+        }
     }
 }
