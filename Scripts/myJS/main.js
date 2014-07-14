@@ -100,6 +100,9 @@ $(function () {
            twitterHub.client.broadcastStatus = function (status) {
                console.log(status.Message + '<br/>' + status.StackTrace + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason);
            };
+           twitterHub.client.getClientsConnectedCount = function (count) {
+               console.log(count);
+           };
            $.connection.hub.start()
                .done(function () {
                    $('#signalr-status').html('Connected <i class="fa fa-check-circle"></i>');
@@ -108,8 +111,11 @@ $(function () {
            var trendsAnalysisHub = $.connection.trendsAnalysisHub;
            trendsAnalysisHub.client.broadcastTrend = function (entity) {
                $.each(entity, function (i) {
-                   console.log(entity[i]);
+                   console.log(entity[i] + ':entity');
                });
                //console.log(entity + 'hey this is a test'); // should be of typeperson
+           };
+           trendsAnalysisHub.client.broadcastLog = function (message) {
+               console.log(message);
            };
        });

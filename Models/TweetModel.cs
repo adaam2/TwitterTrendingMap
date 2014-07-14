@@ -18,6 +18,6 @@ namespace FinalUniProject.Models
         public string ProfileUrl { get; set; }
 
         // This field is set later during Tokenization / Named Entity Recognition
-        public List<NamedEntity> entities = new List<NamedEntity>();
+        public List<NamedEntity<TweetModel>> entities = new List<NamedEntity<TweetModel>>();
     }
 }

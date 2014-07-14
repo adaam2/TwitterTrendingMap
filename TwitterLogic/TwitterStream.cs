@@ -43,30 +43,31 @@ namespace FinalUniProject.TwitterLogic
             //var bottomRight = new Coordinates(180, 90);
 
             // United Kingdom Bounding Box Points - Approximate
-            var topLeft = new Coordinates(-8.164723,49.955269);
+            var topLeft = new Coordinates(-8.164723, 49.955269);
             var bottomRight = new Coordinates(1.7425, 60.6311);
 
             // Add filters
             _filteredStream.AddLocation(topLeft, bottomRight);
             _filteredStream.FilterTweetsToBeIn(Language.English);
-      
+
 
             // Monitor tweets received and broadcast to client function
             _filteredStream.MatchingTweetReceived += (sender, args) =>
             {
                 var tweetargs = args.Tweet;
-                if (tweetargs != null) {
+                if (tweetargs != null)
+                {
                     TweetModel model = new TweetModel()
-                        {
-                            Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
-                            User = tweetargs.Creator.ScreenName,
-                            Latitude = tweetargs.Coordinates.Latitude,
-                            Longitude = tweetargs.Coordinates.Longitude,
-                            CreatedAt = tweetargs.CreatedAt,
-                            ImageUrl = tweetargs.Creator.ProfileImageUrl,
-                            ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
-                        };
-                // pass complex TweetModel object to the client
+                    {
+                        Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
+                        User = tweetargs.Creator.ScreenName,
+                        Latitude = tweetargs.Coordinates.Latitude,
+                        Longitude = tweetargs.Coordinates.Longitude,
+                        CreatedAt = tweetargs.CreatedAt,
+                        ImageUrl = tweetargs.Creator.ProfileImageUrl,
+                        ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
+                    };
+                    // pass complex TweetModel object to the client
                     client.All.broadcastTweetMessage(model);
 
                     TweetParser parse = new TweetParser(model);
@@ -77,12 +78,11 @@ namespace FinalUniProject.TwitterLogic
             _filteredStream.StreamStopped += (sender, args) =>
             {
                 // instantiate custom TwitterException class instance and send to client
+
                 client.All.broadcastStatus(new TwitterException()
                 {
                     Message = !String.IsNullOrEmpty(args.Exception.Message) ? args.Exception.Message : "no exception message",
-                    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace",
-                    TwitterCode = args.DisconnectMessage.Code != 0 ? args.DisconnectMessage.Code : 0,
-                    TwitterReason = !String.IsNullOrEmpty(args.DisconnectMessage.Reason) ? args.DisconnectMessage.Reason : "no twitter reason"
+                    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace"
                 });
                 // Put the current Thread to sleep for 2 seconds
                 Thread.Sleep(2000); //2500?
@@ -90,7 +90,7 @@ namespace FinalUniProject.TwitterLogic
                 // Restart Stream matching all conditions
                 _filteredStream.StartStreamMatchingAllConditions();
             };
-           
+
             _filteredStream.StreamStarted += (sender, args) =>
             {
                 client.All.twitterConnectionSuccess("Connected to Twitter API");

@@ -15,33 +15,26 @@ namespace FinalUniProject.Hubs
 {
     public class GeoFeedHub : Hub
     {
-        // Member Variables
-
-        private bool _sessionEnabledThread;
-        private Thread _thread;
-        private ISampleStream _sampleStream;
-
-        // Twitter Access Keys
-        private string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
-        private string _consumerSecret = ConfigurationManager.AppSettings.Get("twitter:ConsumerSecret");
-        private string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
-        private string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
-
         public override Task OnConnected()
         {
             // add connection id to hashset
             ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
             return base.OnConnected();
         }
         public override Task OnDisconnected()
         {
             // remove the client connection id from the hashset
             ClientsConnected.ConnectedIds.Remove(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
             return base.OnDisconnected();
         }
-        public void getNumberOfClients()
+        public override Task OnReconnected()
         {
-            Clients.All.numberOfClients(ClientsConnected.ConnectedIds.Count);
+            // for reconnections
+            ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
+            return base.OnReconnected();
         }
     }
 }
