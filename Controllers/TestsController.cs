@@ -20,9 +20,13 @@ namespace FinalUniProject.Controllers
 
         public ActionResult Index()
         {
-
+                return View();
+        }
+        [HttpPost]
+        public void ParseEntities(string text)
+        {
             // Classify the text
-            List classified = _classifier.classify("While the Scottish Enlightenment is traditionally considered to have concluded toward the end of the 18th century,[84] disproportionately large Scottish contributions to British science and letters continued for another 50 years or more, thanks to such figures as the physicists James Clerk Maxwell and Lord Kelvin, and the engineers and inventors James Watt and William Murdoch, whose work was critical to the technological developments of the Industrial Revolution throughout Britain.[85] In literature the most successful figure of the mid-19th century was Walter Scott. His first prose work, Waverley in 1814, is often called the first historical novel.[86] It launched a highly successful career that probably more than any other helped define and popularise Scottish cultural identity.[87] In the late 19th century, a number of Scottish-born authors achieved international reputations, such as Robert Louis Stevenson, Arthur Conan Doyle, J. M. Barrie and George MacDonald.[88] Scotland also played a major part in the development of art and architecture. The Glasgow School, which developed in the late 19th century, and flourished in the early 20th century, produced a distinctive blend of influences including the Celtic Revival the Arts and Crafts Movement, and Japonisme, which found favour throughout the modern art world of continental Europe and helped define the Art Nouveau style. Proponents included architect and artist Charles Rennie Mackintosh");
+            List classified = _classifier.classify(text);
 
             // Establish reference to AnswerAnnotation class to pass in later to CoreLabel.get(key)
             CoreAnnotations.AnswerAnnotation ann = new CoreAnnotations.AnswerAnnotation();
@@ -79,28 +83,17 @@ namespace FinalUniProject.Controllers
 
                             break;
                         }
-                   
+
                     }
                     if (!it.hasNext())
                     {
                         break;
                     }
-                    Response.Write("Entity: " + value + "<br/>"); // can turn this into a function and return the value as a string to the NamedEntity intiializer
+                    Response.Write(answ.ToUpper() + ": " + value + "<br/>"); // can turn this into a function and return the value as a string to the NamedEntity intiializer
                 }
-                
+
             }
-            
-            //for (int i = 0; i < classified.Length; i++)
-            //{
-            //    Triple triple = (Triple)classified[i];
-
-            //    int second = Convert.ToInt32(triple.second().ToString());
-            //    int third = Convert.ToInt32(triple.third().ToString());
-
-            //    Response.Write(triple.first().ToString() + triple.second().ToString() + triple.third().ToString() + Environment.NewLine);
-            //}
-
-                return View();
+            //return View();
         }
     }
 }
