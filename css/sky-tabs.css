@@ -35,7 +35,7 @@
 	font-size: 13px;
 	line-height: 45px;
 	cursor: pointer;
-    /*width:50%;*/ /* added this */
+    width:50%; /* added this */
 }
 .sky-tabs > label.inverse {
 	float: right;
@@ -91,7 +91,8 @@
 	font-size: 13px;
 }
 .sky-tabs > ul > li {
-    min-height:650px;
+    /*min-height:650px;*/
+    min-height:745px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -484,6 +485,9 @@
 /**/
 /* typography */
 /**/
+.sky-tabs .typography {
+    height:100%;
+}
 .sky-tabs .typography h1,
 .sky-tabs .typography h2,
 .sky-tabs .typography h3,

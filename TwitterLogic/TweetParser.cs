@@ -8,7 +8,7 @@ using Microsoft.AspNet.SignalR;
 using FinalUniProject.Hubs;
 using System;
 using System.Linq;
-
+using FinalUniProject.helperClasses;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -16,20 +16,28 @@ namespace FinalUniProject.TwitterLogic
 {
     public class TweetParser
     {
+        // Load the 3 class distsim NLP model
         public static CRFClassifier _classifier = CRFClassifier.getClassifierNoExceptions(@"english.all.3class.distsim.crf.ser.gz");
-        public static StringTokenizer _tokenizer;
-        public static List<NamedEntity<TweetModel>> namedEntityCollection = new List<NamedEntity<TweetModel>>(); // holds entities with tweets inside of them - i.e. inverted index of the collection above
+        // Instantiate the static named entity collection - persists through all instances of this class
+        public static List<NamedEntity<TweetModel>> namedEntityCollection = new List<NamedEntity<TweetModel>>();
         public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
-        public static TimeSpan maxAge = new TimeSpan(0,10,0);
-        public const int thresholdNumber = 10; //number of matching tweets needed to broadcast "trend" to the hub
+        public readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
+        public readonly int thresholdNumber = 2; //number of matching tweets needed to broadcast "trend" to the hub
+
+        // Constructor
         public TweetParser(TweetModel tweet)
         {
+            // Start Timer instance to run every 1 minute to remove NamedEntity instances whose last tweet is more than a 10 minutes old.
             var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            // Process the current tweet
             ProcessTweet(tweet);
         }
         private void ProcessTweet(TweetModel tweet)
         {
+            // Create collection instance to hold named entities detected for the current tweet
             List<NamedEntity<TweetModel>> entities = getTweetEntities(tweet);
+
+            // If the static namedEntityCollection has a count of less than 1, then assign the current (first) tweet to this collection
             if (namedEntityCollection.Count < 1)
             {
                 namedEntityCollection = entities;
@@ -38,11 +46,17 @@ namespace FinalUniProject.TwitterLogic
             {
                 namedEntityCollection.AddRange(entities);
             }
-            List<NamedEntity<TweetModel>> joined = Join(namedEntityCollection,entities).ToList<NamedEntity<TweetModel>>();
+            List<NamedEntity<TweetModel>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<NamedEntity<TweetModel>>();
             joined.ForEach(item =>
             {
                 if (item.tweets.Count > thresholdNumber)
                 {
+                    //if (item.isBroadcast)
+                    //{
+                    //    // if the item has been broadcast before
+
+                    //}
+                    item.isBroadcast = true; // set Flag to show that entity has been broadcast before
                     BroadcastToHub(item);
                 }
             });
@@ -51,15 +65,15 @@ namespace FinalUniProject.TwitterLogic
         {
             List classified = _classifier.classify(tweet.Text);
             List<NamedEntity<TweetModel>> entitiesForThisTweet = new List<NamedEntity<TweetModel>>(); 
-            // Establish reference to AnswerAnnotation class to pass in later to CoreLabel.get(key)
+
+            // Establish obj reference to the various Annotation classes to pass in later to CoreLabel.get(key)
             CoreAnnotations.AnswerAnnotation ann = new CoreAnnotations.AnswerAnnotation();
-            CoreAnnotations.BeforeAnnotation bef = new CoreAnnotations.BeforeAnnotation();
-            CoreAnnotations.OriginalTextAnnotation orig = new CoreAnnotations.OriginalTextAnnotation();
-            CoreAnnotations.AfterAnnotation aft = new CoreAnnotations.AfterAnnotation();
             CoreAnnotations.ValueAnnotation valueAnn = new CoreAnnotations.ValueAnnotation();
             Dictionary<string, Dictionary<string, int>> entities = new Dictionary<string, Dictionary<string, int>>();
 
             List<ArrayList> list = CollectionExtensions.ToList<ArrayList>(classified);
+
+            // Get background symbol - this is usually expressed as a string as "O"
             string bg = _classifier.flags.backgroundSymbol;
 
             // Lifted this code below from http://stackoverflow.com/a/15680613/1795862
@@ -128,33 +142,16 @@ namespace FinalUniProject.TwitterLogic
                             className = null;
                             break;
                     }
-                    if (!String.IsNullOrEmpty(className)) { 
-                    NamedEntity<TweetModel> entity = createNewNamedEntity(className, tweet, value);
+                    if (!String.IsNullOrEmpty(className)) {
+                    // If the class name is a valid class name, then create an instance of the Named Entity sub class, using the Activator
+                    NamedEntity<TweetModel> entity = NamedEntityExtensions.createNewNamedEntity(className, tweet, value);
                     entitiesForThisTweet.Add(entity);
                     }
                 }
-            }      
+            } 
+            // Return the List<T> to the caller
             return entitiesForThisTweet;        
-        }
-        private IEnumerable<NamedEntity<TweetModel>> Join(IEnumerable<NamedEntity<TweetModel>> list1,IEnumerable<NamedEntity<TweetModel>> list2)
-        {
-            return list1.Join(list2, item => item.Name, item => item.Name, (outer, inner) =>
-            {
-                outer.tweets.AddRange(inner.tweets);
-                return outer;
-            });
-        }
-        private NamedEntity<TweetModel> createNewNamedEntity(string className, TweetModel tweet, string value)
-        {
-            NamedEntity<TweetModel> entity = null;
-            Type t = Type.GetType("FinalUniProject.NERModels." + className);
-            entity = (NamedEntity<TweetModel>)Activator.CreateInstance(t);
-            entity.Name = value;
-            // Allow for inverted index by adding tweet to NamedEntist List<TweetModel>
-            if (entity.tweets == null) entity.tweets = new List<TweetModel>();
-            entity.tweets.Add(tweet);
-            return entity;
-        }
+        }     
         private void BroadcastLog(string message)
         {
             client.All.broadcastLog(message);

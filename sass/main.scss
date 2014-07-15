@@ -4,7 +4,7 @@
 @import 'compass/css3/box-sizing';
 @import 'bourbon';
 
-@include sticky-footer(150px,"#layout","#layout_footer","#footer");
+@include sticky-footer(0px,"#layout","#layout_footer","#footer");
 
 /* Twitter Colours - https://about.twitter.com/press/brand-assets */
 $primary: #55ACEE;
@@ -36,11 +36,21 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
     background:none !important;
 }
 
+/* Clearfix */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
 /* Inputs */
 
 #{$all-text-inputs} {
-  padding:1rem;
-  margin:1em;
+  padding:.6em;
+  margin:.6em;
   color:#666;
   background:$input-bg;
   border:1px solid $input-border;
@@ -152,6 +162,8 @@ body {
             /* List Style for display of Tweets in Console */
             ul.live-tweets {
                   list-style-type:none !important;
+                  overflow: hidden;
+                  max-height: 620px;
                   li.tweet-item {
                       border-bottom:1px solid #e2e2e2;
                       &:after {
@@ -182,9 +194,13 @@ body {
             }
             /* Map Canvas Stylings */
             div.map-wrapper {
-                margin:0 1.3em;
+
+            .canvas, .console {
+                float:left;
+                padding:0;
+            }
             #map-canvas {
-                width:100%;
+                width:70%;
                 height:800px;
                 border:3px solid #e2e2e2;
                 div.tweet {
@@ -241,6 +257,30 @@ body {
                     }
                 }
             }
+            .console {
+                width:30%;
+                .counter {
+                        padding: 0px 6px 0px;
+                        height: 30px;
+                        min-width:30px;
+                        width:auto;
+                        right:10px;
+                        top: 7.5px;
+                        position:absolute;
+                        text-align:center;
+                        font-size: 0.8em;
+                        line-height: 30px;
+                        font-weight: bold;
+                        display: inline-block;
+                        vertical-align: middle;
+                        white-space: nowrap;
+                        color: #fff;
+                        background-color: #999999;
+                        -webkit-border-radius: 50%;
+                        -moz-border-radius: 50%;
+                        border-radius: 50%;
+                }
+            }
             }
             article {
                 color:#666;
@@ -267,7 +307,7 @@ body {
             }
         }
         header,footer {
-          background:rgba(255,255,255,.3);
+          background:#292f33;
         }
         header {
             div.connection-status-panel {

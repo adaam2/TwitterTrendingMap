@@ -1,4 +1,4 @@
-﻿var map, mc;
+﻿var map, mc, guids = [], counter = 0;
 $(function () {
     function initialize() {
         var stylez = [{ "featureType": "water", "stylers": [{ "saturation": 43 }, { "lightness": -11 }, { "hue": "#0088ff" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": 99 }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }, { "lightness": 54 }] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ece2d9" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#ccdca1" }] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#767676" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] }, { "featureType": "poi", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#b8cb93" }] }, { "featureType": "poi.park", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.sports_complex", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.medical", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.business", "stylers": [{ "visibility": "simplified" }] }];
@@ -51,6 +51,7 @@ $(function () {
         })
     });
     initialize();
+    
     // geocomplete
     $('#autocomplete').geocomplete().bind("geocode:result", function (e, result) {
         map.setCenter(result.geometry.location);
@@ -60,7 +61,8 @@ $(function () {
                map;
 
            twitterHub.client.broadcastTweetMessage = function (tweet) {
-
+               counter++;
+               $('#tweet-count').html(counter);
                // add marker to the map
                var marker = new google.maps.Marker({
                    map:map,
@@ -98,10 +100,10 @@ $(function () {
            };
            
            twitterHub.client.broadcastStatus = function (status) {
-               console.log(status.Message + '<br/>' + status.StackTrace + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason);
+               console.log(status.Message + '<br/>' + status.StackTrace); // + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason
            };
            twitterHub.client.getClientsConnectedCount = function (count) {
-               console.log(count);
+               //console.log(count);
            };
            $.connection.hub.start()
                .done(function () {
@@ -110,12 +112,17 @@ $(function () {
 
            var trendsAnalysisHub = $.connection.trendsAnalysisHub;
            trendsAnalysisHub.client.broadcastTrend = function (entity) {
-               $.each(entity, function (i) {
-                   console.log(entity[i] + ':entity');
-               });
-               //console.log(entity + 'hey this is a test'); // should be of typeperson
+               if ($.inArray(entity.UniqueID, guids) == -1) {
+                   guids.push(entity.UniqueID);
+                   var listItem = '<li data-guid="' + entity.UniqueID + '"><a href="http://www.twitter.com/hashtag/' + entity.Name + '">' + entity.Name + '</a></li>';
+                   $('#trends').append(listItem);
+               } else {
+                   // do tweet updating here
+               }
+               $('#trends').tagcanvas("update");
            };
            trendsAnalysisHub.client.broadcastLog = function (message) {
                console.log(message);
            };
+
        });

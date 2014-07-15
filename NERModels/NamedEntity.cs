@@ -10,10 +10,13 @@ namespace FinalUniProject.NERModels
         /// </summary>
         protected string _name;
         protected Guid _uniqueID;
+        protected bool _broadcast;
 
         public abstract Guid UniqueID { get; }
         public abstract string Name { get; set; }
         public abstract List<TweetModel> tweets { get; set; }
+        public abstract bool isBroadcast { get; set; }
+
         public override string ToString()
         {
             return Name;

@@ -310,6 +310,7 @@
     <Compile Include="helperClasses\ClientsConnected.cs" />
     <Compile Include="helperClasses\database.cs" />
     <Compile Include="helperClasses\DateExtensions.cs" />
+    <Compile Include="helperClasses\NamedEntityExtensions.cs" />
     <Compile Include="helperClasses\StringExtensions.cs" />
     <Compile Include="Hubs\GeoFeedHub.cs" />
     <Compile Include="Hubs\TrendsAnalysisHub.cs" />
@@ -366,6 +367,7 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-tagcanvas.min.js" />
     <Content Include="Scripts\jquery.geocomplete.min.js" />
     <Content Include="Scripts\jquery.livequery.min.js" />
     <Content Include="Scripts\jquery.timeago.js" />

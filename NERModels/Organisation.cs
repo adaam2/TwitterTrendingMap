@@ -20,6 +20,17 @@ namespace FinalUniProject.NERModels
                 _name = value;
             }
         }
+        public override bool isBroadcast
+        {
+            get
+            {
+                return _broadcast;
+            }
+            set
+            {
+                _broadcast = value;
+            }
+        }
         public override System.Guid UniqueID
         {
             get {
