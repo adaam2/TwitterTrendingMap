@@ -4,7 +4,7 @@
 @import 'compass/css3/box-sizing';
 @import 'bourbon';
 
-@include sticky-footer(0px,"#layout","#layout_footer","#footer");
+/*@include sticky-footer(0px,"#layout","#layout_footer","#footer");*/
 
 /* Twitter Colours - https://about.twitter.com/press/brand-assets */
 $primary: #55ACEE;
@@ -35,7 +35,10 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
 .gmnoprint div {
     background:none !important;
 }
-
+input[type="text"] {
+    font-family: 'Lato', sans-serif;
+    font-weight:300;
+}
 /* Clearfix */
 .cf:before,
 .cf:after {
@@ -46,50 +49,6 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
 .cf:after {
     clear: both;
 }
-/* Inputs */
-
-#{$all-text-inputs} {
-  padding:.6em;
-  margin:.6em;
-  color:#666;
-  background:$input-bg;
-  border:1px solid $input-border;
-  width:400px;
-  font-size:1.2em;
-}
-
-#{$all-text-inputs-hover} { // Target the :hover pseudo-class
-  
-}
-
-#{$all-text-inputs-focus} { // Target the :focus pseudo-class
-  border:1px solid $heading-color;
-}
-
-#{$all-button-inputs} {
-  background:$primary;
-  padding:1rem;
-  margin:1em;
-  border:none;
-  color:$secondary-5;
-  font-size:22px;
-  border-radius:10px;
-  font-family:'Lato',sans-serif;
-}
-
-#{$all-button-inputs-hover} { // Target the :hover pseudo-class
-  cursor:pointer;
-}
-
-#{$all-button-inputs-focus} { // Target the :focus pseudo-class
-  /*background: white;*/
-}
-
-#{$all-button-inputs-active} { // Target the :active pseudo-class
-  /*background: blue;*/
-}
-
-
 /* Nested */
 body {
     font-family: 'Lato', sans-serif;
@@ -197,18 +156,32 @@ body {
                }
            }
        }
-       /*header,footer, article {
-            padding:5em;
-        }*/
        main {
             width:100%;
 
+            /* Geocoding pane */
+            .geocode {
+                background:#66757f;
+                padding:.3em;
+
+                input[type="text"] {
+                    background:#fff;
+                    color:#66757f;
+                    font-size:0.7em;
+                    padding:.5em;
+                    vertical-align:middle;
+                    width:300px;
+                }
+            }
             /* List Style for display of Tweets in Console */
             ul.live-tweets {
                   list-style-type:none !important;
                   overflow: hidden;
                   max-height: 620px;
                   li.tweet-item {
+                      a {
+                          text-decoration:none;
+                      }
                       border-bottom:1px solid #e2e2e2;
                       &:after {
                           content:' ';
@@ -221,6 +194,7 @@ body {
                       float:left;
                       img {
                           width:40px;
+                          height:40px;
                       }
                   }
                   span.tweet-content,span.tweet-author {
@@ -327,51 +301,49 @@ body {
             }
             }
             .chat-console {
+                position:relative;
                 background:#fff;
                 border:1px solid #e2e2e2;
-                input[type="text"],input[type="button"] {
-                    padding:0.3em;
-                }
-                ul {
+                height:auto;
+                color:#000;
+                ul#discussion {
                     width:100%;
-                    min-height:350px;
-
+                    overflow:scroll;
+                    height: 400px;
+                    color:#666;
+                    padding: 0.5em;
                     li {
                         width: inherit;
                         display: block;
                         border-top: 1px solid #e2e2e2;
-                        color: #000;
-                        padding: 1em;
+                        padding: 0.3em;
                         border-bottom: 1px solid #e2e2e2;
-
+                        &:not(:last-child) {
+                            border-top:none;
+                        }
                         strong {
-                            font-weight:600;
+                            font-weight:bold;
                         }
                     }
                 }
-            }
-            article {
-                color:#666;
-                background:rgba(255,255,255,.8);
-                &:after {
-                       content: " "; /* Older browser do not support empty content */
-                       visibility: hidden;
-                       display: block;
-                       height: 0;
-                       clear: both;
+                .send-wrap {
+                    bottom:0px;
+                    left:0px;
+                    right:0px;
+                    width:100%;
+                    position:absolute;
+                    padding:5px;
+                    background:#66757f;
+
+                    input[type="text"] {
+                        background: #fff;
+                        color: #66757f;
+                        font-size: 0.7em;
+                        padding: .5em;
+                        vertical-align: middle;
+                        width: 100%;
                     }
-            &.panel-2 {
-                .twitter-logo {
-                    font-size:3em;
-                    vertical-align:middle;
-                    text-align:center;
-                    color:$primary;
                 }
-                & > div {
-                    float:left;
-                    width:49.99999%;
-                }
-            }
             }
         }
         header,footer {

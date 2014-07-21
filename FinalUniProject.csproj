@@ -315,6 +315,7 @@
     <Compile Include="Hubs\GeoFeedHub.cs" />
     <Compile Include="Hubs\TrendsAnalysisHub.cs" />
     <Compile Include="IKVM\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Models\BoundingBox.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="NERModels\Entity.cs" />
     <Compile Include="NERModels\Organisation.cs" />
@@ -331,6 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\animate.css" />
+    <Content Include="css\chatbubbles.css" />
     <Content Include="css\failwhale.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />

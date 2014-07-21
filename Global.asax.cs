@@ -22,7 +22,7 @@ namespace FinalUniProject
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Create Task for the stream of tweets
-            Task.Factory.StartNew(() => new FinalUniProject.TwitterLogic.TwitterStream());
+            Task.Factory.StartNew(() => TwitterStream.Setup());
 
             // Remove entities from the static collection that haven't been updated in a while - i.e. preserving freshness of trends
             var timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));

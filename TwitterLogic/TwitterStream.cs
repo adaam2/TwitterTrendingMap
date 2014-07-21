@@ -11,49 +11,56 @@ using Tweetinvi.Core.Enum;
 using Tweetinvi.Core.Exceptions;
 using Tweetinvi.Core.Interfaces.Streaminvi;
 using Tweetinvi.Logic.Model;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace FinalUniProject.TwitterLogic
 {
-    public class TwitterStream
+    public static class TwitterStream
     {
         // Consumer Keys + Secrets
-        private string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
-        private string _consumerSecret = ConfigurationManager.AppSettings.Get("twitter:ConsumerSecret");
+        private static string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
+        private static string _consumerSecret = ConfigurationManager.AppSettings.Get("twitter:ConsumerSecret");
         // Twitter OAuth Credentials
-        private string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
-        private string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
+        private static string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
+        private static string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
+
+        // Hub Context
+        public static IHubContext context = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>();
 
         // Streams n' threads
-        private IFilteredStream _filteredStream;
-        private Thread _thread;
+        private static IFilteredStream _filteredStream = Stream.CreateFilteredStream();
+        private static Thread _thread;
 
-        // Constructor
-        public TwitterStream()
+        // United Kingdom Bounding Box coordinates
+        public static Coordinates topLeft = new Coordinates(-8.164723, 49.955269);
+        public static Coordinates bottomRight = new Coordinates(1.7425, 60.6311);
+        public static void ChangeStreamBounds(string sw, string ne)
         {
-            StreamsAhoy();
+            //Debug.WriteLine(sw);
+            //_filteredStream.StopStream();
+            //// change the stream bounds 
+            //_filteredStream.RemoveLocation(topLeft, bottomRight);
+            ////BoundingBoxPoint sw = new BoundingBoxPoint()
+            //BoundingBoxPoint southWest = JsonConvert.DeserializeObject<BoundingBoxPoint>(sw);
+            //BoundingBoxPoint northEast = JsonConvert.DeserializeObject<BoundingBoxPoint>(ne);
+            //Debug.WriteLine(sw + "-" + ne);
+            //_filteredStream.AddLocation(southWest, northEast);
+            //_filteredStream.ResumeStream();
         }
-
-        public void StreamsAhoy()
+        public static void Setup()
+        {
+            // dummy method for static constructor
+        }
+        static TwitterStream()
         {
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
-            var client = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>().Clients;
+            var clients = context.Clients;
             TwitterCredentials.SetCredentials(_accessKey, _accessToken, _consumerKey, _consumerSecret);
-
-            // Create the stream
-            _filteredStream = Stream.CreateFilteredStream();
-
-            // Create instance of Coordinates class for top left and bottom right of world bounding box
-            //var topLeft = new Coordinates(-180, -90);
-            //var bottomRight = new Coordinates(180, 90);
-
-            // United Kingdom Bounding Box Points - Approximate
-            var topLeft = new Coordinates(-8.164723, 49.955269);
-            var bottomRight = new Coordinates(1.7425, 60.6311);
 
             // Add filters
             _filteredStream.AddLocation(topLeft, bottomRight);
             _filteredStream.FilterTweetsToBeIn(Language.English);
-
             ExceptionHandler.WebExceptionReceived += (sender, args) =>
             {
                 // This works.. woo
@@ -72,7 +79,7 @@ namespace FinalUniProject.TwitterLogic
                     //    case 420:
                     //    case 429:
                     //        // enhance your calm - being rate limited
-                            
+
                     //        break;
                     //    case 503:
                     //        // twitter servers up - but too many global requests - show error message
@@ -85,7 +92,7 @@ namespace FinalUniProject.TwitterLogic
                     //        // show error message
                     //        break;
                     //}
-                    
+
                 }
             };
             // Monitor tweets received and broadcast to client function
@@ -94,6 +101,7 @@ namespace FinalUniProject.TwitterLogic
                 var tweetargs = args.Tweet;
                 if (tweetargs != null)
                 {
+                    if (!tweetargs.IsRetweet) { 
                     FinalUniProject.Models.Tweet tweet = new FinalUniProject.Models.Tweet()
                     {
                         Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
@@ -105,9 +113,10 @@ namespace FinalUniProject.TwitterLogic
                         ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
                     };
                     // pass complex TweetModel object to the client
-                    client.All.broadcastTweetMessage(tweet);
+                    clients.All.broadcastTweetMessage(tweet);
 
                     TweetParser.ProcessTweet(tweet);
+                    }
                 }
             };
 

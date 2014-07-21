@@ -1,10 +1,10 @@
 ﻿@{
     ViewBag.Title = "News Before It Happens: Twitter Real-time Data Visualisation";
 }
-@*<div class="geocode">
+<div class="geocode">
     <input type="text" placeholder="Search town, city or postcode" id="autocomplete"/>
-    <input type="submit" id="search" value="Search" />
-</div>*@
+    <i class="fa fa-search"></i>
+</div>
 <div class="map-wrapper cf">
     <div class="canvas" id="map-canvas"></div>
     <div class="console sky-tabs sky-tabs-pos-top-left sky-tabs-anim-flip sky-tabs-response-to-icons">
@@ -17,7 +17,6 @@
         <ul>
             <li class="sky-tab-content-1">
                 <div class="typography">
-                    <h1>Live Tweets</h1>
                     <ul class="live-tweets"></ul>
                 </div>
             </li>
@@ -34,10 +33,11 @@
     </div>
 </div>
 <div class="chat-console">
-    <input type="text" id="message" placeholder="Your message"/>
-    <input type="button" id="sendmessage" value="Send"/>
-    <input type="hidden" id="displayname"/>
     <ul id="discussion">
 
     </ul>
+    <div class="send-wrap">
+        <input type="text" id="message" placeholder="Your message" />
+        <input type="hidden" id="displayname" />
+    </div>
 </div>

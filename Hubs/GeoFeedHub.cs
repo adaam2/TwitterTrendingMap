@@ -7,14 +7,23 @@ using System.Configuration;
 using Tweetinvi;
 using Tweetinvi.Streams;
 using Microsoft.AspNet.SignalR;
+using FinalUniProject.TwitterLogic;
 using Tweetinvi.Core.Interfaces.Streaminvi;
 using System.Threading.Tasks;
 using FinalUniProject.helperClasses;
+using System.Diagnostics;
+using FinalUniProject.Models;
+using Tweetinvi.Logic.Model;
 
 namespace FinalUniProject.Hubs
 {
     public class GeoFeedHub : Hub
     {
+        public void ChangeStreamBounds(Coordinates sw)
+        {
+            Debug.WriteLine(sw.Latitude + sw.Longitude);
+            //FinalUniProject.TwitterLogic.TwitterStream.ChangeStreamBounds(southWest, northEast);
+        }
         public override Task OnConnected()
         {
             // get ip and browser
