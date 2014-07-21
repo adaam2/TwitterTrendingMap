@@ -1,4 +1,15 @@
 ﻿var map, mc, guids = [], counter = 0;
+var guid = (function () {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+                   .toString(16)
+                   .substring(1);
+    }
+    return function () {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+               s4() + '-' + s4() + s4() + s4();
+    };
+})();
 $(function () {
     function initialize() {
         var stylez = [{ "featureType": "water", "stylers": [{ "saturation": 43 }, { "lightness": -11 }, { "hue": "#0088ff" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": 99 }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }, { "lightness": 54 }] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ece2d9" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#ccdca1" }] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#767676" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] }, { "featureType": "poi", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#b8cb93" }] }, { "featureType": "poi.park", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.sports_complex", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.medical", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.business", "stylers": [{ "visibility": "simplified" }] }];
@@ -49,7 +60,9 @@ $(function () {
         depth: 0.75
     }, 'trends');
     // geocomplete
-    $('#autocomplete').geocomplete().bind("geocode:result", function (e, result) {
+    $('#autocomplete').geocomplete({
+        map: "#map-canvas"
+    }).bind("geocode:result", function (e, result) {
         map.setCenter(result.geometry.location);
         map.setZoom(10);
     });
@@ -61,8 +74,6 @@ $(function () {
         $('#discussion').append('<li><strong>' + encodedName
             + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
     };
-    // Get the user name and store it to prepend to messages.
-    $('#displayname').val(prompt('Enter your name:', ''));
     // Set initial focus to message input box.  
     $('#message').focus();
     // Start the connection.
@@ -117,13 +128,13 @@ $(function () {
            //twitterHub.client.broadcastStatus = function (status) {
            //    console.log(status.Message + '<br/>' + status.StackTrace); // + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason
            //};
-           twitterHub.client.getClientsConnectedCount = function (clients) {
-               $('.user-count').html(clients.count);
-               console.log(clients);
-           };
+           //twitterHub.client.getClientsConnectedCount = function (clients) {
+           //    $('.user-count').html(clients.count);
+           //    //console.log(clients);
+           //};
            $.connection.hub.start()
                .done(function () {
-                   $('#signalr-status').html('Connected <i class="fa fa-check-circle"></i>');
+                   $('#displayname').val('user' + new guid().toString());
                });
 
            var trendsAnalysisHub = $.connection.trendsAnalysisHub;

@@ -14,7 +14,7 @@ namespace FinalUniProject.Controllers
         //
         // GET: /TwitterError/
 
-        public ActionResult Index(int twitterCode)
+        public ActionResult Index(int? twitterCode = null)
         {
             string errorMessage = String.Empty;
             switch (twitterCode)
@@ -34,6 +34,9 @@ namespace FinalUniProject.Controllers
                     // twitter servers down
                     // show error message
                     errorMessage = "Twitter's servers are down :(";
+                    break;
+                default:
+                    errorMessage = "Sorry, an error has occured. An email has been sent to the system administrator.";
                     break;
             }
             ViewBag.errorMessage = errorMessage;
