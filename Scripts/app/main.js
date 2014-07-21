@@ -43,19 +43,36 @@ $(function () {
         </div>';
         return content;
     }
-    $('#minimize').click(function () {
-        var toggle_div = $('.toggle');
-        toggle_div.slideToggle();
-        $(this).text(function (i, text) {
-            return text === "More" ? "Less" : "More";
-        })
-    });
     initialize();
     
+    $('#myCanvas').tagcanvas({
+        depth: 0.75
+    }, 'trends');
     // geocomplete
     $('#autocomplete').geocomplete().bind("geocode:result", function (e, result) {
         map.setCenter(result.geometry.location);
-        map.setZoom(13);
+        map.setZoom(10);
+    });
+    var chat = $.connection.chatHub;
+    chat.client.broadcastMessage = function (name, message) {
+        var encodedName = $('<div />').text(name).html();
+        var encodedMsg = $('<div />').text(message).html();
+        // Add the message to the page. 
+        $('#discussion').append('<li><strong>' + encodedName
+            + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+    };
+    // Get the user name and store it to prepend to messages.
+    $('#displayname').val(prompt('Enter your name:', ''));
+    // Set initial focus to message input box.  
+    $('#message').focus();
+    // Start the connection.
+    $.connection.hub.start().done(function () {
+        $('#sendmessage').click(function () {
+            // Call the Send method on the hub. 
+            chat.server.send($('#displayname').val(), $('#message').val());
+            // Clear text box and reset focus for next comment. 
+            $('#message').val('').focus();
+        });
     });
            var twitterHub = $.connection.geoFeedHub,
                map;
@@ -83,27 +100,26 @@ $(function () {
                var list_size = $('ul.live-tweets li').size();
                var max_list_size = 10;
                var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">@' + tweet.User + '</span></li>';
-               //var random = Math.floor((Math.random() * 10) + 1);
+
 
                // randomize selection of tweets for display to ensure that tweets can be read.
-               //if(3 > random) {
+
                if (list_size < max_list_size) {
                    $('ul.live-tweets').prepend(list_item);
                } else {
                    $('ul.live-tweets li:last-child').remove();
                    $('ul.live-tweets').prepend(list_item);
                }
-               //}
            }
-           twitterHub.client.twitterConnectionSuccess = function (message) {
-               $('#twitterapi-status').text(message);
-           };
-           
-           twitterHub.client.broadcastStatus = function (status) {
-               console.log(status.Message + '<br/>' + status.StackTrace); // + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason
-           };
-           twitterHub.client.getClientsConnectedCount = function (count) {
-               //console.log(count);
+           twitterHub.client.debug = function (msg) {
+               console.log(msg);
+           }
+           //twitterHub.client.broadcastStatus = function (status) {
+           //    console.log(status.Message + '<br/>' + status.StackTrace); // + '<br/>' + status.TwitterCode + '<br/>' + status.TwitterReason
+           //};
+           twitterHub.client.getClientsConnectedCount = function (clients) {
+               $('.user-count').html(clients.count);
+               console.log(clients);
            };
            $.connection.hub.start()
                .done(function () {
@@ -112,6 +128,7 @@ $(function () {
 
            var trendsAnalysisHub = $.connection.trendsAnalysisHub;
            trendsAnalysisHub.client.broadcastTrend = function (entity) {
+               console.log(entity);
                if ($.inArray(entity.UniqueID, guids) == -1) {
                    guids.push(entity.UniqueID);
                    var listItem = '<li data-guid="' + entity.UniqueID + '"><a href="http://www.twitter.com/hashtag/' + entity.Name + '">' + entity.Name + '</a></li>';

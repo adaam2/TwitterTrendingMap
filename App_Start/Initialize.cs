@@ -5,10 +5,10 @@ using Microsoft.AspNet.SignalR;
 [assembly:Microsoft.Owin.OwinStartup(typeof(FinalUniProject.App_Start.Initialize))]
 namespace FinalUniProject.App_Start
 {
-    public class Initialize
+    public partial class Initialize
     {
         // This class simply initiates the Owin connection for SignalR
-        public static void Configuration(IAppBuilder app)
+        public void Configuration(IAppBuilder app)
         {
             // Prevent TweetModel/NamedEntity endless loop during Json.Net serialization
             var serializerSettings = new JsonSerializerSettings
@@ -22,6 +22,7 @@ namespace FinalUniProject.App_Start
             // Register Hubs
             var hubConfiguration = new HubConfiguration();
             hubConfiguration.EnableDetailedErrors = true;
+         
             app.MapSignalR(hubConfiguration);
            
         }

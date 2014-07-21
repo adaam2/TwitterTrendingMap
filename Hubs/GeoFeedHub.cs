@@ -17,23 +17,24 @@ namespace FinalUniProject.Hubs
     {
         public override Task OnConnected()
         {
+            // get ip and browser
             // add connection id to hashset
-            ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
+            ClientsConnected.ConnectedClients.Add(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
             return base.OnConnected();
         }
         public override Task OnDisconnected()
         {
             // remove the client connection id from the hashset
-            ClientsConnected.ConnectedIds.Remove(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
+            ClientsConnected.ConnectedClients.Remove(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
             return base.OnDisconnected();
         }
         public override Task OnReconnected()
         {
             // for reconnections
-            ClientsConnected.ConnectedIds.Add(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedIds.Count);
+            ClientsConnected.ConnectedClients.Add(Context.ConnectionId);
+            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
             return base.OnReconnected();
         }
     }

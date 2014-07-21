@@ -6,7 +6,7 @@ namespace FinalUniProject.Models
 {
     // This class is instantiated by the TwitterStream class. The getters and setters enable dynamic expression of member variables on the fly.
     [Serializable]
-    public class TweetModel
+    public class Tweet
     {
         // These instance fields are set when Streaming data is sent to the hub client function 
         public string User { get; set; }
@@ -18,6 +18,6 @@ namespace FinalUniProject.Models
         public string ProfileUrl { get; set; }
 
         // This field is set later during Tokenization / Named Entity Recognition
-        public List<NamedEntity<TweetModel>> entities = new List<NamedEntity<TweetModel>>();
+        public List<Entity<Tweet>> entities = new List<Entity<Tweet>>();
     }
 }

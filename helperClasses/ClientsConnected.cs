@@ -6,15 +6,15 @@ namespace FinalUniProject.helperClasses
     public static class ClientsConnected
     {
         // hashset containing all of the ids of connected clients
-        public static HashSet<string> ConnectedIds = new HashSet<string>();
+        public static HashSet<string> ConnectedClients = new HashSet<string>();
 
         public static int getNumberOfClients()
         {
-            return ConnectedIds.Count;
+            return ConnectedClients.Count;
         }
         public static void clearAllClients()
         {
-            ConnectedIds.Clear();
+            ConnectedClients.Clear();
         }
     }
 }

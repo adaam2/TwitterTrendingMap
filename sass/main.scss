@@ -110,9 +110,6 @@ body {
     &.green {
         background-image:url('../img/bg-green.jpg');
     }
-    i {
-        font-style:italic;
-    }
 
     blockquote:not(.twitter-tweet) {
           background: #f9f9f9;
@@ -152,10 +149,57 @@ body {
 
     .container {
         width:100%;
+       nav,footer {
+        background:#292f33;
+       }
+       nav {
+           ul {
+               list-style:none;
+               li {
+                   display:inline-block;
+                   min-width: 45px;
+                   text-align: center;
+                   &.pull-right {
+                       float:right;
+                   }
+                   &.dropdown {
+                       width:250px;
+                       position:relative;
+                       > ul {
+                           display:none;
+                       }
+                       &:hover {
+                           cursor:pointer;
+                           background:#000;
+                           > ul {
+                               display:block;
+                               position:absolute;
+                               top:29px;
+                               width:100%;
+                               background:#000;
+                               z-index:9999;
+                               min-height:100px;
+                           }
+                       }
+                   }
+                   span.users-connected {
+                       color:#77B075;
+                       font-size:0.75em;
+                       position:relative;
+                       top:-3px;
+                       span.user-count {
+                           margin-left:5px;
+                       }
+                   }
+                   span.dropdown-arrow {
 
-       header,footer, article {
+                   }
+               }
+           }
+       }
+       /*header,footer, article {
             padding:5em;
-        }
+        }*/
        main {
             width:100%;
 
@@ -281,6 +325,30 @@ body {
                         border-radius: 50%;
                 }
             }
+            }
+            .chat-console {
+                background:#fff;
+                border:1px solid #e2e2e2;
+                input[type="text"],input[type="button"] {
+                    padding:0.3em;
+                }
+                ul {
+                    width:100%;
+                    min-height:350px;
+
+                    li {
+                        width: inherit;
+                        display: block;
+                        border-top: 1px solid #e2e2e2;
+                        color: #000;
+                        padding: 1em;
+                        border-bottom: 1px solid #e2e2e2;
+
+                        strong {
+                            font-weight:600;
+                        }
+                    }
+                }
             }
             article {
                 color:#666;

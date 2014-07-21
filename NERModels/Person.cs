@@ -6,7 +6,7 @@ namespace FinalUniProject.NERModels
     /// <summary>
     /// Model Class for the Person tag returned by the Named Entity Recognition classifier
     /// </summary>
-    public class Person : NamedEntity<TweetModel>
+    public class Person : Entity<Tweet>
     {
         public override string Name
         {
@@ -20,18 +20,7 @@ namespace FinalUniProject.NERModels
                 _name = value;
             }
         }
-        public override bool isBroadcast
-        {
-            get
-            {
-                return _broadcast;
-            }
-            set
-            {
-                _broadcast = value;
-            }
-        }
-        public override System.Guid UniqueID
+        public override Guid UniqueID
         {
             get
             {
@@ -39,6 +28,6 @@ namespace FinalUniProject.NERModels
             }
         }
         public string entityType = "Person";
-        public override List<TweetModel> tweets { get; set; }
+        public override List<Tweet> tweets { get; set; }
     }
 }

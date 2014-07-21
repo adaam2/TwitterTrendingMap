@@ -514,17 +514,14 @@ body {
   /* line 110, ../sass/main.scss */
   body.green {
     background-image: url("../img/bg-green.jpg"); }
-  /* line 113, ../sass/main.scss */
-  body i {
-    font-style: italic; }
-  /* line 117, ../sass/main.scss */
+  /* line 114, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) {
     background: #f9f9f9;
     border-left: 10px solid #ccc;
     margin: 1.5em 10px;
     padding: 0.5em 10px;
     quotes: "\201C" "\201D" "\2018" "\2019"; }
-  /* line 124, ../sass/main.scss */
+  /* line 121, ../sass/main.scss */
   body blockquote:not(.twitter-tweet):before {
     color: #ccc;
     content: open-quote;
@@ -532,108 +529,151 @@ body {
     line-height: 0.1em;
     margin-right: 0.25em;
     vertical-align: -0.4em; }
-  /* line 132, ../sass/main.scss */
+  /* line 129, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) cite {
     display: block;
     color: #8899a6;
     line-height: 2.2em;
     font-size: 0.8em; }
-  /* line 138, ../sass/main.scss */
+  /* line 135, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) a {
     color: #55ACEE; }
-  /* line 141, ../sass/main.scss */
+  /* line 138, ../sass/main.scss */
   body blockquote:not(.twitter-tweet) p {
     display: inline;
     color: #666; }
-  /* line 145, ../sass/main.scss */
+  /* line 142, ../sass/main.scss */
   body a {
     text-decoration: none;
     color: #f5f8fa; }
-  /* line 153, ../sass/main.scss */
+  /* line 150, ../sass/main.scss */
   body .container {
-    width: 100%; }
+    width: 100%;
+    /*header,footer, article {
+         padding:5em;
+     }*/ }
+    /* line 152, ../sass/main.scss */
+    body .container nav, body .container footer {
+      background: #292f33; }
     /* line 156, ../sass/main.scss */
-    body .container header, body .container footer, body .container article {
-      padding: 5em; }
-    /* line 159, ../sass/main.scss */
+    body .container nav ul {
+      list-style: none; }
+      /* line 158, ../sass/main.scss */
+      body .container nav ul li {
+        display: inline-block;
+        min-width: 45px;
+        text-align: center; }
+        /* line 162, ../sass/main.scss */
+        body .container nav ul li.pull-right {
+          float: right; }
+        /* line 165, ../sass/main.scss */
+        body .container nav ul li.dropdown {
+          width: 250px;
+          position: relative; }
+          /* line 168, ../sass/main.scss */
+          body .container nav ul li.dropdown > ul {
+            display: none; }
+          /* line 171, ../sass/main.scss */
+          body .container nav ul li.dropdown:hover {
+            cursor: pointer;
+            background: #000; }
+            /* line 174, ../sass/main.scss */
+            body .container nav ul li.dropdown:hover > ul {
+              display: block;
+              position: absolute;
+              top: 29px;
+              width: 100%;
+              background: #000;
+              z-index: 9999;
+              min-height: 100px; }
+        /* line 185, ../sass/main.scss */
+        body .container nav ul li span.users-connected {
+          color: #77B075;
+          font-size: 0.75em;
+          position: relative;
+          top: -3px; }
+          /* line 190, ../sass/main.scss */
+          body .container nav ul li span.users-connected span.user-count {
+            margin-left: 5px; }
+    /* line 203, ../sass/main.scss */
     body .container main {
       width: 100%;
       /* List Style for display of Tweets in Console */
       /* Map Canvas Stylings */ }
-      /* line 163, ../sass/main.scss */
+      /* line 207, ../sass/main.scss */
       body .container main ul.live-tweets {
         list-style-type: none !important;
         overflow: hidden;
         max-height: 620px; }
-        /* line 167, ../sass/main.scss */
+        /* line 211, ../sass/main.scss */
         body .container main ul.live-tweets li.tweet-item {
           border-bottom: 1px solid #e2e2e2; }
-          /* line 169, ../sass/main.scss */
+          /* line 213, ../sass/main.scss */
           body .container main ul.live-tweets li.tweet-item:after {
             content: ' ';
             display: table;
             visibility: hidden;
             height: 0;
             clear: both; }
-          /* line 176, ../sass/main.scss */
+          /* line 220, ../sass/main.scss */
           body .container main ul.live-tweets li.tweet-item span.tweet-avatar {
             float: left; }
-            /* line 178, ../sass/main.scss */
+            /* line 222, ../sass/main.scss */
             body .container main ul.live-tweets li.tweet-item span.tweet-avatar img {
               width: 40px; }
-          /* line 182, ../sass/main.scss */
+          /* line 226, ../sass/main.scss */
           body .container main ul.live-tweets li.tweet-item span.tweet-content, body .container main ul.live-tweets li.tweet-item span.tweet-author {
             display: block;
             left: 10px;
             position: relative; }
-          /* line 187, ../sass/main.scss */
+          /* line 231, ../sass/main.scss */
           body .container main ul.live-tweets li.tweet-item span.tweet-content {
             color: #292f33; }
-          /* line 190, ../sass/main.scss */
+          /* line 234, ../sass/main.scss */
           body .container main ul.live-tweets li.tweet-item span.tweet-author {
             color: #808080; }
-      /* line 198, ../sass/main.scss */
+      /* line 242, ../sass/main.scss */
       body .container main div.map-wrapper .canvas, body .container main div.map-wrapper .console {
         float: left;
         padding: 0; }
-      /* line 202, ../sass/main.scss */
+      /* line 246, ../sass/main.scss */
       body .container main div.map-wrapper #map-canvas {
         width: 70%;
         height: 800px;
         border: 3px solid #e2e2e2; }
-        /* line 206, ../sass/main.scss */
+        /* line 250, ../sass/main.scss */
         body .container main div.map-wrapper #map-canvas div.tweet {
           width: auto;
           min-width: 300px; }
-          /* line 210, ../sass/main.scss */
+          /* line 254, ../sass/main.scss */
           body .container main div.map-wrapper #map-canvas div.tweet div.header .avatar, body .container main div.map-wrapper #map-canvas div.tweet div.header .screen-name {
             display: inline-block;
             vertical-align: top; }
-          /* line 214, ../sass/main.scss */
+          /* line 258, ../sass/main.scss */
           body .container main div.map-wrapper #map-canvas div.tweet div.header .avatar a img {
             border-radius: 25px; }
-          /* line 217, ../sass/main.scss */
+          /* line 261, ../sass/main.scss */
           body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name {
             color: #000;
             font-size: 18px;
             font-weight: 700;
             margin-left: 5px; }
-            /* line 222, ../sass/main.scss */
+            /* line 266, ../sass/main.scss */
             body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.handle, body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.time-ago {
               display: block;
               height: 20px; }
-            /* line 226, ../sass/main.scss */
+            /* line 270, ../sass/main.scss */
             body .container main div.map-wrapper #map-canvas div.tweet div.header div.screen-name span.time-ago {
               color: #8899a6;
               font-size: 16px;
               line-height: 2; }
-          /* line 233, ../sass/main.scss */
+          /* line 277, ../sass/main.scss */
           body .container main div.map-wrapper #map-canvas div.tweet div.body {
             color: #292F33;
             font-weight: 400;
             font-size: 16px;
             /*border-bottom:1px solid #e2e2e2;*/ }
-            /* line 239, ../sass/main.scss */
+            /* line 283, ../sass/main.scss */
             body .container main div.map-wrapper #map-canvas div.tweet div.body p {
               white-space: pre-wrap;
               width: 340px;
@@ -644,17 +684,17 @@ body {
               background: #F8F8F8;
               margin-top: 5px;
               margin-bottom: 5px; }
-            /* line 250, ../sass/main.scss */
+            /* line 294, ../sass/main.scss */
             body .container main div.map-wrapper #map-canvas div.tweet div.body a {
               color: #87C5FF; }
-          /* line 254, ../sass/main.scss */
+          /* line 298, ../sass/main.scss */
           body .container main div.map-wrapper #map-canvas div.tweet div.footer {
             color: #666;
             display: none; }
-      /* line 260, ../sass/main.scss */
+      /* line 304, ../sass/main.scss */
       body .container main div.map-wrapper .console {
         width: 30%; }
-        /* line 262, ../sass/main.scss */
+        /* line 306, ../sass/main.scss */
         body .container main div.map-wrapper .console .counter {
           padding: 0px 6px 0px;
           height: 30px;
@@ -675,11 +715,33 @@ body {
           -webkit-border-radius: 50%;
           -moz-border-radius: 50%;
           border-radius: 50%; }
-      /* line 285, ../sass/main.scss */
+      /* line 329, ../sass/main.scss */
+      body .container main .chat-console {
+        background: #fff;
+        border: 1px solid #e2e2e2; }
+        /* line 332, ../sass/main.scss */
+        body .container main .chat-console input[type="text"], body .container main .chat-console input[type="button"] {
+          padding: 0.3em; }
+        /* line 335, ../sass/main.scss */
+        body .container main .chat-console ul {
+          width: 100%;
+          min-height: 350px; }
+          /* line 339, ../sass/main.scss */
+          body .container main .chat-console ul li {
+            width: inherit;
+            display: block;
+            border-top: 1px solid #e2e2e2;
+            color: #000;
+            padding: 1em;
+            border-bottom: 1px solid #e2e2e2; }
+            /* line 347, ../sass/main.scss */
+            body .container main .chat-console ul li strong {
+              font-weight: 600; }
+      /* line 353, ../sass/main.scss */
       body .container main article {
         color: #666;
         background: rgba(255, 255, 255, 0.8); }
-        /* line 288, ../sass/main.scss */
+        /* line 356, ../sass/main.scss */
         body .container main article:after {
           content: " ";
           /* Older browser do not support empty content */
@@ -687,36 +749,36 @@ body {
           display: block;
           height: 0;
           clear: both; }
-        /* line 296, ../sass/main.scss */
+        /* line 364, ../sass/main.scss */
         body .container main article.panel-2 .twitter-logo {
           font-size: 3em;
           vertical-align: middle;
           text-align: center;
           color: #55acee; }
-        /* line 302, ../sass/main.scss */
+        /* line 370, ../sass/main.scss */
         body .container main article.panel-2 > div {
           float: left;
           width: 49.99999%; }
-    /* line 309, ../sass/main.scss */
+    /* line 377, ../sass/main.scss */
     body .container header, body .container footer {
       background: #292f33; }
-    /* line 313, ../sass/main.scss */
+    /* line 381, ../sass/main.scss */
     body .container header div.connection-status-panel {
       border-radius: 10px;
       border: 1px solid #e2e2e2;
       padding: 25px;
       margin-top: 30px;
       background: rgba(255, 255, 255, 0.5); }
-      /* line 319, ../sass/main.scss */
+      /* line 387, ../sass/main.scss */
       body .container header div.connection-status-panel h2 {
         font-size: 1.2em;
         font-weight: 700; }
-      /* line 323, ../sass/main.scss */
+      /* line 391, ../sass/main.scss */
       body .container header div.connection-status-panel label {
         font-weight: 700;
         color: #000;
         display: block; }
-      /* line 328, ../sass/main.scss */
+      /* line 396, ../sass/main.scss */
       body .container header div.connection-status-panel span.status {
         display: inline-block;
         color: #75B6A1;

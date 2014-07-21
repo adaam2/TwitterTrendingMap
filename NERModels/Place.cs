@@ -11,7 +11,7 @@ namespace FinalUniProject.NERModels
     /// <summary>
     /// Model Class for the Place tag returned by the Named Entity Recognition classifier
     /// </summary>
-    public class Place : NamedEntity<TweetModel>
+    public class Place : Entity<Tweet>
     {
         public override string Name
         {
@@ -25,18 +25,7 @@ namespace FinalUniProject.NERModels
                 _name = value;
             }
         }
-        public override bool isBroadcast
-        {
-            get
-            {
-                return _broadcast;
-            }
-            set
-            {
-                _broadcast = value;
-            }
-        }
-        public override System.Guid UniqueID
+        public override Guid UniqueID
         {
             get
             {
@@ -44,6 +33,6 @@ namespace FinalUniProject.NERModels
             }
         }
         public string entityType = "Place";
-        public override List<TweetModel> tweets { get; set; }
+        public override List<Tweet> tweets { get; set; }
     }
 }

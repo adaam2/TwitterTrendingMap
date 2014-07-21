@@ -14,28 +14,28 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace FinalUniProject.TwitterLogic
 {
-    public class TweetParser
+    public static class TweetParser
     {
         // Load the 3 class distsim NLP model
         public static CRFClassifier _classifier = CRFClassifier.getClassifierNoExceptions(@"english.all.3class.distsim.crf.ser.gz");
         // Instantiate the static named entity collection - persists through all instances of this class
-        public static List<NamedEntity<TweetModel>> namedEntityCollection = new List<NamedEntity<TweetModel>>();
+        public static List<Entity<Tweet>> namedEntityCollection = new List<Entity<Tweet>>();
         public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
-        public readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
-        public readonly int thresholdNumber = 2; //number of matching tweets needed to broadcast "trend" to the hub
+        public static readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
+        public static readonly int thresholdNumber = 2; //number of matching tweets needed to broadcast "trend" to the hub
 
         // Constructor
-        public TweetParser(TweetModel tweet)
-        {
-            // Start Timer instance to run every 1 minute to remove NamedEntity instances whose last tweet is more than a 10 minutes old.
-            var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-            // Process the current tweet
-            ProcessTweet(tweet);
-        }
-        private void ProcessTweet(TweetModel tweet)
+        //public TweetParser(Tweet tweet)
+        //{
+        //    // Start Timer instance to run every 1 minute to remove NamedEntity instances whose last tweet is more than a 10 minutes old.
+        //    //var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        //    // Process the current tweet
+        //    ProcessTweet(tweet);
+        //}
+        public static void ProcessTweet(Tweet tweet)
         {
             // Create collection instance to hold named entities detected for the current tweet
-            List<NamedEntity<TweetModel>> entities = getTweetEntities(tweet);
+            List<Entity<Tweet>> entities = getTweetEntities(tweet);
 
             // If the static namedEntityCollection has a count of less than 1, then assign the current (first) tweet to this collection
             if (namedEntityCollection.Count < 1)
@@ -46,25 +46,19 @@ namespace FinalUniProject.TwitterLogic
             {
                 namedEntityCollection.AddRange(entities);
             }
-            List<NamedEntity<TweetModel>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<NamedEntity<TweetModel>>();
+            List<Entity<Tweet>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<Entity<Tweet>>();
             joined.ForEach(item =>
             {
                 if (item.tweets.Count > thresholdNumber)
                 {
-                    //if (item.isBroadcast)
-                    //{
-                    //    // if the item has been broadcast before
-
-                    //}
-                    item.isBroadcast = true; // set Flag to show that entity has been broadcast before
                     BroadcastToHub(item);
                 }
             });
         }
-        private List<NamedEntity<TweetModel>> getTweetEntities(TweetModel tweet)
+        private static List<Entity<Tweet>> getTweetEntities(Tweet tweet)
         {
-            List classified = _classifier.classify(tweet.Text);
-            List<NamedEntity<TweetModel>> entitiesForThisTweet = new List<NamedEntity<TweetModel>>(); 
+            var classified = _classifier.classify(tweet.Text);
+            List<Entity<Tweet>> entitiesForThisTweet = new List<Entity<Tweet>>(); 
 
             // Establish obj reference to the various Annotation classes to pass in later to CoreLabel.get(key)
             CoreAnnotations.AnswerAnnotation ann = new CoreAnnotations.AnswerAnnotation();
@@ -144,7 +138,7 @@ namespace FinalUniProject.TwitterLogic
                     }
                     if (!String.IsNullOrEmpty(className)) {
                     // If the class name is a valid class name, then create an instance of the Named Entity sub class, using the Activator
-                    NamedEntity<TweetModel> entity = NamedEntityExtensions.createNewNamedEntity(className, tweet, value);
+                    Entity<Tweet> entity = NamedEntityExtensions.createNewNamedEntity(className, tweet, value);
                     entitiesForThisTweet.Add(entity);
                     }
                 }
@@ -152,15 +146,15 @@ namespace FinalUniProject.TwitterLogic
             // Return the List<T> to the caller
             return entitiesForThisTweet;        
         }     
-        private void BroadcastLog(string message)
+        private static void BroadcastLog(string message)
         {
             client.All.broadcastLog(message);
         }
-        private void BroadcastToHub(NamedEntity<TweetModel> entity)
+        private static void BroadcastToHub(Entity<Tweet> entity)
         {
             client.All.broadcastTrend(entity);
         }
-        private void RemoveOldTweets()
+        public static void RemoveOldEntities()
         {
             // This little LINQ expression removes entities whose latest updated tweet is more than the threshold max age value (for example.. latest tweet added to the "Rihanna" entity is more than an hour ago, therefore remove that entity)
             namedEntityCollection.RemoveAll(entity => DateTime.Now.Subtract(entity.tweets.Max(t => t.CreatedAt)) >= maxAge);
