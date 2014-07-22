@@ -19,10 +19,10 @@ namespace FinalUniProject.Hubs
 {
     public class GeoFeedHub : Hub
     {
-        public void ChangeStreamBounds(Coordinates sw)
+        public void ChangeStreamBounds(BoundingBoxPoint points)
         {
-            Debug.WriteLine(sw.Latitude + sw.Longitude);
-            //FinalUniProject.TwitterLogic.TwitterStream.ChangeStreamBounds(southWest, northEast);
+            Debug.WriteLine(points.ToString());//string.concat it
+            ////FinalUniProject.TwitterLogic.TwitterStream.ChangeStreamBounds(southWest, northEast);
         }
         public override Task OnConnected()
         {

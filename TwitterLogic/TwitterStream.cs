@@ -35,18 +35,16 @@ namespace FinalUniProject.TwitterLogic
         // United Kingdom Bounding Box coordinates
         public static Coordinates topLeft = new Coordinates(-8.164723, 49.955269);
         public static Coordinates bottomRight = new Coordinates(1.7425, 60.6311);
-        public static void ChangeStreamBounds(string sw, string ne)
+        public static void ChangeStreamBounds(BoundingBoxPoint points)
         {
-            //Debug.WriteLine(sw);
-            //_filteredStream.StopStream();
-            //// change the stream bounds 
-            //_filteredStream.RemoveLocation(topLeft, bottomRight);
-            ////BoundingBoxPoint sw = new BoundingBoxPoint()
-            //BoundingBoxPoint southWest = JsonConvert.DeserializeObject<BoundingBoxPoint>(sw);
-            //BoundingBoxPoint northEast = JsonConvert.DeserializeObject<BoundingBoxPoint>(ne);
-            //Debug.WriteLine(sw + "-" + ne);
-            //_filteredStream.AddLocation(southWest, northEast);
-            //_filteredStream.ResumeStream();
+
+            _filteredStream.StopStream();
+            // change the stream bounds 
+            _filteredStream.RemoveLocation(topLeft, bottomRight);
+            var sw = new Coordinates(points.SouthWestLongitude, points.SouthWestLatitude);
+            var ne = new Coordinates(points.NorthEastLongitude, points.NorthEastLatitude);
+            _filteredStream.AddLocation(sw,ne);
+                                            _filteredStream.StartStreamMatchingAllConditions();
         }
         public static void Setup()
         {

@@ -80,7 +80,7 @@ $(function () {
         var swLng = sw.lng();
         var neLat = ne.lat();
         var neLng = ne.lng();
-        twitterHub.server.changeStreamBounds({ Latitude: swLat, Longitude: swLng }).done(function () {
+        twitterHub.server.changeStreamBounds({ SouthWestLongitude:swLng, SouthWestLatitude:swLat, NorthEastLongitude:neLng, NorthEastLatitude:neLat }).done(function () {
             console.log('Invocation of NewContosoChatMessage succeeded');
         }).fail(function (error) {
             console.log('Invocation of NewContosoChatMessage failed. Error: ' + error);

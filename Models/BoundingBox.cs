@@ -1,31 +1,24 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
-//using Tweetinvi.Logic.Model;
-
-//namespace FinalUniProject.Models
-//{
-//    /// <summary>
-//    /// This class aims to model the Southwesterly or Northeasterly points of a bounding box
-//    /// </summary>
-//    public class BoundingBoxPoint : Coordinates
-//    {
-//        //public enum Type
-//        //{
-//        //    NorthEast,
-//        //    SouthWest
-//        //};
-
-//        //public Type _type { get; set; }
-//        public double Longitude { get; set; }
-//        public double Latitude { get; set; }
-
-//        public BoundingBoxPoint(double latitude, double longitude, Type t)
-//        {
-//            this.Longitude = longitude;
-//            this.Latitude = latitude;
-//            //this._type = t;
-//        }
-//    }
-//}
+﻿using System;
+using System.Text;
+namespace FinalUniProject.Models
+{
+    /// <summary>
+    /// This class aims to model the Southwesterly or Northeasterly points of a bounding box
+    /// </summary>
+    public class BoundingBoxPoint
+    {
+        public double SouthWestLongitude { get; set; }
+        public double SouthWestLatitude { get; set; }
+        public double NorthEastLongitude { get; set; }
+        public double NorthEastLatitude { get; set; }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SW Lat: " + SouthWestLatitude + Environment.NewLine);
+            sb.Append("SW Lng: " + SouthWestLongitude + Environment.NewLine);
+            sb.Append("NE Lat: " + NorthEastLatitude + Environment.NewLine);
+            sb.Append("NE Lng: " + NorthEastLongitude);
+            return sb.ToString();
+        }
+    }
+}
