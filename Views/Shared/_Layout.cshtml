@@ -12,40 +12,23 @@
     <link href="~/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/animate.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/sky-tabs.css" rel="stylesheet" type="text/css"/>
-
-    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="blue">
     <div id="layout" class="container">
-        <header>
-            <h1>Twitter Data Visualization</h1>
-            <div class="connection-status-panel">
-                <h2>Connection Statuses</h2>
-                <label>SignalR Hub Status:</label>
-                <span class="status" id="signalr-status"></span>
-                <label>Twitter API Status:</label>
-                <span class="status" id="twitterapi-status"></span>
-            </div>
-        </header>
         <main>
             @RenderBody()
         </main>
-        <div id="layout_footer"></div>
-        <footer id="footer">
-            <a href="https://twitter.com/wherelionsroam">@@wherelionsroam</a>
-        </footer>
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
     </div>
-    <script src="~/Scripts/jquery.signalR-2.0.3.min.js"></script>
+    <script src="~/Scripts/vendor/jquery/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/vendor/jquery/signalr/jquery.signalR-2.0.3.min.js"></script>
     <script src="signalr/hubs"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script src="~/Scripts/markerclustererplus.js"></script>
-    <script src="~/Scripts/myJS/main.js"></script>
-    <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <script src="~/Scripts/jquery.livequery.min.js"></script>
-    <script src="~/Scripts/jquery.timeago.js"></script>
-    <script src="~/Scripts/jquery.geocomplete.min.js"></script>
+    <script src="~/Scripts/vendor/google/maps/plugins/markerclustererplus.js"></script>
+    <script src="~/Scripts/vendor/jquery/plugins/jquery.timeago.js"></script>
+    <script src="~/Scripts/vendor/jquery/plugins/jquery.geocomplete.min.js"></script>
+    <script src="~/Scripts/vendor/jquery/plugins/jquery-tagcanvas.min.js"></script>
+    <script src="~/Scripts/app/main.js"></script>
+
 </body>
 </html>

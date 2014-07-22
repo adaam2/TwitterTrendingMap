@@ -1,26 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Threading.Tasks;
-using Tweetinvi.Streams;
-using Tweetinvi.Credentials;
-using Tweetinvi.Core.Interfaces.Models;
-using Tweetinvi.Core.Interfaces.Streaminvi;
-using System.Threading;
-using System.Configuration;
-using Microsoft.AspNet.SignalR;
-using FinalUniProject.Hubs;
-using Newtonsoft.Json;
-using Tweetinvi;
-using FinalUniProject.Models;
-using Tweetinvi.Logic.Model;
-using Tweetinvi.Core.Enum;
-
+using System;
+using FinalUniProject.TwitterLogic;
 namespace FinalUniProject
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -37,8 +21,11 @@ namespace FinalUniProject
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // Create Task
-            Task.Factory.StartNew(() => new FinalUniProject.TwitterLogic.TwitterStream());
+            // Create Task for the stream of tweets
+            Task.Factory.StartNew(() => TwitterStream.Setup());
+
+            // Remove entities from the static collection that haven't been updated in a while - i.e. preserving freshness of trends
+            var timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));
         }
     }
 }

@@ -3,102 +3,131 @@ using FinalUniProject.Models;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Threading;
+using System.Web;
 using Tweetinvi;
 using Tweetinvi.Core.Enum;
+using Tweetinvi.Core.Exceptions;
 using Tweetinvi.Core.Interfaces.Streaminvi;
 using Tweetinvi.Logic.Model;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace FinalUniProject.TwitterLogic
 {
-    public class TwitterStream
+    public static class TwitterStream
     {
         // Consumer Keys + Secrets
-        private string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
-        private string _consumerSecret = ConfigurationManager.AppSettings.Get("twitter:ConsumerSecret");
+        private static string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
+        private static string _consumerSecret = ConfigurationManager.AppSettings.Get("twitter:ConsumerSecret");
         // Twitter OAuth Credentials
-        private string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
-        private string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
+        private static string _accessKey = ConfigurationManager.AppSettings.Get("twitter:AccessKey");
+        private static string _accessToken = ConfigurationManager.AppSettings.Get("twitter:AccessToken");
+
+        // Hub Context
+        public static IHubContext context = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>();
 
         // Streams n' threads
-        private IFilteredStream _filteredStream;
-        private Thread _thread;
+        private static IFilteredStream _filteredStream = Stream.CreateFilteredStream();
+        private static Thread _thread;
 
-        // Constructor
-        public TwitterStream()
+        // United Kingdom Bounding Box coordinates
+        public static Coordinates topLeft = new Coordinates(-8.164723, 49.955269);
+        public static Coordinates bottomRight = new Coordinates(1.7425, 60.6311);
+        public static void ChangeStreamBounds(BoundingBoxPoint points)
         {
-            StreamsAhoy();
+
+            _filteredStream.StopStream();
+            // change the stream bounds 
+            _filteredStream.RemoveLocation(topLeft, bottomRight);
+            var sw = new Coordinates(points.SouthWestLongitude, points.SouthWestLatitude);
+            var ne = new Coordinates(points.NorthEastLongitude, points.NorthEastLatitude);
+            _filteredStream.AddLocation(sw,ne);
+                                            _filteredStream.StartStreamMatchingAllConditions();
         }
-        public void StreamsAhoy()
+        public static void Setup()
+        {
+            // dummy method for static constructor
+        }
+        static TwitterStream()
         {
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
-            var client = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>().Clients;
+            var clients = context.Clients;
             TwitterCredentials.SetCredentials(_accessKey, _accessToken, _consumerKey, _consumerSecret);
-
-            // Create the stream
-            _filteredStream = Stream.CreateFilteredStream();
-
-            // Create instance of Coordinates class for top left and bottom right of world bounding box
-            //var topLeft = new Coordinates(-180, -90);
-            //var bottomRight = new Coordinates(180, 90);
-
-            // United Kingdom Bounding Box Points - Approximate
-            var topLeft = new Coordinates(-8.164723,49.955269);
-            var bottomRight = new Coordinates(1.7425, 60.6311);
 
             // Add filters
             _filteredStream.AddLocation(topLeft, bottomRight);
             _filteredStream.FilterTweetsToBeIn(Language.English);
-      
+            ExceptionHandler.WebExceptionReceived += (sender, args) =>
+            {
+                // This works.. woo
+                // Prints out nice(r) view of web exception sent by Twitter API including error code response
+                var exc = (ITwitterException)args.Value;
+                Debug.WriteLine(exc);
+                /* List of Status Codes available below:
+                 * https://dev.twitter.com/docs/error-codes-responses
+                 * Main status codes that we will need to filter on in the switch statement below
+                 */
+                var statusCode = exc.StatusCode;
+                if (statusCode != 200)
+                {
+                    //switch (statusCode)
+                    //{
+                    //    case 420:
+                    //    case 429:
+                    //        // enhance your calm - being rate limited
 
+                    //        break;
+                    //    case 503:
+                    //        // twitter servers up - but too many global requests - show error message
+
+                    //        break;
+                    //    case 500:
+                    //    case 502:
+                    //    case 504:
+                    //        // twitter servers down
+                    //        // show error message
+                    //        break;
+                    //}
+
+                }
+            };
             // Monitor tweets received and broadcast to client function
             _filteredStream.MatchingTweetReceived += (sender, args) =>
             {
                 var tweetargs = args.Tweet;
-                if (tweetargs != null) {
-                    TweetModel model = new TweetModel()
-                        {
-                            Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
-                            User = tweetargs.Creator.ScreenName,
-                            Latitude = tweetargs.Coordinates.Latitude,
-                            Longitude = tweetargs.Coordinates.Longitude,
-                            CreatedAt = tweetargs.CreatedAt,
-                            ImageUrl = tweetargs.Creator.ProfileImageUrl,
-                            ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
-                        };
-                // pass complex TweetModel object to the client
-                    client.All.broadcastTweetMessage(model);
+                if (tweetargs != null)
+                {
+                    if (!tweetargs.IsRetweet) { 
+                    FinalUniProject.Models.Tweet tweet = new FinalUniProject.Models.Tweet()
+                    {
+                        Text = tweetargs.Text.ToString().ParseURL().ParseHashtag().ParseUsername(),
+                        User = tweetargs.Creator.ScreenName,
+                        Latitude = tweetargs.Coordinates.Latitude,
+                        Longitude = tweetargs.Coordinates.Longitude,
+                        CreatedAt = tweetargs.CreatedAt,
+                        ImageUrl = tweetargs.Creator.ProfileImageUrl,
+                        ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
+                    };
+                    // pass complex TweetModel object to the client
+                    clients.All.broadcastTweetMessage(tweet);
 
-                    TweetParser parse = new TweetParser(model);
+                    TweetParser.ProcessTweet(tweet);
+                    }
                 }
             };
 
             // Lambda function with SignalR client broadcast function to detect if stream has ground to a halt. If this is the case, exception details are sent to the client and stream is restarted matching prior conditions
             _filteredStream.StreamStopped += (sender, args) =>
             {
-                // instantiate custom TwitterException class instance and send to client
-                client.All.broadcastStatus(new TwitterException()
-                {
-                    Message = !String.IsNullOrEmpty(args.Exception.Message) ? args.Exception.Message : "no exception message",
-                    StackTrace = !String.IsNullOrEmpty(args.Exception.StackTrace) ? args.Exception.StackTrace : "no stack trace",
-                    TwitterCode = args.DisconnectMessage.Code != 0 ? args.DisconnectMessage.Code : 0,
-                    TwitterReason = !String.IsNullOrEmpty(args.DisconnectMessage.Reason) ? args.DisconnectMessage.Reason : "no twitter reason"
-                });
                 // Put the current Thread to sleep for 2 seconds
-                Thread.Sleep(2000); //2500?
+                Thread.Sleep(2500); //2500?
 
                 // Restart Stream matching all conditions
                 _filteredStream.StartStreamMatchingAllConditions();
             };
-           
-            _filteredStream.StreamStarted += (sender, args) =>
-            {
-                client.All.twitterConnectionSuccess("Connected to Twitter API");
-            };
-            _filteredStream.StreamResumed += (sender, args) =>
-            {
-                client.All.twitterConnectionSuccess("Connected to Twitter API");
-            };
+
             // create thread with stream matching all conditions, keeping it open
             _thread = new Thread(_filteredStream.StartStreamMatchingAllConditions);
 

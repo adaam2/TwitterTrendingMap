@@ -32,8 +32,11 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\IKVM.OpenJDK.XML.WebServices.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\IKVM.OpenJDK.XML.XPath.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\IKVM.Runtime.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\IKVM.Runtime.JNI.dll
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\IQToolkit.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\joda-time.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\jollyday.dll
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Core.dll
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Generated.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.AspNet.SignalR.Core.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.Owin.dll
@@ -47,6 +50,8 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Newtonsoft.Json.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\nunit.framework.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Owin.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\PCLWebUtility.dll
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\RestSharp.dll
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\SimMetrics.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\stanford-corenlp-3.3.1.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Net.Http.Formatting.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.Http.dll
@@ -72,6 +77,10 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\xom.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Autofac.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\HtmlAgilityPack.pdb
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\HtmlAgilityPack.xml
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Core.pdb
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Core.xml
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Generated.pdb
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\LinqToWiki.Generated.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.AspNet.SignalR.Core.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.Owin.xml
@@ -81,6 +90,7 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.Threading.Tasks.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Microsoft.Threading.Tasks.Extensions.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\Newtonsoft.Json.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\nunit.framework.xml
+Z:\Dropbox\FinalUniProject\FinalUniProject\bin\RestSharp.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\EntityFramework.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Net.Http.Formatting.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.Http.xml
@@ -90,6 +100,6 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.Razor.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.WebPages.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.WebPages.Deployment.xml
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\System.Web.WebPages.Razor.xml
+Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.csprojResolveAssemblyReference.cache
 Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.pdb
-Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.csprojResolveAssemblyReference.cache

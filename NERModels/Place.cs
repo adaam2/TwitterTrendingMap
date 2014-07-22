@@ -2,13 +2,16 @@
 using Geocoding;
 using Geocoding.Google;
 using System.Device.Location;
+using FinalUniProject.Models;
+using System.Collections.Generic;
+using System;
 
 namespace FinalUniProject.NERModels
 {
     /// <summary>
     /// Model Class for the Place tag returned by the Named Entity Recognition classifier
     /// </summary>
-    public class Place : NamedEntity
+    public class Place : Entity<Tweet>
     {
         public override string Name
         {
@@ -18,24 +21,18 @@ namespace FinalUniProject.NERModels
             }
             set
             {
-                //// Create geocoder object instance
-                //IGeocoder geocoder = new GoogleGeocoder();
-
-                //// Receive response from Google and take first result returned from response
-                //Address addy = (Address)geocoder.Geocode(value).First();
-
-                //// Initialize new latitude and longitude variables from Address object
-                //double lat = addy.Coordinates.Latitude;
-                //double lng = addy.Coordinates.Longitude;
-
-                //// Create new instance of GeoCoordinate class, feeding in latitude and longitude values
-                //Location = new GeoCoordinate(lat, lng);
-
-                // Finally assign _name the value
+                _uniqueID = Guid.NewGuid();
                 _name = value;
             }
         }
+        public override Guid UniqueID
+        {
+            get
+            {
+                return _uniqueID;
+            }
+        }
         public string entityType = "Place";
-        //public GeoCoordinate Location;
+        public override List<Tweet> tweets { get; set; }
     }
 }

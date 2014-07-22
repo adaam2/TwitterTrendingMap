@@ -7,125 +7,157 @@ using java.util;
 using Microsoft.AspNet.SignalR;
 using FinalUniProject.Hubs;
 using System;
-
+using System.Linq;
+using FinalUniProject.helperClasses;
 using System.Collections.Generic;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace FinalUniProject.TwitterLogic
 {
-    public class TweetParser
+    public static class TweetParser
     {
+        // Load the 3 class distsim NLP model
         public static CRFClassifier _classifier = CRFClassifier.getClassifierNoExceptions(@"english.all.3class.distsim.crf.ser.gz");
-        public static StringTokenizer _tokenizer;
-        //public static TweetCollection dict = new TweetCollection();
-        public static System.Collections.Generic.List<TweetModel> tweets = new System.Collections.Generic.List<TweetModel>();
-        public TweetParser(TweetModel tweet)
-        {
-            //var timer = new System.Threading.Timer(e => RemoveOldTweets(),null,TimeSpan.Zero,TimeSpan.FromMinutes(5));
-            ProcessTweet(tweet);
-        }
-        private void ProcessTweet(TweetModel tweet)
-        {
-            //// Classify the text
-            var classified = _classifier.classify(tweet.Text);
+        // Instantiate the static named entity collection - persists through all instances of this class
+        public static List<Entity<Tweet>> namedEntityCollection = new List<Entity<Tweet>>();
+        public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
+        public static readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
+        public static readonly int thresholdNumber = 2; //number of matching tweets needed to broadcast "trend" to the hub
 
-            // Establish reference to AnswerAnnotation class to pass in later to CoreLabel.get(key)
-            CoreAnnotations.AnswerAnnotation ann = new CoreAnnotations.AnswerAnnotation();
-            CoreAnnotations.BeforeAnnotation bef = new CoreAnnotations.BeforeAnnotation();
-            CoreAnnotations.OriginalTextAnnotation orig = new CoreAnnotations.OriginalTextAnnotation();
-            CoreAnnotations.AfterAnnotation aft = new CoreAnnotations.AfterAnnotation();
+        // Constructor
+        //public TweetParser(Tweet tweet)
+        //{
+        //    // Start Timer instance to run every 1 minute to remove NamedEntity instances whose last tweet is more than a 10 minutes old.
+        //    //var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        //    // Process the current tweet
+        //    ProcessTweet(tweet);
+        //}
+        public static void ProcessTweet(Tweet tweet)
+        {
+            // Create collection instance to hold named entities detected for the current tweet
+            List<Entity<Tweet>> entities = getTweetEntities(tweet);
 
-            // Convert java.util.List to C# List of ArrayList of CoreLabel
-            List<ArrayList> list = CollectionExtensions.ToList<ArrayList>(classified);
-            list.ForEach(item =>
+            // If the static namedEntityCollection has a count of less than 1, then assign the current (first) tweet to this collection
+            if (namedEntityCollection.Count < 1)
             {
-                var arr = item;
-                string bg = _classifier.flags.backgroundSymbol;
-                string prevType = "";
-                string prevValue = "";
-
-                foreach (CoreLabel i in arr)
-                {
-                    string type = i.get(ann.getClass()).ToString();
-                    if (type != bg)
-                    {
-                        string value = i.originalText();
-                        string className = "";
-                        switch (type)
-                        {
-                            case "LOCATION":
-                                className = "Place";
-                                break;
-                            case "PERSON":
-                                className = "Person";
-                                break;
-                            case "ORGANIZATION":
-                                className = "Organisation";
-                                break;
-                            default:
-                                className = null;
-                                break;
-                        }
-                        if (type == prevType)
-                        {
-                            if (className != null)
-                            {
-                                Type t = Type.GetType("FinalUniProject.NERModels." + className);
-                                //Response.Write(t.ToString());
-
-                                NamedEntity combined = (NamedEntity) Activator.CreateInstance(t);
-                                combined.Name = prevValue + " " + value;
-                                this.AddToEntityCollection(tweet, combined);
-                            }
-                        }
-                        else
-                        {
-                            if (className != null) { 
-                            Type t = Type.GetType("FinalUniProject.NERModels." + className);
-                            NamedEntity single = (NamedEntity) Activator.CreateInstance(t);
-                            this.AddToEntityCollection(tweet, single);
-                            }
-                        }
-                        prevType = type;
-                        prevValue = value;
-                        //Response.Write("yes" + bg);
-                    }
-                }
-            });
-        }
-        private void AddToEntityCollection(TweetModel tweet, NamedEntity entity)
-        {
-            if (entity.Name != null) { 
-            if (tweet.entities.Count > 0)
-            {
-                tweet.entities.Add(entity);
+                namedEntityCollection = entities;
             }
             else
             {
-                tweet.entities = new List<NamedEntity>();
-                tweet.entities.Add(entity);
+                namedEntityCollection.AddRange(entities);
             }
-            BroadcastToHub(tweet.entities);
-            }
+            List<Entity<Tweet>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<Entity<Tweet>>();
+            joined.ForEach(item =>
+            {
+                if (item.tweets.Count > thresholdNumber)
+                {
+                    BroadcastToHub(item);
+                }
+            });
         }
-        private void BroadcastToHub(List<NamedEntity> entities)
+        private static List<Entity<Tweet>> getTweetEntities(Tweet tweet)
         {
-            var client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
-            client.All.broadcastTrend(entities);
+            var classified = _classifier.classify(tweet.Text);
+            List<Entity<Tweet>> entitiesForThisTweet = new List<Entity<Tweet>>(); 
+
+            // Establish obj reference to the various Annotation classes to pass in later to CoreLabel.get(key)
+            CoreAnnotations.AnswerAnnotation ann = new CoreAnnotations.AnswerAnnotation();
+            CoreAnnotations.ValueAnnotation valueAnn = new CoreAnnotations.ValueAnnotation();
+            Dictionary<string, Dictionary<string, int>> entities = new Dictionary<string, Dictionary<string, int>>();
+
+            List<ArrayList> list = CollectionExtensions.ToList<ArrayList>(classified);
+
+            // Get background symbol - this is usually expressed as a string as "O"
+            string bg = _classifier.flags.backgroundSymbol;
+
+            // Lifted this code below from http://stackoverflow.com/a/15680613/1795862
+            // Converted (with great trepidation) from Java
+            foreach (ArrayList inner in list)
+            {
+                Iterator it = inner.iterator();
+                if (!it.hasNext()) continue;
+
+                CoreLabel cl = (CoreLabel)it.next();
+                while (it.hasNext())
+                {
+                    string answ = cl.getString(ann.getClass());
+                    if (answ.Equals(bg))
+                    {
+                        cl = (CoreLabel)it.next();
+                        continue;
+                    }
+                    if (!entities.ContainsKey(answ))
+                    {
+                        entities.Add(answ, new Dictionary<string, int>());
+                    }
+                    string value = cl.value();
+                    while (it.hasNext())
+                    {
+                        cl = (CoreLabel)it.next();
+                        if (answ.Equals(cl.getString(ann.getClass())))
+                        {
+                            value = value + " " + cl.getString(valueAnn.getClass());
+                        }
+                        else
+                        {
+                            if (!entities.ContainsKey(answ))
+                            {
+                                entities[answ].Add(value, 0);
+                            }
+                            Dictionary<string, int> innerDict = entities[answ];
+                            int number;
+                            if (innerDict.ContainsKey(value))
+                            {
+                                number = innerDict[value] + 1;
+                                innerDict.Add(value, number);
+                            }
+
+                            break;
+                        }
+
+                    }
+                    if (!it.hasNext())
+                    {
+                        break;
+                    }
+                    string className = "";
+                    switch (answ)
+                    {
+                        case "LOCATION":
+                            className = "Place";
+                            break;
+                        case "PERSON":
+                            className = "Person";
+                            break;
+                        case "ORGANIZATION":
+                            className = "Organisation";
+                            break;
+                        default:
+                            className = null;
+                            break;
+                    }
+                    if (!String.IsNullOrEmpty(className)) {
+                    // If the class name is a valid class name, then create an instance of the Named Entity sub class, using the Activator
+                    Entity<Tweet> entity = NamedEntityExtensions.createNewNamedEntity(className, tweet, value);
+                    entitiesForThisTweet.Add(entity);
+                    }
+                }
+            } 
+            // Return the List<T> to the caller
+            return entitiesForThisTweet;        
+        }     
+        private static void BroadcastLog(string message)
+        {
+            client.All.broadcastLog(message);
         }
-        //private void RemoveOldTweets()
-        //{
-        //    tweets.ForEach(tweet =>
-        //        {
-        //            var now = DateTime.Now;
-        //            var then = tweet.CreatedAt;
-        //            var difference = now.Subtract(then); // finding out the difference between the tweet time and now
-        //            var maxage = new TimeSpan(1, 0, 0); // max age of tweets in the collection in one hour
-        //            if (difference > maxage)
-        //            {
-        //                // remove this tweet from the collection
-        //                tweets.Remove(tweet);
-        //            }
-        //        });
-        //}
+        private static void BroadcastToHub(Entity<Tweet> entity)
+        {
+            client.All.broadcastTrend(entity);
+        }
+        public static void RemoveOldEntities()
+        {
+            // This little LINQ expression removes entities whose latest updated tweet is more than the threshold max age value (for example.. latest tweet added to the "Rihanna" entity is more than an hour ago, therefore remove that entity)
+            namedEntityCollection.RemoveAll(entity => DateTime.Now.Subtract(entity.tweets.Max(t => t.CreatedAt)) >= maxAge);
+        }
     }
 }

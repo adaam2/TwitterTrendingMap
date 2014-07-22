@@ -3,32 +3,41 @@
 }
 <div class="geocode">
     <input type="text" placeholder="Search town, city or postcode" id="autocomplete"/>
-    <input type="submit" id="search" value="Search" />
+    <i class="fa fa-search"></i>
 </div>
-<div class="map-wrapper">
-    <div id="map-canvas"></div>
+<div class="map-wrapper cf">
+    <div class="canvas" id="map-canvas"></div>
+    <div class="console sky-tabs sky-tabs-pos-top-left sky-tabs-anim-flip sky-tabs-response-to-icons">
+        <input type="radio" name="sky-tabs" checked="" id="sky-tab1" class="sky-tab-content-1">
+        <label for="sky-tab1"><span><span><i class="fa fa-terminal"></i>Tweet Console <span id="tweet-count" class="counter">0</span></span></span></label>
+
+        <input type="radio" name="sky-tabs" id="sky-tab2" class="sky-tab-content-2">
+        <label for="sky-tab2"><span><span><i class="fa fa-twitter"></i> Calculated Trends</span></span></label>
+
+        <ul>
+            <li class="sky-tab-content-1">
+                <div class="typography">
+                    <ul class="live-tweets"></ul>
+                </div>
+            </li>
+
+            <li class="sky-tab-content-2">
+                <div class="typography">
+                    <h1>Live Trends</h1>
+                    <p>The trends below are calculated using Stanford University's Natural Language Parsing (NLP) library. In particular, the application uses a tool called the Named Entity Recognizer to detect words that it thinks may be People, Places or Organizations.</p>
+                    <ul style="display:none;" id="trends"></ul>
+                    <canvas width="300" height="300" id="myCanvas"></canvas>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
-<div class="sky-tabs sky-tabs-pos-top-left sky-tabs-anim-flip sky-tabs-response-to-icons">
-    <input type="radio" name="sky-tabs" checked="" id="sky-tab1" class="sky-tab-content-1">
-    <label for="sky-tab1"><span><span><i class="fa fa-terminal"></i>Tweet Console</span></span></label>
+<div class="chat-console">
+    <ul id="discussion">
 
-    <input type="radio" name="sky-tabs" id="sky-tab2" class="sky-tab-content-2">
-    <label for="sky-tab2"><span><span><i class="fa fa-twitter"></i> Calculated Trends</span></span></label>
-
-    <ul>
-        <li class="sky-tab-content-1">
-            <div class="typography">
-                <h1>Live Tweets</h1>
-                <ul class="live-tweets"></ul>
-            </div>
-        </li>
-
-        <li class="sky-tab-content-2">
-            <div class="typography">
-                <h1>Live Trends</h1>
-                <p>The trends below are calculated using Stanford University's Natural Language Parsing (NLP) library. In particular, the application uses a tool called the Named Entity Recognizer to detect words that it thinks may be People, Places or Organizations.</p>
-                <ul class="live-trends"></ul>
-            </div>
-        </li>
     </ul>
+    <div class="send-wrap">
+        <input type="text" id="message" placeholder="Your message" />
+        <input type="hidden" id="displayname" />
+    </div>
 </div>

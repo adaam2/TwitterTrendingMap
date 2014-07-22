@@ -4,7 +4,7 @@
 @import 'compass/css3/box-sizing';
 @import 'bourbon';
 
-@include sticky-footer(150px,"#layout","#layout_footer","#footer");
+/*@include sticky-footer(0px,"#layout","#layout_footer","#footer");*/
 
 /* Twitter Colours - https://about.twitter.com/press/brand-assets */
 $primary: #55ACEE;
@@ -35,51 +35,20 @@ a[href^="http://maps.google.com/maps"]{display:none !important}
 .gmnoprint div {
     background:none !important;
 }
-
-/* Inputs */
-
-#{$all-text-inputs} {
-  padding:1rem;
-  margin:1em;
-  color:#666;
-  background:$input-bg;
-  border:1px solid $input-border;
-  width:400px;
-  font-size:1.2em;
+input[type="text"] {
+    font-family: 'Lato', sans-serif;
+    font-weight:300;
+}
+/* Clearfix */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
 }
 
-#{$all-text-inputs-hover} { // Target the :hover pseudo-class
-  
+.cf:after {
+    clear: both;
 }
-
-#{$all-text-inputs-focus} { // Target the :focus pseudo-class
-  border:1px solid $heading-color;
-}
-
-#{$all-button-inputs} {
-  background:$primary;
-  padding:1rem;
-  margin:1em;
-  border:none;
-  color:$secondary-5;
-  font-size:22px;
-  border-radius:10px;
-  font-family:'Lato',sans-serif;
-}
-
-#{$all-button-inputs-hover} { // Target the :hover pseudo-class
-  cursor:pointer;
-}
-
-#{$all-button-inputs-focus} { // Target the :focus pseudo-class
-  /*background: white;*/
-}
-
-#{$all-button-inputs-active} { // Target the :active pseudo-class
-  /*background: blue;*/
-}
-
-
 /* Nested */
 body {
     font-family: 'Lato', sans-serif;
@@ -99,9 +68,6 @@ body {
     }
     &.green {
         background-image:url('../img/bg-green.jpg');
-    }
-    i {
-        font-style:italic;
     }
 
     blockquote:not(.twitter-tweet) {
@@ -142,17 +108,80 @@ body {
 
     .container {
         width:100%;
+       nav,footer {
+        background:#292f33;
+       }
+       nav {
+           ul {
+               list-style:none;
+               li {
+                   display:inline-block;
+                   min-width: 45px;
+                   text-align: center;
+                   &.pull-right {
+                       float:right;
+                   }
+                   &.dropdown {
+                       width:250px;
+                       position:relative;
+                       > ul {
+                           display:none;
+                       }
+                       &:hover {
+                           cursor:pointer;
+                           background:#000;
+                           > ul {
+                               display:block;
+                               position:absolute;
+                               top:29px;
+                               width:100%;
+                               background:#000;
+                               z-index:9999;
+                               min-height:100px;
+                           }
+                       }
+                   }
+                   span.users-connected {
+                       color:#77B075;
+                       font-size:0.75em;
+                       position:relative;
+                       top:-3px;
+                       span.user-count {
+                           margin-left:5px;
+                       }
+                   }
+                   span.dropdown-arrow {
 
-       header,footer, article {
-            padding:5em;
-        }
+                   }
+               }
+           }
+       }
        main {
             width:100%;
 
+            /* Geocoding pane */
+            .geocode {
+                background:#66757f;
+                padding:.3em;
+
+                input[type="text"] {
+                    background:#fff;
+                    color:#66757f;
+                    font-size:0.7em;
+                    padding:.5em;
+                    vertical-align:middle;
+                    width:300px;
+                }
+            }
             /* List Style for display of Tweets in Console */
             ul.live-tweets {
                   list-style-type:none !important;
+                  overflow: hidden;
+                  max-height: 620px;
                   li.tweet-item {
+                      a {
+                          text-decoration:none;
+                      }
                       border-bottom:1px solid #e2e2e2;
                       &:after {
                           content:' ';
@@ -165,6 +194,7 @@ body {
                       float:left;
                       img {
                           width:40px;
+                          height:40px;
                       }
                   }
                   span.tweet-content,span.tweet-author {
@@ -182,9 +212,13 @@ body {
             }
             /* Map Canvas Stylings */
             div.map-wrapper {
-                margin:0 1.3em;
+
+            .canvas, .console {
+                float:left;
+                padding:0;
+            }
             #map-canvas {
-                width:100%;
+                width:70%;
                 height:800px;
                 border:3px solid #e2e2e2;
                 div.tweet {
@@ -241,33 +275,79 @@ body {
                     }
                 }
             }
+            .console {
+                width:30%;
+                .counter {
+                        padding: 0px 6px 0px;
+                        height: 30px;
+                        min-width:30px;
+                        width:auto;
+                        right:10px;
+                        top: 7.5px;
+                        position:absolute;
+                        text-align:center;
+                        font-size: 0.8em;
+                        line-height: 30px;
+                        font-weight: bold;
+                        display: inline-block;
+                        vertical-align: middle;
+                        white-space: nowrap;
+                        color: #fff;
+                        background-color: #999999;
+                        -webkit-border-radius: 50%;
+                        -moz-border-radius: 50%;
+                        border-radius: 50%;
+                }
             }
-            article {
-                color:#666;
-                background:rgba(255,255,255,.8);
-                &:after {
-                       content: " "; /* Older browser do not support empty content */
-                       visibility: hidden;
-                       display: block;
-                       height: 0;
-                       clear: both;
+            }
+            .chat-console {
+                position:relative;
+                background:#fff;
+                border:1px solid #e2e2e2;
+                height:auto;
+                color:#000;
+                ul#discussion {
+                    width:100%;
+                    overflow:scroll;
+                    height: 400px;
+                    color:#666;
+                    padding: 0.5em;
+                    li {
+                        width: inherit;
+                        display: block;
+                        border-top: 1px solid #e2e2e2;
+                        padding: 0.3em;
+                        border-bottom: 1px solid #e2e2e2;
+                        &:not(:last-child) {
+                            border-top:none;
+                        }
+                        strong {
+                            font-weight:bold;
+                        }
                     }
-            &.panel-2 {
-                .twitter-logo {
-                    font-size:3em;
-                    vertical-align:middle;
-                    text-align:center;
-                    color:$primary;
                 }
-                & > div {
-                    float:left;
-                    width:49.99999%;
+                .send-wrap {
+                    bottom:0px;
+                    left:0px;
+                    right:0px;
+                    width:100%;
+                    position:absolute;
+                    padding:5px;
+                    background:#66757f;
+
+                    input[type="text"] {
+                        background: #fff;
+                        color: #66757f;
+                        font-size: 0.7em;
+                        padding: .5em;
+                        vertical-align: middle;
+                        width: 100%;
+                    }
                 }
-            }
             }
         }
         header,footer {
-          background:rgba(255,255,255,.3);
+          background:#292f33;
         }
         header {
             div.connection-status-panel {
