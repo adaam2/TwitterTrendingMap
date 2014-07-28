@@ -29,7 +29,10 @@ namespace System
             return Regex.Replace(s,
                 "(@)((?:[A-Za-z0-9-_]*))", new MatchEvaluator(StringExtensions.Username));
         }
-
+        internal static string TrimWhitespace(this string s)
+        {
+            return Regex.Replace(s, @"\s+", " ");
+        }
         public static string ParseHashtag(this string s)
         {
 

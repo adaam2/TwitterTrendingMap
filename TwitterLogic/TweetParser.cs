@@ -44,16 +44,15 @@ namespace FinalUniProject.TwitterLogic
             }
             else
             {
-                namedEntityCollection.AddRange(entities);
-            }
-            List<Entity<Tweet>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<Entity<Tweet>>();
-            joined.ForEach(item =>
-            {
-                if (item.tweets.Count > thresholdNumber)
+                List<Entity<Tweet>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<Entity<Tweet>>();
+                joined.ForEach(item =>
                 {
-                    BroadcastToHub(item);
-                }
-            });
+                    if (item.tweets.Count > thresholdNumber)
+                    {
+                        BroadcastToHub(item);
+                    }
+                });
+            }
         }
         private static List<Entity<Tweet>> getTweetEntities(Tweet tweet)
         {

@@ -317,6 +317,8 @@
     <Compile Include="IKVM\Extensions\CollectionExtensions.cs" />
     <Compile Include="Models\BoundingBox.cs" />
     <Compile Include="Models\Tweet.cs" />
+    <Compile Include="Models\TwitterUser.cs" />
+    <Compile Include="Models\TwitterUsers.cs" />
     <Compile Include="NERModels\Entity.cs" />
     <Compile Include="NERModels\Organisation.cs" />
     <Compile Include="NERModels\Person.cs" />
@@ -327,19 +329,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="TwitterLogic\oAuthProcessCredentials.cs" />
     <Compile Include="TwitterLogic\TweetParser.cs" />
     <Compile Include="TwitterLogic\TwitterStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\animate.css" />
-    <Content Include="css\chatbubbles.css" />
     <Content Include="css\failwhale.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
-    <Content Include="css\ie.css" />
-    <Content Include="css\morris.css" />
-    <Content Include="css\print.css" />
-    <Content Include="css\screen.css" />
+    <Content Include="css\login.css" />
     <Content Include="css\sky-tabs.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -350,19 +349,19 @@
     <Content Include="img\clustersprites.png" />
     <Content Include="img\marker.png" />
     <Content Include="img\marker.svg" />
+    <Content Include="img\signin.png" />
     <Content Include="sass\main.scss" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="sass\_vars-typeplate.scss" />
-    <Content Include="sass\ie.scss" />
-    <Content Include="sass\_typeplate.scss" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="sass\login.scss" />
     <None Include="Scripts\vendor\jquery\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\app\notificationFx.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery-tagcanvas.min.js" />
@@ -379,12 +378,7 @@
     <Content Include="Scripts\vendor\jquery\plugins\jquery.validate.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\vendor\knockout\knockout-2.2.0.debug.js" />
-    <Content Include="Scripts\vendor\knockout\knockout-2.2.0.js" />
     <Content Include="Scripts\vendor\google\maps\plugins\markerclustererplus.js" />
-    <Content Include="Scripts\vendor\modernizr\modernizr-2.6.2.js" />
-    <Content Include="Scripts\vendor\morris\morris.js" />
-    <Content Include="Scripts\vendor\morris\morris.min.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -400,6 +394,7 @@
     <Content Include="Views\Map\Index.cshtml" />
     <Content Include="Views\Tests\Index.cshtml" />
     <Content Include="Views\TwitterError\Index.cshtml" />
+    <Content Include="Views\Map\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

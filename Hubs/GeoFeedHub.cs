@@ -19,10 +19,27 @@ namespace FinalUniProject.Hubs
 {
     public class GeoFeedHub : Hub
     {
+        private static string[] _reservedGroupNames = new[] { "Global" };
+        public bool SubscribeToStreamGroup(string groupName)
+        {
+            if (_reservedGroupNames.Any(x => x.Equals(groupName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Groups.Add(Context.ConnectionId, groupName);
+                return true;
+            }
+            return false;
+        }
+        public void UnsubscribeFromStreamGroup(string groupName)
+        {
+            if (_reservedGroupNames.Any(x => x.Equals(groupName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Groups.Remove(Context.ConnectionId, groupName);
+            }
+        }
         public void ChangeStreamBounds(BoundingBoxPoint points)
         {
-            Debug.WriteLine(points.ToString());//string.concat it
-            ////FinalUniProject.TwitterLogic.TwitterStream.ChangeStreamBounds(southWest, northEast);
+            //Debug.WriteLine(points.ToString());//string.concat it
+            FinalUniProject.TwitterLogic.TwitterStream.SetUserBounds(points);
         }
         public override Task OnConnected()
         {

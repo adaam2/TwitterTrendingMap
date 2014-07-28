@@ -9,25 +9,99 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/ns-default.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/ns-style-bar.css" />
     <link href="~/css/main.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/animate.css" rel="stylesheet" type="text/css"/>
-    <link href="~/css/sky-tabs.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/vendor/modernizr/modernizr.custom.js"></script>
 </head>
-<body class="blue">
-    <div id="layout" class="container">
-        <main>
-            @RenderBody()
-        </main>
+<body>
+    <!-- Static navbar -->
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">WHERELIONSROAM</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="http://blog.wherelionsroam.co.uk">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
     </div>
+
+    <!-- +++++ Welcome Section +++++ -->
+    <div class="ww">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 centered">
+                    <img src="~/img/user.png" alt="Stanley">
+                    <h1>About this project</h1>
+                    <p>Hello everybody. I'm Adam, I am a web developer from a little place called Saint Albans in the United Kingdom.</p>
+                    <p>One day in late May, I decided that I would build a real-time map of all of the tweets in the UK and tokenize them individually in real-time using the Stanford Natural Language Parsing library. The Stanford Named Entity Recognizer (also known as the CRFClassifier in techie speak), processes strings of text, extracting the "named entities" of a sentence. These are the named people, places or organisations in a sentence.</p>
+                </div><!-- /col-lg-8 -->
+            </div><!-- /row -->
+        </div> <!-- /container -->
+    </div><!-- /ww -->
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- +++++ Footer Section +++++ -->
+
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>My Deets</h4>
+                    <p>
+                        <span class="detail"><strong>Telephone:</strong> (+44) 7891 443 984</span>
+                        <span class="detail"><strong>Email:</strong> adamjamesbull (at) googlemail.com</span>
+</p>
+                    <p></p>
+                </div><!-- /col-lg-4 -->
+
+                <div class="col-lg-4">
+                    <h4>My Links</h4>
+                    <p>
+                        <a href="http://www.github.com/adaam2">GitHub</a><br />
+                        <a href="https://twitter.com/wherelionsroam">Twitter</a><br />
+                    </p>
+                </div><!-- /col-lg-4 -->
+
+                <div class="col-lg-4">
+                    <h4>About Adam</h4>
+                    <p>I am a .NET developer specializing in C# and VB.NET and a smidgeon of node.js. Outside of work, I like Pina Coladas, and gettin' caught in the rain. <strong>n.b:</strong> All round good egg.</p>
+                </div><!-- /col-lg-4 -->
+
+            </div>
+
+        </div>
+    </div>
+
+
     <script src="~/Scripts/vendor/jquery/jquery-1.8.2.min.js"></script>
     <script src="~/Scripts/vendor/jquery/signalr/jquery.signalR-2.0.3.min.js"></script>
-    <script src="signalr/hubs"></script>
+    <script src="/signalr/hubs"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="~/Scripts/vendor/google/maps/plugins/markerclustererplus.js"></script>
     <script src="~/Scripts/vendor/jquery/plugins/jquery.timeago.js"></script>
     <script src="~/Scripts/vendor/jquery/plugins/jquery.geocomplete.min.js"></script>
     <script src="~/Scripts/vendor/jquery/plugins/jquery-tagcanvas.min.js"></script>
+    <script src="~/Scripts/vendor/bootstrap/bootstrap.js"></script>
+    <script src="~/Scripts/app/classie.js"></script>
+    <script src="~/Scripts/app/notificationFx.js"></script>
     <script src="~/Scripts/app/main.js"></script>
 
 </body>
