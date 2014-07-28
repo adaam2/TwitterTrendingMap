@@ -1,4 +1,5 @@
-﻿var map, mc, guids = [], counter = 0, bounds = new google.maps.LatLngBounds(), twitterHub = $.connection.geoFeedHub, startBtn = $('#startStream'), stopBtn = $('#stopStream'),svgshape = document.getElementById('notification-shape');;
+﻿/*-- Global variables --*/
+var map, mc,tweetLayer, guids = [], counter = 0, bounds = new google.maps.LatLngBounds(), twitterHub = $.connection.geoFeedHub, startBtn = $('#startStream'), stopBtn = $('#stopStream'), svgshape = document.getElementById('notification-shape');
 var stylez = [{ "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "water", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "color": "#C6E2FF" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "color": "#C5E3BF" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "color": "#D1D1B8" }] }];
 var map_options = {
     zoom: 7,
@@ -27,7 +28,7 @@ var guid = (function () {
     };
 })();
 
-function buildTweetWindow(tweet) {
+var buildTweetWindow = function(tweet) {
     var date = new Date(tweet.CreatedAt);
     var dd = date.getDate();
     var mm = date.getMonth() + 1;
@@ -45,11 +46,8 @@ function buildTweetWindow(tweet) {
     return content;
 }
 function subscribeGlobalStream() {
-
     twitterHub.server.subscribeToStreamGroup("Global").done(function (result) {
-
         if (result === true) {
-
             startBtn.prop("disabled", true);
             stopBtn.prop("disabled", false);
         }
@@ -57,12 +55,12 @@ function subscribeGlobalStream() {
 }
 
 function unsubscribeGlobalStream() {
-
     twitterHub.server.unsubscribeFromStreamGroup("Global").done(function () {
         stopBtn.prop("disabled", true);
         startBtn.prop("disabled", false);
     });
 }
+
 /* Doc Ready stuff */
 $(function () {
 
@@ -71,16 +69,29 @@ $(function () {
         map: "#map-canvas",
         mapOptions: map_options
     }).bind("geocode:result", function (e, result) {
+
         var resultBounds = new google.maps.LatLngBounds(
             result.geometry.viewport.getSouthWest(),
             result.geometry.viewport.getNorthEast()
         );
         map.fitBounds(resultBounds);
+        // create new notification
+        var notification = new NotificationFx({
+            message: '<span class="icon"><i class="fa fa-map-marker fa-3x"></i></span><p>Now only showing results for ' + result.name + ' and surrounding areas.</p>',
+            layout: 'bar',
+            customClass: 'geo',
+            effect: 'exploader',
+            ttl: 15000,
+            type: 'notice'
+        });
+
+        // show the notification
+        notification.show();
     });
     $('#find').click(function () {
         $("#autocomplete").trigger("geocode");
     });
-    var map = $("#autocomplete").geocomplete("map");
+    map = $("#autocomplete").geocomplete("map");
     map.set('streetViewControl', true);
     map.mapTypeControl = false;
     var clusterer_opts = {
@@ -101,9 +112,9 @@ $(function () {
                $('#tweet-count').html(counter);
                // add marker to the map
                var marker = new google.maps.Marker({
-                   map:map,
                    position: new google.maps.LatLng(tweet.Latitude, tweet.Longitude),
-                   title:tweet.Text + ' by @' + tweet.User
+                   title: tweet.Text + ' by @' + tweet.User,
+                   map:map
                });
                var infowindow = new google.maps.InfoWindow({
                    content:buildTweetWindow(tweet)
@@ -123,19 +134,19 @@ $(function () {
 
                // randomize selection of tweets for display to ensure that tweets can be read.
 
-               if (list_size < max_list_size) {
+               //if (list_size < max_list_size) {
                    $('ul.live-tweets').prepend(list_item);
-               } else {
-                   $('ul.live-tweets li:last-child').remove();
-                   $('ul.live-tweets').prepend(list_item);
-               }
+               //} else {
+               //    $('ul.live-tweets li:last-child').remove();
+               //    $('ul.live-tweets').prepend(list_item);
+               //}
            }
            twitterHub.client.debug = function (msg) {
                console.log(msg);
            }
            twitterHub.client.broadcastLog = function (message) {
                $('#error').modal();
-               console.log(message);
+               $('.errorMessage').html(message);
            };
            $.connection.hub.start()
                .done(function () {

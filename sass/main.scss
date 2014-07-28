@@ -49,7 +49,9 @@ input[type="text"] {
 .start {
     background-color:#58B957;    
 }
-
+.geo {
+    background-color: #46769D;   
+}
 span.detail {
     display: block;
 }
@@ -231,7 +233,7 @@ main {
         .console {
             ul.live-tweets {
                 max-height: 640px;
-                overflow: hidden;
+                overflow: scroll;
                     li {
                         border-radius: 15px;
                         padding:1.2em;

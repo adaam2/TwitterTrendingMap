@@ -67,7 +67,7 @@ namespace FinalUniProject.TwitterLogic
                 // Prints out nice(r) view of web exception sent by Twitter API including error code response
                 var exc = (ITwitterException) args.Value;
                 clients.All.broadcastLog(args.Value.ToString());
-                Debug.WriteLine(exc.ToString());
+                //Debug.WriteLine(exc.ToString());
                 /* List of Status Codes available below:
                  * https://dev.twitter.com/docs/error-codes-responses
                  * Main status codes that we will need to filter on in the switch statement below
@@ -75,6 +75,7 @@ namespace FinalUniProject.TwitterLogic
                 var statusCode = exc.StatusCode;
                 if (statusCode != 200)
                 {
+                    clients.All.broadcastLog("Twitter API error " + statusCode);
                     switch (statusCode)
                     {
                         case 420:
@@ -83,20 +84,9 @@ namespace FinalUniProject.TwitterLogic
                             if (!(Thread.CurrentThread.ThreadState == System.Threading.ThreadState.WaitSleepJoin)) { 
                                 Thread.Sleep(_recommendedBackoffTimeout);
                             }
-                            clients.All.broadcastLog("Implementing backoff");
-                            break;
-                        case 503:
-                            // twitter servers up - but too many global requests - show error message
-
-                            break;
-                        case 500:
-                        case 502:
-                        case 504:
-                            // twitter servers down
-                            // show error message
+                            
                             break;
                     }
-                    clients.All.broadcastLog("Twitter API error " + statusCode);
                 }
             };
             // Monitor tweets received and broadcast to client function
