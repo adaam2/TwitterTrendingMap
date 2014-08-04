@@ -174,7 +174,6 @@ $(function () {
                var max_list_size = 50;
                var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img alt="' + tweet.User + 's profile picture" class="img-thumbnail" src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">@' + tweet.User + '</span></li>';
 
-
                // randomize selection of tweets for display to ensure that tweets can be read.
 
                if (list_size < max_list_size) {
@@ -184,12 +183,7 @@ $(function () {
                    $('ul.live-tweets').prepend(list_item);
                }
            }
-           twitterHub.client.debug = function (msg) {
-               console.log(msg);
-           }
            twitterHub.client.broadcastLog = function (message) {
-               //$('#error').modal();
-               //$('.errorMessage').html(message);
                console.log(message);
            };
 

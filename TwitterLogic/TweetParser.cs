@@ -27,7 +27,7 @@ namespace FinalUniProject.TwitterLogic
 
         public static readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
 
-        public static readonly int thresholdNumber = 3; //number of matching tweets needed to broadcast "trend" to the hub
+        public static readonly int thresholdNumber = 10; //number of matching tweets needed to broadcast "trend" to the hub
 
         // array holding names of entities that have been broadcast already - pop this array every 5 minutes to ensure entities previously mentioned can be broadcast again.
         public static List<string> broadcastedEntities = new List<string>();
@@ -74,7 +74,7 @@ namespace FinalUniProject.TwitterLogic
                         else
                         {
                             namedEntityCollection.Add(entity);
-                            Debug.WriteLine("New " + entity.Name + " added");
+                            //Debug.WriteLine("New " + entity.Name + " added");
                         }
                         
                     }

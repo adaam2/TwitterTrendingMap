@@ -80,7 +80,7 @@ namespace FinalUniProject.TwitterLogic
                 var statusCode = exc.StatusCode;
                 if (statusCode != 200)
                 {
-                    clients.All.broadcastLog("Twitter API error " + statusCode);
+                    //clients.All.broadcastLog("Twitter API error " + statusCode);
                     switch (statusCode)
                     {
                         case 420:
