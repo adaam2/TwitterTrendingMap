@@ -59,7 +59,8 @@
                     <ul>
                         <li>The Twitter Streaming API broadcasts a live json stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
                         <li>The server broadcasts real-time tweets and trends to the map canvas. If the user has not performed any form of dragging action or hasn't entered their address into the autocomplete, then the tweets and trends displayed are representative of what's going on nationwide.</li>
-                        <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>
+                        <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>                   
+                        <li>Trends are plotted on the map according to the <strong>average geographical center</strong> of their tweets. <i>i.e. if there are two tweets (with geo data) for a trend, the trend will be plotted midway between the locations of the two tweets</i>.</li>
                     </ul>
                 </div><!-- /col-lg-8 -->
             </div><!-- /row -->
