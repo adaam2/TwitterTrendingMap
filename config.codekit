@@ -56,6 +56,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/css\/jquery.fancybox.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/jquery.fancybox.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/css\/login.css": {
 		"fileType": 16,
 		"ignore": 1,
@@ -203,6 +212,39 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/img\/fancybox_overlay.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1003,
+		"inputAbbreviatedPath": "\/img\/fancybox_overlay.png",
+		"outputAbbreviatedPath": "\/img\/fancybox_overlay.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/fancybox_sprite.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 1362,
+		"inputAbbreviatedPath": "\/img\/fancybox_sprite.png",
+		"outputAbbreviatedPath": "\/img\/fancybox_sprite.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/fancybox_sprite@2x.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6553,
+		"inputAbbreviatedPath": "\/img\/fancybox_sprite@2x.png",
+		"outputAbbreviatedPath": "\/img\/fancybox_sprite@2x.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/img\/marker.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -214,105 +256,6 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/img\/portfolio\/1.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 158654,
-		"inputAbbreviatedPath": "\/img\/portfolio\/1.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/1.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/2.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 136895,
-		"inputAbbreviatedPath": "\/img\/portfolio\/2.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/2.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/3.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 183165,
-		"inputAbbreviatedPath": "\/img\/portfolio\/3.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/3.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port01.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 85287,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port01.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port01.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port02.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 68044,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port02.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port02.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port03.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 82393,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port03.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port03.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port04.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 82612,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port04.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port04.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port05.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 69095,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port05.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port05.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/portfolio\/port06.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 78054,
-		"inputAbbreviatedPath": "\/img\/portfolio\/port06.jpg",
-		"outputAbbreviatedPath": "\/img\/portfolio\/port06.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
 	"\/img\/signin.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -320,6 +263,39 @@
 		"initialSize": 2830,
 		"inputAbbreviatedPath": "\/img\/signin.png",
 		"outputAbbreviatedPath": "\/img\/signin.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/trends\/organisation.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 9007,
+		"inputAbbreviatedPath": "\/img\/trends\/organisation.png",
+		"outputAbbreviatedPath": "\/img\/trends\/organisation.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/trends\/person.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 6829,
+		"inputAbbreviatedPath": "\/img\/trends\/person.png",
+		"outputAbbreviatedPath": "\/img\/trends\/person.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/trends\/place.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 7390,
+		"inputAbbreviatedPath": "\/img\/trends\/place.png",
+		"outputAbbreviatedPath": "\/img\/trends\/place.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -1612,12 +1588,45 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/Scripts\/app\/maplayers.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/app\/maplayers.js",
+		"outputAbbreviatedPath": "\/Scripts\/app\/min\/maplayers-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/Scripts\/app\/min\/main-ck.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Scripts\/app\/min\/main-ck.js",
 		"outputAbbreviatedPath": "\/Scripts\/app\/min\/min\/main-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/app\/min\/mapLayers-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/app\/min\/mapLayers-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/app\/min\/min\/mapLayers-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/app\/min\/notificationFx-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/app\/min\/notificationFx-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/app\/min\/min\/notificationFx-ck-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -1634,12 +1643,12 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/Scripts\/app\/notificationFx.js": {
+	"\/Scripts\/app\/notificationfx.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/app\/notificationFx.js",
-		"outputAbbreviatedPath": "\/Scripts\/app\/min\/notificationFx-ck.js",
+		"inputAbbreviatedPath": "\/Scripts\/app\/notificationfx.js",
+		"outputAbbreviatedPath": "\/Scripts\/app\/min\/notificationfx-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -1876,6 +1885,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/Scripts\/vendor\/google\/maps\/plugins\/min\/markerclustererplus-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/google\/maps\/plugins\/min\/markerclustererplus-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/google\/maps\/plugins\/min\/min\/markerclustererplus-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/Scripts\/vendor\/jquery\/jquery-1.8.2.intellisense.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -1909,12 +1929,12 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/Scripts\/vendor\/jquery\/plugins\/jquery-tagcanvas.min.js": {
+	"\/Scripts\/vendor\/jquery\/plugins\/jquery.fancybox.pack.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/jquery-tagcanvas.min.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/jquery-tagcanvas.min-ck.js",
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/jquery.fancybox.pack.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/jquery.fancybox.pack-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -2019,6 +2039,39 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/Scripts\/vendor\/jquery\/plugins\/min\/jquery.geocomplete.min-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/jquery.geocomplete.min-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/min\/jquery.geocomplete.min-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/min\/splitter-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/vendor\/jquery\/plugins\/splitter.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/splitter.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/Scripts\/vendor\/jquery\/signalr\/jquery.signalR-2.0.3.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -2030,12 +2083,12 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/Scripts\/vendor\/jquery\/signalr\/jquery.signalR-2.0.3.min.js": {
+	"\/Scripts\/vendor\/jquery\/signalr\/jquery.signalr-2.0.3.min.js": {
 		"fileType": 64,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/signalr\/jquery.signalR-2.0.3.min.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/signalr\/min\/jquery.signalR-2.0.3.min-ck.js",
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/signalr\/jquery.signalr-2.0.3.min.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/signalr\/min\/jquery.signalr-2.0.3.min-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,
@@ -2080,6 +2133,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Scripts\/vendor\/misc\/hover.zoom.js",
 		"outputAbbreviatedPath": "\/Scripts\/vendor\/misc\/min\/hover.zoom-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/Scripts\/vendor\/modernizr\/modernizr.custom.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/Scripts\/vendor\/modernizr\/modernizr.custom.js",
+		"outputAbbreviatedPath": "\/Scripts\/vendor\/modernizr\/min\/modernizr.custom-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

@@ -16,15 +16,7 @@ namespace FinalUniProject.NERModels
             }
             set
             {
-                _uniqueID = Guid.NewGuid();
                 _name = value;
-            }
-        }
-        public override Guid UniqueID
-        {
-            get
-            {
-                return _uniqueID;
             }
         }
         public string entityType = "Person";

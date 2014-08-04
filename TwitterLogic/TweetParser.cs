@@ -11,6 +11,7 @@ using System.Linq;
 using FinalUniProject.helperClasses;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Hubs;
+using System.Diagnostics;
 
 namespace FinalUniProject.TwitterLogic
 {
@@ -18,40 +19,66 @@ namespace FinalUniProject.TwitterLogic
     {
         // Load the 3 class distsim NLP model
         public static CRFClassifier _classifier = CRFClassifier.getClassifierNoExceptions(@"english.all.3class.distsim.crf.ser.gz");
+
         // Instantiate the static named entity collection - persists through all instances of this class
         public static List<Entity<Tweet>> namedEntityCollection = new List<Entity<Tweet>>();
-        public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<TrendsAnalysisHub>().Clients;
-        public static readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
-        public static readonly int thresholdNumber = 2; //number of matching tweets needed to broadcast "trend" to the hub
 
-        // Constructor
-        //public TweetParser(Tweet tweet)
-        //{
-        //    // Start Timer instance to run every 1 minute to remove NamedEntity instances whose last tweet is more than a 10 minutes old.
-        //    //var timer = new System.Threading.Timer(e => RemoveOldTweets(), null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
-        //    // Process the current tweet
-        //    ProcessTweet(tweet);
-        //}
+        public static IHubConnectionContext client = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>().Clients;
+
+        public static readonly TimeSpan maxAge = new TimeSpan(0,10,0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
+
+        public static readonly int thresholdNumber = 3; //number of matching tweets needed to broadcast "trend" to the hub
+
+        // array holding names of entities that have been broadcast already - pop this array every 5 minutes to ensure entities previously mentioned can be broadcast again.
+        public static List<string> broadcastedEntities = new List<string>();
+
+        // global group name
+        private static string globalStreamGroupName = "Global";
+
         public static void ProcessTweet(Tweet tweet)
         {
-            // Create collection instance to hold named entities detected for the current tweet
-            List<Entity<Tweet>> entities = getTweetEntities(tweet);
-
-            // If the static namedEntityCollection has a count of less than 1, then assign the current (first) tweet to this collection
-            if (namedEntityCollection.Count < 1)
+            // Get entities for the tweet coming in
+            List<Entity<Tweet>> entitiesForCurrentTweet = getTweetEntities(tweet); // may be more than one entity, always one tweet per entity
+            if (entitiesForCurrentTweet.Count > 0)
             {
-                namedEntityCollection = entities;
-            }
-            else
-            {
-                List<Entity<Tweet>> joined = NamedEntityExtensions.Join(namedEntityCollection, entities).ToList<Entity<Tweet>>();
-                joined.ForEach(item =>
+                if (namedEntityCollection.Count < 1)
                 {
-                    if (item.tweets.Count > thresholdNumber)
+                    //Debug.WriteLine("entities added for first time");
+                    namedEntityCollection = entitiesForCurrentTweet;
+                }
+                else {
+                    foreach (var entity in entitiesForCurrentTweet)
                     {
-                        BroadcastToHub(item);
+                        if (namedEntityCollection.Any(item => item.Name.Trim().ToLower() == entity.Name.Trim().ToLower())) {
+                            var matched = namedEntityCollection.Find(item => item.Name.Trim().ToLower() == entity.Name.Trim().ToLower());
+                            matched.tweets.AddRange(entity.tweets);
+                            //Debug.WriteLine("__________________________________");
+                            //Debug.WriteLine(matched.Name + "(" + matched.tweets.Count + ")");
+                            //Debug.WriteLine("----------------------------------");
+                            //Debug.WriteLine("Containing tweets:");
+                            //Debug.WriteLine("----------------------------------");
+                            //matched.tweets.ForEach(t =>
+                            //{
+                            //    Debug.WriteLine("[" + t.Text + "]");
+                            //});
+                            //Debug.WriteLine("__________________________________");
+
+                            if (matched.tweets.Count >= thresholdNumber) {
+                                if (!broadcastedEntities.Contains(matched.Name.ToString().Trim().ToLower()))
+                                {
+                                    broadcastedEntities.Add(matched.Name.ToString().Trim().ToLower());
+                                    BroadcastToHub(matched);
+                                }        
+                            } 
+                        }
+                        else
+                        {
+                            namedEntityCollection.Add(entity);
+                            Debug.WriteLine("New " + entity.Name + " added");
+                        }
+                        
                     }
-                });
+                }
             }
         }
         private static List<Entity<Tweet>> getTweetEntities(Tweet tweet)
@@ -145,13 +172,38 @@ namespace FinalUniProject.TwitterLogic
             // Return the List<T> to the caller
             return entitiesForThisTweet;        
         }     
-        private static void BroadcastLog(string message)
-        {
-            client.All.broadcastLog(message);
-        }
         private static void BroadcastToHub(Entity<Tweet> entity)
         {
             client.All.broadcastTrend(entity);
+            //SignalRUsers.Users.ForEach(user =>
+            //{
+            //    Debug.WriteLine(user.ConnectionId);
+            //    var usersBounds = user.userBoundingBox;
+            //    if (usersBounds != null)
+            //    {
+            //        //Debug.WriteLine("user bounds isn't null");
+            //        // first check that the average center of all of the tweets for the trend are inside the bounds of the current user
+            //        if (GeoHelper.IsInBounds(entity.averageCenter.Latitude, entity.averageCenter.Longitude, user.ConnectionId))
+            //        {
+
+            //            // next check that the user hasn't stopped the stream
+            //            if (user.isStreamRunning)
+            //            {
+            //                client.Client(user.ConnectionId).broadcastTrend(entity);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        //Debug.WriteLine("user bounds not set");
+            //        // check that the user hasn't stopped the stream
+            //        if (user.isStreamRunning)
+            //        {
+            //            // no bounds set, so therefore trends are nationwide for this user
+            //            client.Client(user.ConnectionId).broadcastTrend(entity);
+            //        }
+            //    }
+            //});
         }
         public static void RemoveOldEntities()
         {

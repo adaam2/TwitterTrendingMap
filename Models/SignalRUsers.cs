@@ -9,26 +9,26 @@ using System.Threading;
 
 namespace FinalUniProject
 {
-    public static class TwitterUsers
+    public static class SignalRUsers
     {
         public static IHubContext context;
-        public static List<TwitterUser> Users;
+        public static List<SignalRUser> Users;
         
-        static TwitterUsers()
+        static SignalRUsers()
         {
             context = GlobalHost.ConnectionManager.GetHubContext<GeoFeedHub>();
-            Users = new List<TwitterUser>();
+            Users = new List<SignalRUser>();
         }
-        public static void AddUser(TwitterUser user)
+        public static void AddUser(SignalRUser user)
         {
             Users.Add(user);
             BroadcastNewUserToHub(user);
         }
-        public static void RemoveUser(TwitterUser user)
+        public static void RemoveUser(SignalRUser user)
         {
             Users.Remove(user);
         }
-        public static List<TwitterUser> AsListOfT()
+        public static List<SignalRUser> AsListOfT()
         {
             return Users;
         }
@@ -36,13 +36,12 @@ namespace FinalUniProject
         {
             return Users.AsEnumerable();
         }
-        public static IEnumerable<TwitterUser> Where(Func<TwitterUser, bool> predicate)
+        public static IEnumerable<SignalRUser> Where(Func<SignalRUser, bool> predicate)
         {
-            return Users.Where<TwitterUser>(predicate);
+            return Users.Where<SignalRUser>(predicate);
         }
-        public static void BroadcastNewUserToHub(TwitterUser user)
-        {
-            
+        public static void BroadcastNewUserToHub(SignalRUser user)
+        {            
             context.Clients.All.BroadcastNewUserToHub(user);
         }
     }

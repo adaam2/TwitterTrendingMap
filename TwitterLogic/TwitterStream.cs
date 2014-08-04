@@ -27,7 +27,7 @@ namespace FinalUniProject.TwitterLogic
         private static string globalStreamGroupName = "Global";
 
         // Bounds as set by the user when they perform any action on the map (zoom_changed, drag_end etc)
-        public static BoundingBoxPoint userSetBounds;
+        //public static BoundingBoxPoint userSetBounds;
 
         // Consumer Keys + Secrets
         private static string _consumerKey = ConfigurationManager.AppSettings.Get("twitter:ConsumerKey");
@@ -50,8 +50,13 @@ namespace FinalUniProject.TwitterLogic
         {
             // dummy method for static constructor
         }
+        public static void KillStream()
+        {
+            _filteredStream.StopStream();
+        }
         static TwitterStream()
         {
+           
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
             var clients = context.Clients;
 
@@ -81,11 +86,20 @@ namespace FinalUniProject.TwitterLogic
                         case 420:
                         case 429:
                             // enhance your calm - being rate limited
+                            TwitterStatusHelper.isRateLimited = true;
                             if (!(Thread.CurrentThread.ThreadState == System.Threading.ThreadState.WaitSleepJoin)) { 
                                 Thread.Sleep(_recommendedBackoffTimeout);
                             }
                             
                             break;
+                    }
+                }
+                else
+                {
+                    if (TwitterStatusHelper.isRateLimited)
+                    {
+                        // set isRateLimited back to false if status code 200 is received
+                        TwitterStatusHelper.isRateLimited = false;
                     }
                 }
             };
@@ -105,24 +119,34 @@ namespace FinalUniProject.TwitterLogic
                             Longitude = tweetargs.Coordinates.Longitude,
                             CreatedAt = tweetargs.CreatedAt,
                             ImageUrl = tweetargs.Creator.ProfileImageUrl,
-                            ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName
+                            ProfileUrl = "https://twitter.com/" + tweetargs.Creator.ScreenName,
+                            URL = "https://twitter.com/" + tweetargs.Creator.ScreenName.ToLower() + "/status/" + tweetargs.IdStr
                         };
                         // pass complex TweetModel object to the client
-
-                        if (userSetBounds != null)
+                        SignalRUsers.Users.ForEach(user =>
                         {
-                            if (IsInBounds(tweet.Latitude, tweet.Longitude))
+                            // for each connected signalr user, get their location and check bounds, then broadcast
+                            var usersBounds = user.userBoundingBox;
+                            if (usersBounds != null)
                             {
-                                clients.Group(globalStreamGroupName).broadcastTweetMessage(tweet);
+                                if (GeoHelper.IsInBounds(tweet.Latitude, tweet.Longitude,user.ConnectionId))
+                                {
+                                    if (user.isStreamRunning) { 
+                                        clients.Client(user.ConnectionId).broadcastTweetMessage(tweet);
+                                    }
+                                }
                             }
-                        }
-                        else
-                        {
-                            clients.Group(globalStreamGroupName).broadcastTweetMessage(tweet);
-                        }
+                            else
+                            {
+                                if (user.isStreamRunning)
+                                {
+                                    // no bounds set, so therefore nationwide for this user
+                                    clients.Client(user.ConnectionId).broadcastTweetMessage(tweet);
+                                }
+                            }
+                        });
 
-
-                        //Task.Factory.StartNew(() => TweetParser.ProcessTweet(tweet));
+                        TweetParser.ProcessTweet(tweet);
                     }
                 }
             };
@@ -142,25 +166,6 @@ namespace FinalUniProject.TwitterLogic
 
             // start the thread
             _thread.Start();
-        }
-
-        // Refactor these into geometry singleton
-        public static BoundingBoxPoint GetUserSetBounds()
-        {
-            return userSetBounds;
-        }
-        public static void SetUserBounds(BoundingBoxPoint points)
-        {
-            userSetBounds = points;
-        }
-        public static bool IsInBounds(double lat, double lng)
-        {
-            if ((lat <= userSetBounds.NorthWestLatitude && lat >= userSetBounds.SouthEastLatitude) && (lng >= userSetBounds.NorthWestLongitude && lng <= userSetBounds.SouthEastLongitude))
-            {
-                // The point is in the box
-                return true;
-            }
-            return false;
         }
     }
 }

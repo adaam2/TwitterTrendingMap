@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -307,18 +308,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="helperClasses\ClientsConnected.cs" />
     <Compile Include="helperClasses\DateExtensions.cs" />
+    <Compile Include="helperClasses\GeoHelper.cs" />
     <Compile Include="helperClasses\NamedEntityExtensions.cs" />
     <Compile Include="helperClasses\StringExtensions.cs" />
-    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\GeoFeedHub.cs" />
     <Compile Include="Hubs\TrendsAnalysisHub.cs" />
     <Compile Include="IKVM\Extensions\CollectionExtensions.cs" />
     <Compile Include="Models\BoundingBox.cs" />
     <Compile Include="Models\Tweet.cs" />
-    <Compile Include="Models\TwitterUser.cs" />
-    <Compile Include="Models\TwitterUsers.cs" />
+    <Compile Include="Models\SignalRUser.cs" />
+    <Compile Include="Models\SignalRUsers.cs" />
     <Compile Include="NERModels\Entity.cs" />
     <Compile Include="NERModels\Organisation.cs" />
     <Compile Include="NERModels\Person.cs" />
@@ -331,6 +331,7 @@
     </Compile>
     <Compile Include="TwitterLogic\oAuthProcessCredentials.cs" />
     <Compile Include="TwitterLogic\TweetParser.cs" />
+    <Compile Include="TwitterLogic\TwitterStatusHelper.cs" />
     <Compile Include="TwitterLogic\TwitterStream.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -355,12 +356,14 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="App_Data\exclusionList.csv" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="sass\login.scss" />
     <None Include="Scripts\vendor\jquery\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\app\mapLayers.js" />
     <Content Include="Scripts\app\notificationFx.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.min.js" />
@@ -368,6 +371,7 @@
     <Content Include="Scripts\vendor\jquery\plugins\jquery.geocomplete.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.timeago.js" />
     <None Include="Scripts\vendor\jquery\plugins\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\vendor\jquery\plugins\splitter.js" />
     <Content Include="Scripts\vendor\jquery\ui\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\vendor\jquery\ui\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\vendor\jquery\signalr\jquery.signalR-2.0.3.js" />
@@ -396,9 +400,7 @@
     <Content Include="Views\TwitterError\Index.cshtml" />
     <Content Include="Views\Map\Login.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
