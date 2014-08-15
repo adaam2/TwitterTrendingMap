@@ -16,7 +16,7 @@ namespace FinalUniProject.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public string ProfileUrl { get; set; }
-
+        public string URL { get; set; }
         // This field is set later during Tokenization / Named Entity Recognition
         public List<Entity<Tweet>> entities = new List<Entity<Tweet>>();
     }

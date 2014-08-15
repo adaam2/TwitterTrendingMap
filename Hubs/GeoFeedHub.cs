@@ -19,32 +19,48 @@ namespace FinalUniProject.Hubs
 {
     public class GeoFeedHub : Hub
     {
-        public void ChangeStreamBounds(BoundingBoxPoint points)
+        private static string[] _reservedGroupNames = new[] { "Global" };
+        public bool SubscribeToStreamGroup(string groupName)
         {
-            Debug.WriteLine(points.ToString());//string.concat it
-            ////FinalUniProject.TwitterLogic.TwitterStream.ChangeStreamBounds(southWest, northEast);
+            if (_reservedGroupNames.Any(x => x.Equals(groupName, StringComparison.OrdinalIgnoreCase)))
+            {
+                var user = SignalRUsers.Users.Find(e => e.ConnectionId == Context.ConnectionId);
+                user.isStreamRunning = true;
+                Groups.Add(Context.ConnectionId, groupName);
+                return true;
+            }
+            return false;
+        }
+        public void UnsubscribeFromStreamGroup(string groupName)
+        {
+            if (_reservedGroupNames.Any(x => x.Equals(groupName, StringComparison.OrdinalIgnoreCase)))
+            {
+                var user = SignalRUsers.Users.Find(e => e.ConnectionId == Context.ConnectionId);
+                user.isStreamRunning = false;
+                Groups.Remove(Context.ConnectionId, groupName);
+            }
+        }
+        //public void KillStream()
+        //{
+        //    FinalUniProject.TwitterLogic.TwitterStream.KillStream();
+        //}
+        public void ChangeStreamBounds(BoundingBoxPoint points, string connectionId)
+        {
+            GeoHelper.SetUserBounds(points,Context.ConnectionId);
         }
         public override Task OnConnected()
         {
-            // get ip and browser
-            // add connection id to hashset
-            ClientsConnected.ConnectedClients.Add(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
+            SignalRUsers.Users.Add(new SignalRUser()
+            {
+                ConnectionId = Context.ConnectionId
+            });
             return base.OnConnected();
         }
         public override Task OnDisconnected()
         {
-            // remove the client connection id from the hashset
-            ClientsConnected.ConnectedClients.Remove(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
+            var userToBeRemoved = SignalRUsers.Users.Find(e => e.ConnectionId == Context.ConnectionId);
+            SignalRUsers.Users.Remove(userToBeRemoved);
             return base.OnDisconnected();
-        }
-        public override Task OnReconnected()
-        {
-            // for reconnections
-            ClientsConnected.ConnectedClients.Add(Context.ConnectionId);
-            Clients.All.getClientsConnectedCount(ClientsConnected.ConnectedClients);
-            return base.OnReconnected();
         }
     }
 }

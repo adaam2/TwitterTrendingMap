@@ -1,43 +1,68 @@
 ﻿@{
     ViewBag.Title = "News Before It Happens: Twitter Real-time Data Visualisation";
 }
-<div class="geocode">
-    <input type="text" placeholder="Search town, city or postcode" id="autocomplete"/>
-    <i class="fa fa-search"></i>
-</div>
-<div class="map-wrapper cf">
-    <div class="canvas" id="map-canvas"></div>
-    <div class="console sky-tabs sky-tabs-pos-top-left sky-tabs-anim-flip sky-tabs-response-to-icons">
-        <input type="radio" name="sky-tabs" checked="" id="sky-tab1" class="sky-tab-content-1">
-        <label for="sky-tab1"><span><span><i class="fa fa-terminal"></i>Tweet Console <span id="tweet-count" class="counter">0</span></span></span></label>
-
-        <input type="radio" name="sky-tabs" id="sky-tab2" class="sky-tab-content-2">
-        <label for="sky-tab2"><span><span><i class="fa fa-twitter"></i> Calculated Trends</span></span></label>
-
-        <ul>
-            <li class="sky-tab-content-1">
-                <div class="typography">
-                    <ul class="live-tweets"></ul>
-                </div>
-            </li>
-
-            <li class="sky-tab-content-2">
-                <div class="typography">
-                    <h1>Live Trends</h1>
-                    <p>The trends below are calculated using Stanford University's Natural Language Parsing (NLP) library. In particular, the application uses a tool called the Named Entity Recognizer to detect words that it thinks may be People, Places or Organizations.</p>
-                    <ul style="display:none;" id="trends"></ul>
-                    <canvas width="300" height="300" id="myCanvas"></canvas>
-                </div>
-            </li>
-        </ul>
+<div class="container-fluid">
+    <div class="row geocomplete">
+        <div class="col-xs-7">
+            <div class="input-group">
+                <input type="text" id="autocomplete" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" id="find" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div><!-- /input-group -->
+        </div>
+        <div class="col-xs-5">
+            <span class="pull-right">
+                <button type="button" title="Reset the map to its original state and zoom level" id="reset-map" class="btn btn-default">
+                    Reset Map
+                </button>
+                <button type="button" id="startStream" class="btn btn-success" disabled="disabled">
+                Start Stream
+                <span class="progress"></span>
+                </button>
+                <button type="button" id="stopStream" class="btn btn-danger">
+                Stop Stream
+                <span class="progress"></span>
+                </button>
+            </span>
+        </div>
     </div>
 </div>
-<div class="chat-console">
-    <ul id="discussion">
 
-    </ul>
-    <div class="send-wrap">
-        <input type="text" id="message" placeholder="Your message" />
-        <input type="hidden" id="displayname" />
+    <div class="container-fluid map-wrapper">
+        <div class="row" style="position:relative;">
+            <div class="canvas col-md-8" id="map-canvas"></div>
+            <div style="display:none;" class="loader">
+                <div class="inner">
+                    <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+                </div>
+            </div>
+            <div class="console col-md-4">
+                <ul class="live-tweets"></ul>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="container-fluid">
+        <div class="row switchoverlay">
+            <div class="col-lg-12">
+                @*<button type="button" id="kill" class="btn btn-danger">Kill Stream</button>*@
+                <button type="button" id="switch" class="btn btn-warning">Switch to Trends</button>
+            </div>
+        </div>
+    </div>
+    <div class="ww">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 centered">
+                    <i class="fa fa-info-circle fa-4x"></i>
+                    <h1>How the map works</h1>
+                    <ul>
+                        <li>The Twitter Streaming API broadcasts a live json stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
+                        <li>The server broadcasts real-time tweets and trends to the map canvas. If the user has not performed any form of dragging action or hasn't entered their address into the autocomplete, then the tweets and trends displayed are representative of what's going on nationwide.</li>
+                        <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>                   
+                        <li>Trends are plotted on the map according to the <strong>average geographical center</strong> of their tweets. <i>i.e. if there are two tweets (with geo data) for a trend, the trend will be plotted midway between the locations of the two tweets</i>.</li>
+                    </ul>
+                </div><!-- /col-lg-8 -->
+            </div><!-- /row -->
+        </div><!-- /ww -->
+     </div>

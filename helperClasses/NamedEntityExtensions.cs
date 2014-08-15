@@ -4,18 +4,18 @@ using System.Linq;
 using System.Web;
 using FinalUniProject.NERModels;
 using FinalUniProject.Models;
+using System.Diagnostics;
 
 namespace FinalUniProject.helperClasses
 {
     public static class NamedEntityExtensions
     {
-        public static IEnumerable<Entity<Tweet>> Join(IEnumerable<Entity<Tweet>> list1, IEnumerable<Entity<Tweet>> list2)
+        public static Entity<Tweet> createNewNamedEntity(string className)
         {
-            return list1.Join(list2, item => item.Name, item => item.Name, (outer, inner) =>
-            {
-                outer.tweets.AddRange(inner.tweets);
-                return outer;
-            });
+            Entity<Tweet> entity = null;
+            Type t = Type.GetType("FinalUniProject.NERModels." + className);
+            entity = (Entity<Tweet>)Activator.CreateInstance(t);
+            return entity;
         }
         public static Entity<Tweet> createNewNamedEntity(string className, Tweet tweet, string value)
         {
