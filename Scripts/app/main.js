@@ -79,13 +79,6 @@ function unsubscribeGlobalStream() {
         startBtn.prop("disabled", false);
     });
 }
-//function killStream() {
-//    twitterHub.server.killStream().done(function () {
-//        alert('Stream is dead. This will cause exception in app');
-//    }).fail(function (e) {
-//        alert(e);
-//    });
-//}
 function Initialize() {
 
     // geocomplete
@@ -127,9 +120,9 @@ function Initialize() {
     var clusterer_opts = {
         gridSize: 100,
         batchSize: 3000,
-        minimumClusterSize:1,
-        batchSizeIE: 200,
-        maxZoom: 12,
+        minimumClusterSize:2,
+        batchSizeIE: 500,
+        maxZoom: 10,
         averageCenter: false,
         ignoreHidden:true
     };
@@ -168,7 +161,6 @@ $(function () {
                });
                mc.addMarker(marker);
                mc.repaint();
-               // mc.repaint();
                // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
                var max_list_size = 50;
@@ -193,6 +185,7 @@ $(function () {
                    // if trend layer isHidden = true
                    if (trendLayer.getState()) {
                        //mc.setClusterClass('hide');
+                       mc.repaint();
                        mc.setMap(null);
                        tweetLayer.hide();
                        trendLayer.show();
@@ -201,8 +194,7 @@ $(function () {
                        $('#switch').html('Switch to Tweets');
                    } else {
                        mc.repaint();
-                       mc.setMap(map);
-                   
+                       mc.setMap(map);                  
                        trendLayer.hide();
                        tweetLayer.show();
                        $('#switch').addClass('btn-warning');
@@ -210,7 +202,7 @@ $(function () {
                        $('#switch').html('Switch to Trends');
                    }
                    $('.loader').hide('fade', 100);
-               }, 600);
+               }, 300);
            });
            $('#reset-map').click(function () {
                fitToUKBounds(map);
@@ -218,10 +210,7 @@ $(function () {
            $.connection.hub.start()
                .done(function () {
                    subscribeGlobalStream();
-                   //killBtn.click(function (e) {
-                   //    e.preventDefault();
-                   //    killStream();
-                   //});
+
                    stopBtn.click(function (e) {
 
                        unsubscribeGlobalStream();
@@ -232,7 +221,7 @@ $(function () {
                            layout: 'bar',
                            customClass:'stop',
                            effect: 'exploader',
-                           ttl: 6000,
+                           ttl: 5000,
                            type: 'notice'
                        });
 
@@ -250,7 +239,7 @@ $(function () {
                            layout: 'bar',
                            customClass:'start',
                            effect: 'exploader',
-                           ttl: 6000,
+                           ttl: 5000,
                            type: 'notice'
                        });
 
@@ -258,7 +247,9 @@ $(function () {
                        notification.show();
                    });
                });
-
+           twitterHub.client.debug = function (message) {
+               alert(message);
+           };
            twitterHub.client.broadcastTrend = function (entity) {
                var marker = new google.maps.Marker({
                    position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),

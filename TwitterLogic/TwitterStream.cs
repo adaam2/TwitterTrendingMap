@@ -5,7 +5,9 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading;
+using System.Collections.Generic;
 using System.Web;
+//using System.IO;
 using Tweetinvi;
 using Tweetinvi.Core.Enum;
 using Tweetinvi.Core.Exceptions;
@@ -43,20 +45,29 @@ namespace FinalUniProject.TwitterLogic
         private static IFilteredStream _filteredStream = Stream.CreateFilteredStream();
         private static Thread _thread;
 
+        // Timespan necessary to wait for rate limiting to wear off
         private static TimeSpan _recommendedBackoffTimeout = new TimeSpan(0, 0, 240); // 240 seconds
+
+        // List<string> holding "Bad words" that we don't want to stream
+        private static List<string> badWords = new List<string>();
 
         // Static constructor and dummy method
         public static void Setup()
         {
             // dummy method for static constructor
         }
-        public static void KillStream()
-        {
-            _filteredStream.StopStream();
-        }
         static TwitterStream()
         {
-           
+            //using (StreamReader CsvReader = new StreamReader(HttpContext.Current.Server.MapPath("~/App_Data/exclusionList.csv")))
+            //{
+            //    string inputLine = "";
+
+            //    while ((inputLine = CsvReader.ReadLine()) != null)
+            //    {
+                    
+            //    }
+            //    CsvReader.Close();
+            //}
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
             var clients = context.Clients;
 

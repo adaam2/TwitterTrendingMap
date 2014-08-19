@@ -5,6 +5,8 @@ using System.Web.Routing;
 using System.Threading.Tasks;
 using System;
 using FinalUniProject.TwitterLogic;
+using Hangfire;
+
 namespace FinalUniProject
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -25,7 +27,12 @@ namespace FinalUniProject
             Task.Factory.StartNew(() => TwitterStream.Setup());
 
             // Remove entities from the static collection that haven't been updated in a while - i.e. preserving freshness of trends
-            var timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));
+            //System.Threading.Timer timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));
+            //timer.s
+
+            //// Start task to save top entities into the db
+            //var timer2 = new System.Threading.Timer(e => TweetParser.SaveTopEntities(), null, new TimeSpan(0,1,0), new TimeSpan(0,2,0));
+
         }
     }
 }

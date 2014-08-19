@@ -1,6 +1,9 @@
 ﻿using Owin;
 using Newtonsoft.Json;
 using Microsoft.AspNet.SignalR;
+using Hangfire;
+using Hangfire.SqlServer;
+using System.Configuration;
 
 [assembly:Microsoft.Owin.OwinStartup(typeof(FinalUniProject.App_Start.Initialize))]
 namespace FinalUniProject.App_Start
@@ -10,6 +13,17 @@ namespace FinalUniProject.App_Start
         // This class simply initiates the Owin connection for SignalR
         public void Configuration(IAppBuilder app)
         {
+
+            // Register Hangfire Task Scheduler
+
+            app.UseHangfire(config =>
+            {
+                // Basic setup required to process background jobs.
+                config.UseSqlServerStorage(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString);
+                config.UseAuthorizationFilters();
+                config.UseServer();
+            });
+
             // Prevent TweetModel/NamedEntity endless loop during Json.Net serialization
             var serializerSettings = new JsonSerializerSettings
             {
@@ -24,6 +38,7 @@ namespace FinalUniProject.App_Start
             hubConfiguration.EnableDetailedErrors = true;
          
             app.MapSignalR(hubConfiguration);
+
            
         }
     }

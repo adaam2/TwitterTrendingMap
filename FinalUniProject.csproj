@@ -43,14 +43,33 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.2.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.2.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CronExpressionDescriptor">
+      <HintPath>..\packages\CronExpressionDescriptor.1.10.1\lib\net35\CronExpressionDescriptor.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.13\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="ejml-0.23">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.3.1.1\lib\ejml-0.23.dll</HintPath>
     </Reference>
-    <Reference Include="Geocoding">
-      <HintPath>..\packages\Geocoding.net.3.1.0\lib\net40\Geocoding.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Core">
+      <HintPath>..\packages\Hangfire.Core.1.0.2\lib\net45\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer">
+      <HintPath>..\packages\Hangfire.SqlServer.1.0.2\lib\net45\Hangfire.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.AWT.WinForms">
       <HintPath>..\packages\IKVM.7.4.5196.0\lib\IKVM.AWT.WinForms.dll</HintPath>
@@ -127,20 +146,11 @@
     <Reference Include="IKVM.Runtime.JNI">
       <HintPath>..\packages\IKVM.7.4.5196.0\lib\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
-    <Reference Include="IQToolkit">
-      <HintPath>..\packages\LinqToWiki.Core.1.2.0\Lib\net40-client\IQToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="joda-time">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.3.1.1\lib\joda-time.dll</HintPath>
     </Reference>
     <Reference Include="jollyday">
       <HintPath>..\packages\Stanford.NLP.CoreNLP.3.3.1.1\lib\jollyday.dll</HintPath>
-    </Reference>
-    <Reference Include="LinqToWiki.Core">
-      <HintPath>..\packages\LinqToWiki.Core.1.2.0\Lib\net40-client\LinqToWiki.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="LinqToWiki.Generated">
-      <HintPath>..\packages\LinqToWiki.1.4.1\Lib\net40-client\LinqToWiki.Generated.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -149,11 +159,13 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.0.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.2.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Security">
       <HintPath>..\packages\Microsoft.Owin.Security.2.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
@@ -164,21 +176,18 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net45\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="NCrontab">
+      <HintPath>..\packages\ncrontab.1.0.0\lib\NCrontab.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="PCLWebUtility">
       <HintPath>..\packages\PCLWebUtility.1.0.2\Lib\portable-net4+sl4+wp7+win8\PCLWebUtility.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SimMetrics">
       <HintPath>..\packages\SimMetrics.1.1.4118.23231\lib\SimMetrics.dll</HintPath>
@@ -188,10 +197,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -207,9 +217,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -308,12 +315,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="helperClasses\Database.cs" />
     <Compile Include="helperClasses\DateExtensions.cs" />
     <Compile Include="helperClasses\GeoHelper.cs" />
     <Compile Include="helperClasses\NamedEntityExtensions.cs" />
+    <Compile Include="helperClasses\SignalRHelper.cs" />
     <Compile Include="helperClasses\StringExtensions.cs" />
     <Compile Include="Hubs\GeoFeedHub.cs" />
-    <Compile Include="Hubs\TrendsAnalysisHub.cs" />
     <Compile Include="IKVM\Extensions\CollectionExtensions.cs" />
     <Compile Include="Models\BoundingBox.cs" />
     <Compile Include="Models\Tweet.cs" />
@@ -335,11 +343,15 @@
     <Compile Include="TwitterLogic\TwitterStream.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\animate.css" />
     <Content Include="css\failwhale.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\login.css" />
+    <Content Include="css\ns-default.css" />
+    <Content Include="css\ns-style-attached.css" />
+    <Content Include="css\ns-style-bar.css" />
+    <Content Include="css\ns-style-growl.css" />
+    <Content Include="css\ns-style-other.css" />
     <Content Include="css\sky-tabs.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -357,6 +369,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="App_Data\exclusionList.csv" />
+    <None Include="Properties\PublishProfiles\WebDeploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -367,7 +380,6 @@
     <Content Include="Scripts\app\notificationFx.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.min.js" />
-    <Content Include="Scripts\vendor\jquery\plugins\jquery-tagcanvas.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.geocomplete.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.timeago.js" />
     <None Include="Scripts\vendor\jquery\plugins\jquery.validate-vsdoc.js" />
@@ -384,7 +396,9 @@
     <Content Include="Scripts\vendor\jquery\plugins\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\vendor\google\maps\plugins\markerclustererplus.js" />
     <Content Include="Scripts\app\main.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

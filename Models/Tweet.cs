@@ -17,6 +17,8 @@ namespace FinalUniProject.Models
         public double Latitude { get; set; }
         public string ProfileUrl { get; set; }
         public string URL { get; set; }
+        public int databaseID { get; set; }
+        public bool isDatabase { get; set; }
         // This field is set later during Tokenization / Named Entity Recognition
         public List<Entity<Tweet>> entities = new List<Entity<Tweet>>();
     }
