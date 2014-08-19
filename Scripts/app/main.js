@@ -207,6 +207,7 @@ $(function () {
            $('#reset-map').click(function () {
                fitToUKBounds(map);
            });
+           $('.entity-tweets-link').fancybox();
            $.connection.hub.start()
                .done(function () {
                    subscribeGlobalStream();

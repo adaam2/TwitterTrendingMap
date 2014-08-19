@@ -25,14 +25,6 @@ namespace FinalUniProject
 
             // Create Task for the stream of tweets
             Task.Factory.StartNew(() => TwitterStream.Setup());
-
-            // Remove entities from the static collection that haven't been updated in a while - i.e. preserving freshness of trends
-            //System.Threading.Timer timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));
-            //timer.s
-
-            //// Start task to save top entities into the db
-            //var timer2 = new System.Threading.Timer(e => TweetParser.SaveTopEntities(), null, new TimeSpan(0,1,0), new TimeSpan(0,2,0));
-
         }
     }
 }

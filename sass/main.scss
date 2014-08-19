@@ -249,6 +249,21 @@ hr {
 
 main {
     width: 100%;
+    div.topTrends {
+        width: 60%;
+        font-size:1.3em;
+        margin: 0 auto;
+        background:#66757f;
+        color:#fff;
+        ol {
+            list-style:decimal !important;
+            margin:0 auto;
+            width:300px;
+            li {
+                text-align:left;
+            }
+        }
+    }
     .geocomplete,.switchoverlay {
         background: #445;
         padding: 1em;

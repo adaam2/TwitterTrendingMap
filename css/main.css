@@ -6908,93 +6908,108 @@ hr {
 main {
   width: 100%; }
   /* line 252, ../sass/main.scss */
+  main div.topTrends {
+    width: 60%;
+    font-size: 1.3em;
+    margin: 0 auto;
+    background: #66757f;
+    color: #fff; }
+    /* line 258, ../sass/main.scss */
+    main div.topTrends ol {
+      list-style: decimal !important;
+      margin: 0 auto;
+      width: 300px; }
+      /* line 262, ../sass/main.scss */
+      main div.topTrends ol li {
+        text-align: left; }
+  /* line 267, ../sass/main.scss */
   main .geocomplete, main .switchoverlay {
     background: #445;
     padding: 1em; }
-    /* line 255, ../sass/main.scss */
+    /* line 270, ../sass/main.scss */
     main .geocomplete #find, main .switchoverlay #find {
       height: 34px; }
-  /* line 260, ../sass/main.scss */
+  /* line 275, ../sass/main.scss */
   main .map-wrapper .canvas, main .map-wrapper .console {
     min-height: 650px; }
-  /* line 264, ../sass/main.scss */
+  /* line 279, ../sass/main.scss */
   main .map-wrapper .console ul.live-tweets {
     max-height: 640px;
     overflow-y: scroll;
     overflow-x: hidden; }
-    /* line 268, ../sass/main.scss */
+    /* line 283, ../sass/main.scss */
     main .map-wrapper .console ul.live-tweets li {
       border-radius: 15px;
       padding: 1.2em;
       margin: 1em;
       border: 1px solid #e2e2e2;
       background-color: #f2f2f2; }
-      /* line 274, ../sass/main.scss */
+      /* line 289, ../sass/main.scss */
       main .map-wrapper .console ul.live-tweets li:after {
         content: ' ';
         display: table;
         visibility: hidden;
         height: 0;
         clear: both; }
-      /* line 281, ../sass/main.scss */
+      /* line 296, ../sass/main.scss */
       main .map-wrapper .console ul.live-tweets li span.tweet-avatar {
         float: left; }
-        /* line 283, ../sass/main.scss */
+        /* line 298, ../sass/main.scss */
         main .map-wrapper .console ul.live-tweets li span.tweet-avatar a {
           display: block; }
-          /* line 285, ../sass/main.scss */
+          /* line 300, ../sass/main.scss */
           main .map-wrapper .console ul.live-tweets li span.tweet-avatar a img {
             width: 50px;
             height: 50px; }
-      /* line 291, ../sass/main.scss */
+      /* line 306, ../sass/main.scss */
       main .map-wrapper .console ul.live-tweets li span.tweet-content, main .map-wrapper .console ul.live-tweets li span.tweet-author {
         display: block;
         left: 10px;
         position: relative; }
-      /* line 296, ../sass/main.scss */
+      /* line 311, ../sass/main.scss */
       main .map-wrapper .console ul.live-tweets li span.tweet-content {
         color: #292F33;
         padding: .1em; }
-      /* line 300, ../sass/main.scss */
+      /* line 315, ../sass/main.scss */
       main .map-wrapper .console ul.live-tweets li span.tweet-author {
         clear: both;
         color: #808080;
         margin-top: 10px;
         padding-top: 3px;
         border-top: 1px solid #e2e2e2; }
-  /* line 310, ../sass/main.scss */
+  /* line 325, ../sass/main.scss */
   main .map-wrapper div.tweet {
     width: auto;
     min-width: 300px; }
-    /* line 314, ../sass/main.scss */
+    /* line 329, ../sass/main.scss */
     main .map-wrapper div.tweet div.header .avatar, main .map-wrapper div.tweet div.header .screen-name {
       display: inline-block;
       vertical-align: top; }
-    /* line 318, ../sass/main.scss */
+    /* line 333, ../sass/main.scss */
     main .map-wrapper div.tweet div.header .avatar a img {
       border-radius: 25px; }
-    /* line 321, ../sass/main.scss */
+    /* line 336, ../sass/main.scss */
     main .map-wrapper div.tweet div.header div.screen-name {
       color: #000;
       font-size: 18px;
       font-weight: 700;
       margin-left: 5px; }
-      /* line 326, ../sass/main.scss */
+      /* line 341, ../sass/main.scss */
       main .map-wrapper div.tweet div.header div.screen-name span.handle, main .map-wrapper div.tweet div.header div.screen-name span.time-ago {
         display: block;
         height: 20px; }
-      /* line 330, ../sass/main.scss */
+      /* line 345, ../sass/main.scss */
       main .map-wrapper div.tweet div.header div.screen-name span.time-ago {
         color: #8899a6;
         font-size: 16px;
         line-height: 2; }
-    /* line 337, ../sass/main.scss */
+    /* line 352, ../sass/main.scss */
     main .map-wrapper div.tweet div.body {
       color: #292F33;
       font-weight: 400;
       font-size: 16px;
       /*border-bottom:1px solid #e2e2e2;*/ }
-      /* line 342, ../sass/main.scss */
+      /* line 357, ../sass/main.scss */
       main .map-wrapper div.tweet div.body p {
         white-space: pre-wrap;
         width: 340px;
@@ -7005,10 +7020,10 @@ main {
         background: #F8F8F8;
         margin-top: 5px;
         margin-bottom: 5px; }
-      /* line 353, ../sass/main.scss */
+      /* line 368, ../sass/main.scss */
       main .map-wrapper div.tweet div.body a {
         color: #87C5FF; }
-    /* line 357, ../sass/main.scss */
+    /* line 372, ../sass/main.scss */
     main .map-wrapper div.tweet div.footer {
       color: #666;
       display: none; }

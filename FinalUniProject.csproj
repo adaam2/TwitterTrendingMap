@@ -337,7 +337,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="TwitterLogic\oAuthProcessCredentials.cs" />
     <Compile Include="TwitterLogic\TweetParser.cs" />
     <Compile Include="TwitterLogic\TwitterStatusHelper.cs" />
     <Compile Include="TwitterLogic\TwitterStream.cs" />

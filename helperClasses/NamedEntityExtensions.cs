@@ -28,5 +28,39 @@ namespace FinalUniProject.helperClasses
             entity.tweets.Add(tweet);
             return entity;
         }
+        public static int? GetDatabaseIDForEntityType(string entityTypeName)
+        {
+            int? theEntityTypeID = null;
+            switch (entityTypeName)
+            {
+                case "Person":
+                    theEntityTypeID = 1;
+                    break;
+                case "Place":
+                    theEntityTypeID = 2;
+                    break;
+                case "Organisation":
+                    theEntityTypeID = 3;
+                    break;
+            }
+            return theEntityTypeID;
+        }
+        public static string GetEntityNameFromDatabaseID(int ID)
+        {
+            string theName = "";
+            switch (ID)
+            {
+                case 1:
+                    theName = "Person";
+                    break;
+                case 2:
+                    theName = "Place";
+                    break;
+                case 3:
+                    theName = "Organisation";
+                    break;
+            }
+            return theName;
+        }
     }
 }

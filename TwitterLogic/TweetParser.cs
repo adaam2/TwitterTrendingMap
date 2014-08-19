@@ -250,7 +250,7 @@ namespace FinalUniProject.TwitterLogic
                     if (!entity.isDatabase)
                     {
                         //first insert into entities table
-                        string theInsert = @"INSERT INTO dbo.Entities(entityName,lastUpdated,averageCenterLatitude,averageCenterLongitude) OUTPUT INSERTED.ID VALUES(@name, @lastUpdated, @averageCenterLatitude, @averageCenterLongitude)";
+                        string theInsert = @"INSERT INTO dbo.Entities(entityName,lastUpdated,averageCenterLatitude,averageCenterLongitude, entityTypeID) OUTPUT INSERTED.ID VALUES(@name, @lastUpdated, @averageCenterLatitude, @averageCenterLongitude, @entityTypeID)";
                         
                         using (SqlCommand cmd = new SqlCommand(theInsert, conn))
                         {
@@ -260,6 +260,27 @@ namespace FinalUniProject.TwitterLogic
                             cmd.Parameters.AddWithValue("@lastUpdated", entity.tweets.Max(t => t.CreatedAt).ToString("yyyy-MM-dd HH:mm:ss"));
                             cmd.Parameters.AddWithValue("@averageCenterLatitude", entity.averageCenter.Latitude);
                             cmd.Parameters.AddWithValue("@averageCenterLongitude", entity.averageCenter.Longitude);
+
+                            dynamic ent = entity;
+
+                            string entityName = ent.entityType;
+
+                            int? entityTypeID = null;
+
+                            switch(entityName){
+                                case "Person":
+                                    entityTypeID = 1;
+                                    break;
+                                case "Place":
+                                    entityTypeID = 2;
+                                    break;
+                                case "Organisation":
+                                    entityTypeID = 3;
+                                    break;
+                            }
+                            cmd.Parameters.AddWithValue("@entityTypeID", entityTypeID);
+                            
+
                             // keep record of the entity id
                             insertedID = (int)cmd.ExecuteScalar();
                             entity.databaseID = insertedID;
@@ -344,33 +365,66 @@ namespace FinalUniProject.TwitterLogic
         //    string truncateTweetsTable = @"TRUNCATE TABLE dbo.Tweets";
         //}
 
-//        public List<Entity<Tweet>> GetTopEntities()
-//        {
-//            string theTopEntitySQL = @"select e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs from dbo.Entities e1 inner join dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID inner join dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID group by e1.entityName order by COUNT(dbo.Tweets.ID) desc";
-//            DataTable entities = Database.GetAsDataTable(theTopEntitySQL);
+        public static List<Entity<Tweet>> GetTopEntities()
+        {
+            // First initialize new top entities list of T<T>
+            List<Entity<Tweet>> topEntities = new List<Entity<Tweet>>();
 
-//            if (entities.Rows.Count > 0)
-//            {
-//                foreach (DataRow row in entities.Rows)
-//                {
-//                    Entity<Tweet> entity = new Entity<Tweet>()
-//                    {
+            // Then query the Entities table in the database to get top entities
+            string theTopEntitySQL = @"select e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 inner join dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID inner join dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID group by e1.entityName order by COUNT(dbo.Tweets.ID) desc";
 
-//                    };
-//                    // for each entity, get list of ids from entity result set and filter on those ids 
-//                    string theIDs = row["listOfIDs"].ToString();
+            // Read the data into a datatable
+            DataTable entities = Database.GetAsDataTable(theTopEntitySQL);
 
-//                    string theSelectByIDsSQL = @"SELECT tweetEncodedText, MAX(tweetUserHandle) as userHandle, MAX(tweetLatitude) as lat, MAX(tweetLongitude) as lng, MAX(tweetUserProfileImageUrl) as imageUrl, MAX(tweetDateTime) as [date]
-//  FROM [dbo].[Tweets] inner join dbo.EntityTweetLink on dbo.Tweets.ID = dbo.EntityTweetLink.tweetID  where dbo.EntityTweetLink.entityID in (" + theIDs + ") group by dbo.Tweets.tweetEncodedText order by date desc";
+            // Check that the datatable count is more than 1
+            if (entities.Rows.Count > 0)
+            {
+                // iterate over DataRows
+                foreach (DataRow row in entities.Rows)
+                {
+                    // Check that the entity in the database has an entity type
+                    if (row["entityTypeID"] != System.DBNull.Value)
+                    {
+                        // Get reference to type of entity
+                        int theEntityTypeID = int.Parse(row["entityTypeID"].ToString());
 
-//                    DataTable tweets = Database.GetAsDataTable(theSelectByIDsSQL);
+                        dynamic entity = NamedEntityExtensions.createNewNamedEntity(NamedEntityExtensions.GetEntityNameFromDatabaseID(theEntityTypeID));
 
-//                }
-//            }
+                        entity.Name = row["entityName"].ToString();
+                        entity.databaseID = int.Parse(row["theID"].ToString());
+                        entity.entityType = NamedEntityExtensions.GetEntityNameFromDatabaseID(theEntityTypeID);
 
-            
-//            var list = new List<Entity<Tweet>>();
-//            return list;
-//        }
+                        // for each entity, get list of ids from entity result set and filter on those ids 
+                        string theIDs = row["listOfIDs"].ToString();
+
+                        string theSelectByIDsSQL = @"SELECT tweetEncodedText, MAX(tweetUserHandle) as userHandle, MAX(tweetLatitude) as lat, MAX(tweetLongitude) as lng, MAX(tweetUserProfileImageUrl) as imageUrl, MAX(tweetDateTime) as [date], MAX(dbo.Tweets.ID) as theID FROM [dbo].[Tweets] inner join dbo.EntityTweetLink on dbo.Tweets.ID = dbo.EntityTweetLink.tweetID  where dbo.EntityTweetLink.entityID in (" + theIDs + ") group by dbo.Tweets.tweetEncodedText order by date desc";
+
+                        DataTable tweets = Database.GetAsDataTable(theSelectByIDsSQL);
+
+                        List<Tweet> tweetList = new List<Tweet>();
+                        // Now iterate over tweet results for all of the matching entity IDs in the database for this entity
+                        foreach (DataRow tweetRow in tweets.Rows)
+                        {
+                            Tweet t = new Tweet()
+                            {
+                                Text = tweetRow["tweetEncodedText"].ToString(),
+                                CreatedAt = DateTime.Parse(tweetRow["date"].ToString()),
+                                Latitude = double.Parse(tweetRow["lat"].ToString()),
+                                Longitude = double.Parse(tweetRow["lng"].ToString()),
+                                databaseID = int.Parse(tweetRow["theID"].ToString()),
+                                ImageUrl = tweetRow["imageUrl"].ToString(),
+                                User = tweetRow["userHandle"].ToString()
+                            };
+                            tweetList.Add(t);
+                        }
+
+                        entity.tweets = tweetList;
+
+                        topEntities.Add(entity);
+                    }
+                }
+            }
+            return topEntities;
+        }
     }
 }

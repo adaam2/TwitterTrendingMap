@@ -56,7 +56,7 @@
                     <i class="fa fa-info-circle fa-4x"></i>
                     <h1>How the map works</h1>
                     <ul>
-                        <li>The Twitter Streaming API broadcasts a live json stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
+                        <li>The Twitter Streaming API broadcasts a live JSON stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
                         <li>The server broadcasts real-time tweets and trends to the map canvas. If the user has not performed any form of dragging action or hasn't entered their address into the autocomplete, then the tweets and trends displayed are representative of what's going on nationwide.</li>
                         <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>                   
                         <li>Trends are plotted on the map according to the <strong>average geographical center</strong> of their tweets. <i>i.e. if there are two tweets (with geo data) for a trend, the trend will be plotted midway between the locations of the two tweets</i>.</li>
@@ -65,3 +65,33 @@
             </div><!-- /row -->
         </div><!-- /ww -->
      </div>
+<div class="ww">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                    <h1>Top Trends From the past 30 days</h1>
+                    <p>Please see the top trends from the past 30 days below. If you would like to see the tweets for each trend, please click on the <i>Tweet</i> icon to see them all.</p>
+                <div class="topTrends">
+                    <ol>
+                        @foreach (var entity in ViewBag.TopEntities)
+                        {
+                            <li>
+                                <a class="entity-tweets-link" href="#@entity.databaseID">@entity.Name</a>
+                                <div style="display:none;" id="@entity.databaseID" class="entity-tweets">
+                                    <ul>
+                                        @foreach (var tweet in entity.tweets) {
+                                            <li>
+                                                @Html.Raw(tweet.Text)
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
