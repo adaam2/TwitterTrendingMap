@@ -5,6 +5,8 @@ using System.Web.Routing;
 using System.Threading.Tasks;
 using System;
 using FinalUniProject.TwitterLogic;
+using Hangfire;
+
 namespace FinalUniProject
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -23,9 +25,6 @@ namespace FinalUniProject
 
             // Create Task for the stream of tweets
             Task.Factory.StartNew(() => TwitterStream.Setup());
-
-            // Remove entities from the static collection that haven't been updated in a while - i.e. preserving freshness of trends
-            var timer = new System.Threading.Timer(e => TweetParser.RemoveOldEntities(), null, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5));
         }
     }
 }

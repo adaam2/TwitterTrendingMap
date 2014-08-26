@@ -17,52 +17,134 @@
                     Reset Map
                 </button>
                 <button type="button" id="startStream" class="btn btn-success" disabled="disabled">
-                Start Stream
-                <span class="progress"></span>
+                    Start Stream
+                    <span class="progress"></span>
                 </button>
                 <button type="button" id="stopStream" class="btn btn-danger">
-                Stop Stream
-                <span class="progress"></span>
+                    Stop Stream
+                    <span class="progress"></span>
                 </button>
             </span>
         </div>
     </div>
 </div>
 
-    <div class="container-fluid map-wrapper">
-        <div class="row" style="position:relative;">
-            <div class="canvas col-md-8" id="map-canvas"></div>
-            <div style="display:none;" class="loader">
-                <div class="inner">
-                    <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+<div class="container-fluid map-wrapper">
+    <div class="row" style="position:relative;">
+        <div class="canvas col-md-8" id="map-canvas"></div>
+        <div style="display:none;" class="loader">
+            <div class="inner">
+                <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+            </div>
+        </div>
+        <div class="console col-md-4">
+            <ul class="live-tweets"></ul>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row switchoverlay">
+        <div class="col-lg-12">
+            <button type="button" id="switch" class="btn btn-warning">Switch to Trends</button>
+        </div>
+    </div>
+</div>
+<div class="ww">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                <i class="fa fa-info-circle fa-4x"></i>
+                <h1>How the map works</h1>
+                <ul>
+                    <li>The Twitter Streaming API broadcasts a live JSON stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
+                    <li>The server broadcasts real-time tweets and trends to the map canvas. If the user has not performed any form of dragging action or hasn't entered their address into the autocomplete, then the tweets and trends displayed are representative of what's going on nationwide.</li>
+                    <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>
+                    <li>Trends are plotted on the map according to the <strong>average geographical center</strong> of their tweets. <i>i.e. if there are two tweets (with geo data) for a trend, the trend will be plotted midway between the locations of the two tweets</i>.</li>
+                </ul>
+            </div><!-- /col-lg-8 -->
+        </div><!-- /row -->
+    </div><!-- /ww -->
+</div>
+<div class="ww trend-stats">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 centered">
+                <h1>The Vital Statistics</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 centered">
+                <h2>Top Trends (Overall)</h2>
+                <div class="topTrends col-md-offset-1">
+                    <ol>
+                        @foreach (var entity in ViewBag.TopEntities)
+                        {
+                            <li>
+                                <a class="entity-tweets-link" href="#@entity.databaseID">@entity.Name</a> - <span class="tweet-count">@entity.tweets.Count tweets</span>
+                                <div style="display:none;" id="@entity.databaseID" class="entity-tweets">
+                                    <h3>Tweets for <strong>@entity.Name</strong></h3>
+                                    <div class="holder"></div>
+                                    <ol class="tweet-list" id="@entity.databaseID">
+                                        @foreach (var tweet in entity.tweets)
+                                        {
+                                            <li>
+                                                <div class="tweet-avatar">
+                                                    <img alt="@tweet.User" src="@tweet.ImageUrl" />
+                                                </div>
+                                                <div class="tweet-main">
+                                                    <div class="tweet-text">
+                                                        @Html.Raw(tweet.Text)
+                                                    </div>
+                                                    <div class="tweet-foot">
+                                                        @tweet.User - @tweet.CreatedAt
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ol>
+                                    @*<script type="text/javascript">
+                                        $(function () {
+                                            $("div.holder").jPages({
+                                                containerID: '@entity.databaseID'
+                                            });
+                                        });
+                                    </script>*@
+                                </div>
+                            </li>
+                        }
+                    </ol>
+
                 </div>
             </div>
-            <div class="console col-md-4">
-                <ul class="live-tweets"></ul>
-            </div>
+            <div class="col-lg-6">
+                <h3>Trends about <i>People</i></h3>
+                <div class="topTrends">
+                    <ol id="people-trends">
+                        @foreach (var entity in ViewBag.People)
+                        {
+                            <li>@entity.Name</li>
+                        }
+                    </ol>
+                </div>
+                    <h3>Trends about <i>Places</i></h3>
+                <div class="topTrends">
+                    <ol id="place-trends">
+                        @foreach (var entity in ViewBag.Places)
+                        {
+                            <li>@entity.Name</li>
+                        }
+                    </ol>
+                </div>
+                    <h3>Trends about <i>Organisations</i></h3>
+                <div class="topTrends">
+                    <ol id="organsation-trends">
+                        @foreach (var entity in ViewBag.Organisations)
+                        {
+                            <li>@entity.Name</li>
+                        }
+                    </ol>
+                 </div>
+             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row switchoverlay">
-            <div class="col-lg-12">
-                @*<button type="button" id="kill" class="btn btn-danger">Kill Stream</button>*@
-                <button type="button" id="switch" class="btn btn-warning">Switch to Trends</button>
-            </div>
-        </div>
-    </div>
-    <div class="ww">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 centered">
-                    <i class="fa fa-info-circle fa-4x"></i>
-                    <h1>How the map works</h1>
-                    <ul>
-                        <li>The Twitter Streaming API broadcasts a live json stream to this website, and the application programatically filters and sorts the new tweets and conducts pattern analysis on them to find any potential trends.</li>
-                        <li>The server broadcasts real-time tweets and trends to the map canvas. If the user has not performed any form of dragging action or hasn't entered their address into the autocomplete, then the tweets and trends displayed are representative of what's going on nationwide.</li>
-                        <li>If the user drags, completes the geolocator, or in any way affects the bounding box of the map, the tweets and trends are then made contextual. The amount of tweets transmitted for a small geographical area should be far less than in the nationwide view.</li>                   
-                        <li>Trends are plotted on the map according to the <strong>average geographical center</strong> of their tweets. <i>i.e. if there are two tweets (with geo data) for a trend, the trend will be plotted midway between the locations of the two tweets</i>.</li>
-                    </ul>
-                </div><!-- /col-lg-8 -->
-            </div><!-- /row -->
-        </div><!-- /ww -->
-     </div>
+</div>

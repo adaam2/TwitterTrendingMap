@@ -33,10 +33,9 @@ var map_options = {
 var buildTrendWindow = function(trend){
     var tweets = trend.tweets;
     var html = "<div class='trendTweetsWrapper'><h3>Tweets for " + trend.title + "</h3><ul>";
-     //console.log(trend);
      $.each(trend.data.tweets,function(i,item){
          
-         html += "<li><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></li>";
+         html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
     });
     html += "</ul></div>";
     return html;
@@ -79,13 +78,6 @@ function unsubscribeGlobalStream() {
         startBtn.prop("disabled", false);
     });
 }
-//function killStream() {
-//    twitterHub.server.killStream().done(function () {
-//        alert('Stream is dead. This will cause exception in app');
-//    }).fail(function (e) {
-//        alert(e);
-//    });
-//}
 function Initialize() {
 
     // geocomplete
@@ -104,7 +96,7 @@ function Initialize() {
         map.fitBounds(resultBounds);
         // create new notification
         var notification = new NotificationFx({
-            message: '<span class="icon"><i class="fa fa-map-marker fa-3x"></i></span><p>Now only showing results for <strong>' + result.name + '</strong> and surrounding areas.</p>',
+            message: '<span class="icon"><i class="fa fa-map-marker fa-3x"></i></span><p>Now only showing results for <strong>' + result.name + '</strong> and surrounding areas. (The number of tweets broadcasted should now be far less.)</p>',
             layout: 'bar',
             customClass: 'geo',
             effect: 'exploader',
@@ -127,9 +119,9 @@ function Initialize() {
     var clusterer_opts = {
         gridSize: 100,
         batchSize: 3000,
-        minimumClusterSize:1,
-        batchSizeIE: 200,
-        maxZoom: 12,
+        minimumClusterSize:2,
+        batchSizeIE: 500,
+        maxZoom: 10,
         averageCenter: false,
         ignoreHidden:true
     };
@@ -168,7 +160,6 @@ $(function () {
                });
                mc.addMarker(marker);
                mc.repaint();
-               // mc.repaint();
                // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
                var max_list_size = 50;
@@ -193,6 +184,7 @@ $(function () {
                    // if trend layer isHidden = true
                    if (trendLayer.getState()) {
                        //mc.setClusterClass('hide');
+                       mc.repaint();
                        mc.setMap(null);
                        tweetLayer.hide();
                        trendLayer.show();
@@ -201,8 +193,7 @@ $(function () {
                        $('#switch').html('Switch to Tweets');
                    } else {
                        mc.repaint();
-                       mc.setMap(map);
-                   
+                       mc.setMap(map);                  
                        trendLayer.hide();
                        tweetLayer.show();
                        $('#switch').addClass('btn-warning');
@@ -210,18 +201,22 @@ $(function () {
                        $('#switch').html('Switch to Trends');
                    }
                    $('.loader').hide('fade', 100);
-               }, 600);
+               }, 300);
            });
            $('#reset-map').click(function () {
                fitToUKBounds(map);
            });
+           $('.entity-tweets-link').fancybox({
+               helpers: {
+                   overlay: {
+                       locked: false
+                   }
+               }
+           });
            $.connection.hub.start()
                .done(function () {
                    subscribeGlobalStream();
-                   //killBtn.click(function (e) {
-                   //    e.preventDefault();
-                   //    killStream();
-                   //});
+
                    stopBtn.click(function (e) {
 
                        unsubscribeGlobalStream();
@@ -232,7 +227,7 @@ $(function () {
                            layout: 'bar',
                            customClass:'stop',
                            effect: 'exploader',
-                           ttl: 6000,
+                           ttl: 5000,
                            type: 'notice'
                        });
 
@@ -250,7 +245,7 @@ $(function () {
                            layout: 'bar',
                            customClass:'start',
                            effect: 'exploader',
-                           ttl: 6000,
+                           ttl: 5000,
                            type: 'notice'
                        });
 
@@ -258,19 +253,20 @@ $(function () {
                        notification.show();
                    });
                });
-
+           twitterHub.client.debug = function (message) {
+               alert(message);
+           };
            twitterHub.client.broadcastTrend = function (entity) {
                var marker = new google.maps.Marker({
                    position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),
                    title: entity.Name,
                    data: {
                        tweets: entity.tweets,
-                       type: entity.entityType,
-                       miscInfo: entity.MiscInformation
+                       type: entity.entityType
                    },
                    icon: '/img/trends/' + entity.entityType + '.png'
                });
-               console.log(marker.data);
+               //console.log(marker.data);
                var infowindow = new google.maps.InfoWindow({
                    content: buildTrendWindow(marker),
                    maxWidth: 400,

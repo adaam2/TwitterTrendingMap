@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using Geocoding;
-using Geocoding.Google;
 using System.Device.Location;
 using FinalUniProject.Models;
 using System.Collections.Generic;
