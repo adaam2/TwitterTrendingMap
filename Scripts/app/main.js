@@ -33,10 +33,9 @@ var map_options = {
 var buildTrendWindow = function(trend){
     var tweets = trend.tweets;
     var html = "<div class='trendTweetsWrapper'><h3>Tweets for " + trend.title + "</h3><ul>";
-     //console.log(trend);
      $.each(trend.data.tweets,function(i,item){
          
-         html += "<li><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></li>";
+         html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
     });
     html += "</ul></div>";
     return html;
@@ -97,7 +96,7 @@ function Initialize() {
         map.fitBounds(resultBounds);
         // create new notification
         var notification = new NotificationFx({
-            message: '<span class="icon"><i class="fa fa-map-marker fa-3x"></i></span><p>Now only showing results for <strong>' + result.name + '</strong> and surrounding areas.</p>',
+            message: '<span class="icon"><i class="fa fa-map-marker fa-3x"></i></span><p>Now only showing results for <strong>' + result.name + '</strong> and surrounding areas. (The number of tweets broadcasted should now be far less.)</p>',
             layout: 'bar',
             customClass: 'geo',
             effect: 'exploader',
@@ -207,7 +206,13 @@ $(function () {
            $('#reset-map').click(function () {
                fitToUKBounds(map);
            });
-           $('.entity-tweets-link').fancybox();
+           $('.entity-tweets-link').fancybox({
+               helpers: {
+                   overlay: {
+                       locked: false
+                   }
+               }
+           });
            $.connection.hub.start()
                .done(function () {
                    subscribeGlobalStream();
@@ -257,12 +262,11 @@ $(function () {
                    title: entity.Name,
                    data: {
                        tweets: entity.tweets,
-                       type: entity.entityType,
-                       miscInfo: entity.MiscInformation
+                       type: entity.entityType
                    },
                    icon: '/img/trends/' + entity.entityType + '.png'
                });
-               console.log(marker.data);
+               //console.log(marker.data);
                var infowindow = new google.maps.InfoWindow({
                    content: buildTrendWindow(marker),
                    maxWidth: 400,

@@ -20,12 +20,13 @@ namespace FinalUniProject.TwitterLogic
 {
     public static class TweetParser
     {
-        //private static enum EntityTypes
-        //{
-        //    Person = 1,
-        //    Place = 2,
-        //    Organisation = 3
-        //}
+        public enum EntityType
+        {
+            None = 0,
+            Person = 1,
+            Place = 2,
+            Organisation = 3
+        }
         // Load the 3 class distsim NLP model
         public static CRFClassifier _classifier = CRFClassifier.getClassifierNoExceptions(@"english.all.3class.distsim.crf.ser.gz");
 
@@ -36,7 +37,7 @@ namespace FinalUniProject.TwitterLogic
 
         public static readonly TimeSpan maxAge = new TimeSpan(0, 10, 0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
 
-        public static readonly int thresholdNumber = 3;
+        public static readonly int thresholdNumber = 5;
         //public static readonly int thresholdNumber = 10; //number of matching tweets needed to broadcast "trend" to the hub
 
         // array holding names of entities that have been broadcast already - pop this array every 5 minutes to ensure entities previously mentioned can be broadcast again.
@@ -46,7 +47,8 @@ namespace FinalUniProject.TwitterLogic
         {
             // setup recurring jobs
             RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Hourly);
-            RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Minutely);
+            RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
+            RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
         }
         /// <summary>
         /// This method parses each tweet for its named entities and broadcasts entities that have reached the threshold number to the client (only if they haven't been broadcast before)
@@ -218,6 +220,10 @@ namespace FinalUniProject.TwitterLogic
         {
             // This little LINQ expression removes entities whose latest updated tweet is more than the threshold max age value (for example.. latest tweet added to the "Rihanna" entity is more than an hour ago, therefore remove that entity)
             namedEntityCollection.RemoveAll(entity => DateTime.Now.Subtract(entity.tweets.Max(t => t.CreatedAt)) >= maxAge);
+
+            // Now do the same for the db version
+
+            //string theDeleteEntitySQL = @"DELETE FROM dbo.Entities WHERE "
         }
         /// <summary>
         /// This method saves the top 20 entities from the current collection stored in memory and sticks them into the relevant database tables 
@@ -355,24 +361,28 @@ namespace FinalUniProject.TwitterLogic
                 }
             }
         }
-        /// <summary>
-        /// This method is run every 10 days to ensure that the server doesn't crash!
-        /// </summary>
-        //public void TruncateAllTables()
-        //{
-        //   // first clear out tweets
+        public static void DeleteOldTweetsFromDatabase()
+        {
+            // Delete tweets older than 10 days - this is run every 7 days
 
-        //    string truncateTweetsTable = @"TRUNCATE TABLE dbo.Tweets";
-        //}
+            string theDeleteSQL = @"DELETE FROM dbo.Tweets WHERE tweetDateTime < (GETDATE() - 10)";
 
-        public static List<Entity<Tweet>> GetTopEntities()
+            Database.Query(theDeleteSQL);
+        }
+        public static List<Entity<Tweet>> GetTopEntities(EntityType type = EntityType.None, int? number = null)
         {
             // First initialize new top entities list of T<T>
             List<Entity<Tweet>> topEntities = new List<Entity<Tweet>>();
-
+            string theTopEntitySQL = "";
+            if (type != EntityType.None) { 
             // Then query the Entities table in the database to get top entities
-            string theTopEntitySQL = @"select e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 inner join dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID inner join dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID group by e1.entityName order by COUNT(dbo.Tweets.ID) desc";
-
+                theTopEntitySQL = @"SELECT TOP 20 e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' AND e1.entityTypeID = " + (int)type + " GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+            }
+            else
+            {
+                theTopEntitySQL = @"SELECT TOP 20 e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+               
+            }
             // Read the data into a datatable
             DataTable entities = Database.GetAsDataTable(theTopEntitySQL);
 
@@ -397,8 +407,11 @@ namespace FinalUniProject.TwitterLogic
                         // for each entity, get list of ids from entity result set and filter on those ids 
                         string theIDs = row["listOfIDs"].ToString();
 
+                        // select top 25 tweets for this entity
+
                         string theSelectByIDsSQL = @"SELECT tweetEncodedText, MAX(tweetUserHandle) as userHandle, MAX(tweetLatitude) as lat, MAX(tweetLongitude) as lng, MAX(tweetUserProfileImageUrl) as imageUrl, MAX(tweetDateTime) as [date], MAX(dbo.Tweets.ID) as theID FROM [dbo].[Tweets] inner join dbo.EntityTweetLink on dbo.Tweets.ID = dbo.EntityTweetLink.tweetID  where dbo.EntityTweetLink.entityID in (" + theIDs + ") group by dbo.Tweets.tweetEncodedText order by date desc";
 
+                        // Feed into a datatable
                         DataTable tweets = Database.GetAsDataTable(theSelectByIDsSQL);
 
                         List<Tweet> tweetList = new List<Tweet>();
@@ -424,7 +437,13 @@ namespace FinalUniProject.TwitterLogic
                     }
                 }
             }
-            return topEntities;
+            if (number == null) { 
+                return topEntities;
+            }
+            else
+            {
+                return topEntities.OrderByDescending(entity => entity.tweets.Count).Take(number.Value).ToList();
+            }
         }
     }
 }

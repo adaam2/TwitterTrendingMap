@@ -359,6 +359,7 @@
     <Content Include="img\bg-green.jpg" />
     <Content Include="img\bg-pink.jpg" />
     <Content Include="img\clustersprites.png" />
+    <Content Include="img\header.svg" />
     <Content Include="img\marker.png" />
     <Content Include="img\marker.svg" />
     <Content Include="img\signin.png" />
@@ -379,6 +380,8 @@
     <Content Include="Scripts\app\notificationFx.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.js" />
     <Content Include="Scripts\vendor\jquery\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\vendor\jquery\plugins\jPages.min.js" />
+    <Content Include="Scripts\vendor\jquery\plugins\jquery.fancybox.pack.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.geocomplete.min.js" />
     <Content Include="Scripts\vendor\jquery\plugins\jquery.timeago.js" />
     <None Include="Scripts\vendor\jquery\plugins\jquery.validate-vsdoc.js" />

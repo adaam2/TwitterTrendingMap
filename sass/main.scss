@@ -27,6 +27,20 @@ a[href^="http://maps.google.com/maps"] {
     background: none !important;
 }
 
+/* Nicholas Gallagher Micro Clearfix hack */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+.cf {
+    *zoom: 1;
+}
+/* end hack */
 input[type="text"] {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
@@ -46,7 +60,28 @@ input[type="text"] {
         text-align: center;
     }
 }
-
+div.trend-stats {
+    background-color: #1abc9c;
+background-image: url('../img/header.svg');
+background-size: 100% 620%;
+background-image: url('../img/header.svg'),	-moz-linear-gradient(75deg, #1abc9c 15%, #16a085 55%);
+background-image: url('../img/header.svg'),	-webkit-linear-gradient(75deg, #1abc9c 15%, #16a085 55%);
+background-image: url('../img/header.svg'),	-o-linear-gradient(75deg, #1abc9c 15%, #16a085 55%);
+background-image: url('../img/header.svg'),	-ms-linear-gradient(75deg, #1abc9c 15%, #16a085 55%);
+background-image: url("../img/header.svg"), linear-gradient(75deg, #1abc9c 15%, #16a085 55%);
+background-size: 128px 128px, 100% 620%,	auto;
+background-repeat: repeat,	no-repeat,	no-repeat;
+    background-size:cover;
+}
+div.trend-stats h1, div.trend-stats h2, div.trend-stats h3 {
+    color:#fff;
+}
+div.trend-stats ol {
+    list-style:decimal !important;
+}
+div.trend-stats ol li {
+    list-style:decimal !important;
+}
 .ns-box {
     z-index: 9999;
     color: #fff;
@@ -76,6 +111,21 @@ input[type="text"] {
             background: #f2f2f2;
             margin-top: 5px;
             margin-bottom: 5px;
+            .tweetmain, .tweetavatar {
+                float:left;
+                height:100%;
+            }
+            .tweetmain {
+                width:75%;
+            }
+            .tweetavatar {
+                width:25%;
+                img {
+                    float:right;
+                    height:60px;
+                    border-radius:35px;
+                }
+            }
         }
     }
 }
@@ -250,17 +300,28 @@ hr {
 main {
     width: 100%;
     div.topTrends {
-        width: 60%;
-        font-size:1.3em;
-        margin: 0 auto;
-        background:#66757f;
-        color:#fff;
+        width: 85%;
+        font-size: 1.3em;
+        color: #888;
+        border: 1px solid #e2e2e2;
+        background: #eee;
+
         ol {
-            list-style:decimal !important;
-            margin:0 auto;
-            width:300px;
+            list-style: decimal !important;
+            margin: 0 auto;
+            width: 86%;
+            display: block;
+            padding: 2em;
+
             li {
                 text-align:left;
+                text-transform:capitalize;
+
+                span.tweet-count {
+                    color:#999;
+                    font-size:0.8em;
+                    text-transform:none !important;
+                }
             }
         }
     }
@@ -273,11 +334,11 @@ main {
     }
     .map-wrapper {
         .canvas,.console {
-            min-height: 650px;
+            min-height: 550px;
         }
         .console {
             ul.live-tweets {
-                max-height: 640px;
+                max-height: 530px;
                 overflow-y: scroll;
                 overflow-x: hidden;
                 li {
@@ -372,6 +433,33 @@ main {
             div.footer {
                 color: #666;
                 display: none;
+            }
+        }
+    }
+}
+
+.entity-tweets {
+    ol {
+        li {
+            min-height:70px;
+            height:auto;
+
+            .tweet-avatar, .tweet-main {
+                display:inline-block;
+            }
+            .tweet-avatar {
+                img {
+                    border-radius: 50px;
+                    width: 50px;
+                }
+            }
+            .tweet-main {
+                vertical-align: middle;
+                background: #f2f2f2;
+                border: 1px solid #e2e2e2;
+                padding: .4em;
+                max-width: 800px;
+                margin: 10px;
             }
         }
     }

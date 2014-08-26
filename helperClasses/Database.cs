@@ -13,57 +13,66 @@ namespace FinalUniProject.helperClasses
 {
     public static class Database
     {
-        private static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString);
+        private static SqlConnection conn;
 
-        public static bool Query(string sqlStr)
+        public static void Query(string sqlStr, List<SqlParameter> parameters)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString))
             {
                 conn.Open();
-                var cmd = new SqlCommand(sqlStr);
-                cmd.ExecuteNonQuery();
-                return true;
+
+                using (SqlCommand cmd = new SqlCommand(sqlStr, conn))
+                {
+                    if (parameters.Count > 0)
+                    {
+                        foreach (SqlParameter param in parameters)
+                        {
+                            cmd.Parameters.AddWithValue(param.ParameterName, param.Value);
+                        }
+                    }
+                    cmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                conn.Dispose();
             }
-            catch (SqlException sqlEx)
-            {
-                return false;
+        }
+        public static void Query(string sqlStr)
+        {
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString)) {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sqlStr, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                conn.Dispose();
             }
         }
         public static DataTable GetAsDataTable(string sqlStr)
         {
-            using (var da = new SqlDataAdapter(sqlStr, conn))
+            var table = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString))
             {
-                var table = new DataTable();
-                da.Fill(table);
-                return table;
+                conn.Open();
+
+                using (SqlDataAdapter da = new SqlDataAdapter(sqlStr, conn))
+                {
+                    table = new DataTable();
+                    
+                    da.Fill(table);
+                }
+
+                conn.Close();
+                conn.Dispose();
             }
+            return table;
         }
         public static string DataTable_To_JSON(DataTable dt)
         {
             return JsonConvert.SerializeObject(dt, Formatting.None);
         }
-        //public List<Entity<Tweet>> ConvertToObject(string sqlStr)
-        //{
-        //    using (conn)
-        //    {
-        //        SqlCommand cmd = new SqlCommand(sqlStr, conn);
-        //        conn.Open();
-
-        //        SqlDataReader reader = cmd.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                //var entity = new Entity<Tweet>()
-        //                //{
-        //                //    Name = reader["entityName"].ToString(),
-                            
-
-        //                //};
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
