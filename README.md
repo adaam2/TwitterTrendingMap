@@ -1,6 +1,8 @@
-FinalUniProject
+TwitterTrendingMap
 ===============
 
-Real time tweets displayed on a map using the Twitter Streaming API, ASP.NET MVC4 and SignalR. There is also an additional NLP segment of this project which involves analyzing each tweet with Stanford's NLP Named Entity Recognizer (NER) that is yet to be completed.
+Real time tweets displayed on a map using the Twitter Streaming API, ASP.NET MVC4 and SignalR, the Stanford NLP library and many other technologies.
 
-More to come! (26/06/2014)
+Trending is calculated using a combination of background tasks and a sorting algorithm to determine trend freshness
+
+Demo at http://dev.wherelionsroam.co.uk
