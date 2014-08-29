@@ -13,10 +13,6 @@ namespace FinalUniProject.Models
         public double NorthWestLongitude { get; set; }
         public double NorthWestLatitude { get; set; }
 
-        //public void Clear()
-        //{
-        //    SouthEastLongitude = SouthEastLatitude = NorthWestLatitude = NorthWestLongitude = null;
-        //}
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

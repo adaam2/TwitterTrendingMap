@@ -278,10 +278,28 @@ $(function () {
                });
                trendLayer.addOverlay(marker);
            };
-            
+           $('#localSearch').geocomplete().bind("geocode:result", function (e, result) {
+
+               var resultBounds = new google.maps.LatLngBounds(
+                   result.geometry.viewport.getSouthWest(),
+                   result.geometry.viewport.getNorthEast()
+               );
+ 
+               var sw = resultBounds.getSouthWest();
+               var ne = resultBounds.getNorthEast();
+               var nw = new google.maps.LatLng(ne.lat(), sw.lng());
+               var se = new google.maps.LatLng(sw.lat(), ne.lng());
+               //alert(resultBounds);
+               twitterHub.server.GetTopEntitiesGeo({ SouthEastLongitude: se.lng(), SouthEastLatitude: se.lat(), NorthWestLongitude: nw.lng(), NorthWestLatitude: nw.lat() }).done(function (result) {
+                   console.log(result);
+               }).fail(function (error) {
+                   console.log('Error: ' + error);
+               });
+           });
            google.maps.event.addListener(map, 'idle', function (event) {
                google.maps.event.addListener(map, 'bounds_changed', function () {
                    var bounds = this.getBounds();
+
                    var sw = bounds.getSouthWest();
                    var ne = bounds.getNorthEast();
                    var nw = new google.maps.LatLng(ne.lat(), sw.lng());

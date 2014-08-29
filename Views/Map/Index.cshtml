@@ -85,30 +85,24 @@
                                     <h3>Tweets for <strong>@entity.Name</strong></h3>
                                     <div class="holder"></div>
                                     <ol class="tweet-list" id="@entity.databaseID">
-                                        @foreach (var tweet in entity.tweets)
-                                        {
+                                        @for (int i = 0; i < entity.tweets.Count; i++) { 
+                                            if (i < 20) { 
                                             <li>
                                                 <div class="tweet-avatar">
-                                                    <img alt="@tweet.User" src="@tweet.ImageUrl" />
+                                                    <img alt="@entity.tweets[i].User" src="@entity.tweets[i].ImageUrl" />
                                                 </div>
                                                 <div class="tweet-main">
                                                     <div class="tweet-text">
-                                                        @Html.Raw(tweet.Text)
+                                                        @Html.Raw(entity.tweets[i].Text)
                                                     </div>
                                                     <div class="tweet-foot">
-                                                        @tweet.User - @tweet.CreatedAt
+                                                        @entity.tweets[i].User - @entity.tweets[i].CreatedAt
                                                     </div>
                                                 </div>
                                             </li>
+                                            }
                                         }
                                     </ol>
-                                    @*<script type="text/javascript">
-                                        $(function () {
-                                            $("div.holder").jPages({
-                                                containerID: '@entity.databaseID'
-                                            });
-                                        });
-                                    </script>*@
                                 </div>
                             </li>
                         }
@@ -145,6 +139,10 @@
                     </ol>
                  </div>
              </div>
+            @*<div class="col-lg-12">
+                <h3>Local Trends</h3>
+                <input type="text" id="localSearch"/>
+            </div>*@
         </div>
     </div>
 </div>

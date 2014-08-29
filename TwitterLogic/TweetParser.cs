@@ -49,6 +49,7 @@ namespace FinalUniProject.TwitterLogic
             RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Hourly);
             RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
             RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
+            RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(), Cron.Daily);
         }
         /// <summary>
         /// This method parses each tweet for its named entities and broadcasts entities that have reached the threshold number to the client (only if they haven't been broadcast before)
@@ -186,35 +187,10 @@ namespace FinalUniProject.TwitterLogic
         private static void BroadcastToHub(Entity<Tweet> entity)
         {
             client.All.broadcastTrend(entity);
-            //SignalRUsers.Users.ForEach(user =>
-            //{
-            //    Debug.WriteLine(user.ConnectionId);
-            //    var usersBounds = user.userBoundingBox;
-            //    if (usersBounds != null)
-            //    {
-            //        //Debug.WriteLine("user bounds isn't null");
-            //        // first check that the average center of all of the tweets for the trend are inside the bounds of the current user
-            //        if (GeoHelper.IsInBounds(entity.averageCenter.Latitude, entity.averageCenter.Longitude, user.ConnectionId))
-            //        {
-
-            //            // next check that the user hasn't stopped the stream
-            //            if (user.isStreamRunning)
-            //            {
-            //                client.Client(user.ConnectionId).broadcastTrend(entity);
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        //Debug.WriteLine("user bounds not set");
-            //        // check that the user hasn't stopped the stream
-            //        if (user.isStreamRunning)
-            //        {
-            //            // no bounds set, so therefore trends are nationwide for this user
-            //            client.Client(user.ConnectionId).broadcastTrend(entity);
-            //        }
-            //    }
-            //});
+        }
+        public static void ClearOutEntityMemory()
+        {
+            namedEntityCollection.Clear();
         }
         public static void RemoveOldEntities()
         {
@@ -297,8 +273,7 @@ namespace FinalUniProject.TwitterLogic
                     List<int> insertedTweetIDs = new List<int>();
 
                     // Loop over each of the tweets in the current entity
-                    //entity.tweets.ForEach(tweet =>
-                    //{
+
                     foreach (Tweet t in entity.tweets) { 
                         if (!t.isDatabase)
                         {
@@ -336,7 +311,7 @@ namespace FinalUniProject.TwitterLogic
                             }
                         }
                     }
-                    //});
+
 
                     // loop over tweet ids and stick them along with corresponding entity ID into the linking table
                     string theLinkingSQL = @"INSERT INTO dbo.EntityTweetLink(entityID, tweetID) VALUES(@entityID, @tweetID)";
@@ -369,18 +344,22 @@ namespace FinalUniProject.TwitterLogic
 
             Database.Query(theDeleteSQL);
         }
-        public static List<Entity<Tweet>> GetTopEntities(EntityType type = EntityType.None, int? number = null)
+        
+        public static List<Entity<Tweet>> GetTopEntities(EntityType type = EntityType.None, int? numberOfEntities = null, BoundingBoxPoint box = null)
         {
             // First initialize new top entities list of T<T>
             List<Entity<Tweet>> topEntities = new List<Entity<Tweet>>();
             string theTopEntitySQL = "";
+            string theTopAmount = "TOP 20";
+
+            if (box != null) theTopAmount = "";
             if (type != EntityType.None) { 
             // Then query the Entities table in the database to get top entities
-                theTopEntitySQL = @"SELECT TOP 20 e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' AND e1.entityTypeID = " + (int)type + " GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' AND e1.entityTypeID = " + (int)type + " GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
             }
             else
             {
-                theTopEntitySQL = @"SELECT TOP 20 e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
                
             }
             // Read the data into a datatable
@@ -433,16 +412,33 @@ namespace FinalUniProject.TwitterLogic
 
                         entity.tweets = tweetList;
 
+                        //if (numberOfTweets != null) entity.tweets = entity.tweets.AsEnumerable().Take(numberOfTweets.Value).ToList();
+
                         topEntities.Add(entity);
                     }
                 }
             }
-            if (number == null) { 
+            // Check if bounding box points have been provided for local search
+            if (box != null)
+            {
+                var filteredList = new List<Entity<Tweet>>();
+                topEntities.ForEach(entity =>
+                {
+                    // check that it is in bounds
+                    if (GeoHelper.IsInBounds(entity.averageCenter.Latitude, entity.averageCenter.Longitude, box))
+                    {
+                        filteredList.Add(entity);                        
+                    }
+                });
+                topEntities = filteredList;
+            }
+            if (numberOfEntities == null)
+            { 
                 return topEntities;
             }
             else
             {
-                return topEntities.OrderByDescending(entity => entity.tweets.Count).Take(number.Value).ToList();
+                return topEntities.OrderByDescending(entity => entity.tweets.Count).Take(numberOfEntities.Value).ToList();
             }
         }
     }

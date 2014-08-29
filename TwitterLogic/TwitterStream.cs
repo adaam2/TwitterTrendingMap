@@ -58,16 +58,7 @@ namespace FinalUniProject.TwitterLogic
         }
         static TwitterStream()
         {
-            //using (StreamReader CsvReader = new StreamReader(HttpContext.Current.Server.MapPath("~/App_Data/exclusionList.csv")))
-            //{
-            //    string inputLine = "";
 
-            //    while ((inputLine = CsvReader.ReadLine()) != null)
-            //    {
-                    
-            //    }
-            //    CsvReader.Close();
-            //}
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
             var clients = context.Clients;
 

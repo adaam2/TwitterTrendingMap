@@ -14,6 +14,8 @@ using FinalUniProject.helperClasses;
 using System.Diagnostics;
 using FinalUniProject.Models;
 using Tweetinvi.Logic.Model;
+using FinalUniProject.NERModels;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace FinalUniProject.Hubs
 {
@@ -40,10 +42,12 @@ namespace FinalUniProject.Hubs
                 Groups.Remove(Context.ConnectionId, groupName);
             }
         }
-        //public void KillStream()
-        //{
-        //    FinalUniProject.TwitterLogic.TwitterStream.KillStream();
-        //}
+        [HubMethodName("GetTopEntitiesGeo")]
+        public List<Entity<FinalUniProject.Models.Tweet>> GetTopEntitiesGeo(BoundingBoxPoint bounds)
+        {
+            var list = TweetParser.GetTopEntities(box: bounds);
+            return list;
+        }
         public void ChangeStreamBounds(BoundingBoxPoint points, string connectionId)
         {
             GeoHelper.SetUserBounds(points,Context.ConnectionId);

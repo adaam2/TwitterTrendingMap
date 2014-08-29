@@ -10,7 +10,10 @@ namespace FinalUniProject.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.TopEntities = TweetParser.GetTopEntities();
+            var topOverall = TweetParser.GetTopEntities();
+
+            ViewBag.TopEntities = topOverall;
+            
             ViewBag.Organisations = TweetParser.GetTopEntities(TweetParser.EntityType.Organisation, 5);
             ViewBag.People = TweetParser.GetTopEntities(TweetParser.EntityType.Person, 5);
             ViewBag.Places = TweetParser.GetTopEntities(TweetParser.EntityType.Place, 5);
