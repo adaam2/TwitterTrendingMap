@@ -17,6 +17,7 @@ namespace FinalUniProject.NERModels
         public abstract List<Tweet> tweets { get; set; }
         public int databaseID { get; set; }
         public bool isDatabase { get; set; }
+        public DateTime LastUpdated { get; set; } // this is only set when pulling back from the db
         public Coordinates averageCenter
         {
             get

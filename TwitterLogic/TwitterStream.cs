@@ -25,9 +25,6 @@ namespace FinalUniProject.TwitterLogic
         public static Coordinates topLeft = new Coordinates(-8.164723, 49.955269);
         public static Coordinates bottomRight = new Coordinates(1.7425, 60.6311);
 
-        // global group name
-        private static string globalStreamGroupName = "Global";
-
         // Bounds as set by the user when they perform any action on the map (zoom_changed, drag_end etc)
         //public static BoundingBoxPoint userSetBounds;
 
@@ -58,16 +55,7 @@ namespace FinalUniProject.TwitterLogic
         }
         static TwitterStream()
         {
-            //using (StreamReader CsvReader = new StreamReader(HttpContext.Current.Server.MapPath("~/App_Data/exclusionList.csv")))
-            //{
-            //    string inputLine = "";
 
-            //    while ((inputLine = CsvReader.ReadLine()) != null)
-            //    {
-                    
-            //    }
-            //    CsvReader.Close();
-            //}
             // Start the stream, establish a remote connection to the hub and return to the client in a nice format
             var clients = context.Clients;
 
