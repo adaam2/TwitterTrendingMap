@@ -70,6 +70,25 @@ namespace FinalUniProject.helperClasses
             }
             return table;
         }
+        public static DataTable GetAsDataTable(string sqlStr, SqlParameterCollection parameters)
+        {
+            var table = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["mainConnection"].ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlDataAdapter da = new SqlDataAdapter(sqlStr, conn))
+                {
+                    table = new DataTable();
+
+                    da.Fill(table);
+                }
+
+                conn.Close();
+                conn.Dispose();
+            }
+            return table;
+        }
         public static string DataTable_To_JSON(DataTable dt)
         {
             return JsonConvert.SerializeObject(dt, Formatting.None);

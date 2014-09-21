@@ -415,6 +415,7 @@
     <Content Include="Views\Tests\Index.cshtml" />
     <Content Include="Views\TwitterError\Index.cshtml" />
     <Content Include="Views\Map\Login.cshtml" />
+    <Content Include="Views\Map\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

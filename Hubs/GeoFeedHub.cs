@@ -29,6 +29,7 @@ namespace FinalUniProject.Hubs
                 var user = SignalRUsers.Users.Find(e => e.ConnectionId == Context.ConnectionId);
                 user.isStreamRunning = true;
                 Groups.Add(Context.ConnectionId, groupName);
+                
                 return true;
             }
             return false;

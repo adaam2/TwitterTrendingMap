@@ -46,9 +46,9 @@ namespace FinalUniProject.TwitterLogic
         static TweetParser()
         {
             // setup recurring jobs
-            RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Hourly);
+            RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Daily);
             RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
-            RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
+            //RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
             RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(), Cron.Daily);
         }
         /// <summary>
@@ -212,14 +212,14 @@ namespace FinalUniProject.TwitterLogic
 
             IEnumerable<Entity<Tweet>> topList = null;
 
-            if (namedEntityCollection.Count > 20)
-            {
-                topList = namedEntityCollection.OrderByDescending(entity => entity.tweets.Count).Take(20);
-            }
-            else
-            {
-                topList = namedEntityCollection.OrderByDescending(entity => entity.tweets.Count).Take(namedEntityCollection.Count);
-            }
+            //if (namedEntityCollection.Count > 20)
+            //{
+                topList = namedEntityCollection.Where(entity => entity.tweets.Count > 5);
+            //}
+            //else
+            //{
+            //    topList = namedEntityCollection.OrderByDescending(entity => entity.tweets.Count).Take(namedEntityCollection.Count);
+            //}
 
             // Loop over each of the entities in the top list (usually 20 in the list)
             foreach (Entity<Tweet> entity in topList.ToList())
@@ -345,21 +345,28 @@ namespace FinalUniProject.TwitterLogic
             Database.Query(theDeleteSQL);
         }
         
-        public static List<Entity<Tweet>> GetTopEntities(EntityType type = EntityType.None, int? numberOfEntities = null, BoundingBoxPoint box = null)
+        public static List<Entity<Tweet>> GetTopEntities(EntityType type = EntityType.None, int? numberOfEntities = null, BoundingBoxPoint box = null, bool isLastUpdatedQuery = false)
         {
             // First initialize new top entities list of T<T>
             List<Entity<Tweet>> topEntities = new List<Entity<Tweet>>();
             string theTopEntitySQL = "";
             string theTopAmount = "TOP 20";
 
-            if (box != null) theTopAmount = "";
+            if (box != null)
+            {
+                theTopAmount = "";
+            }
             if (type != EntityType.None) { 
             // Then query the Entities table in the database to get top entities
-                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' AND e1.entityTypeID = " + (int)type + " GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' AND e1.entityTypeID = " + (int)type + " GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc"; //and MAX(lastUpdated) > DATEADD(Day, -" + int.Parse(ConfigurationManager.AppSettings["maxEntityLastUpdatedDaySpan"]) + ", GETDATE())
+            }
+            else if (isLastUpdatedQuery)
+            {
+                theTopEntitySQL = @"SELECT TOP 10 e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY lastUpdated desc";
             }
             else
             {
-                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc";
+                theTopEntitySQL = @"SELECT " + theTopAmount + " e1.entityName as entityName, COUNT(dbo.Tweets.ID) as tweetCount, MAX(e1.lastUpdated) as lastUpdated, STUFF((SELECT ', ' + cast(ID as varchar(20)) from dbo.Entities e2 where e2.entityName = e1.entityName FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'),1,1,'') as listOfIDs, MAX(e1.ID) as theID, MAX(entityTypeID) as entityTypeID from dbo.Entities e1 INNER JOIN dbo.EntityTweetLink on e1.ID = dbo.EntityTweetLink.entityID INNER JOIN dbo.Tweets on dbo.EntityTweetLink.tweetID = dbo.Tweets.ID WHERE dbo.Tweets.tweetEncodedText not like '%5SOS%' GROUP BY e1.entityName HAVING COUNT(dbo.Tweets.ID) > 5 ORDER BY COUNT(dbo.Tweets.ID) desc"; // and MAX(lastUpdated) > DATEADD(Day, -" + int.Parse(ConfigurationManager.AppSettings["maxEntityLastUpdatedDaySpan"]) + ", GETDATE())
                
             }
             // Read the data into a datatable
@@ -382,6 +389,11 @@ namespace FinalUniProject.TwitterLogic
                         entity.Name = row["entityName"].ToString();
                         entity.databaseID = int.Parse(row["theID"].ToString());
                         entity.entityType = NamedEntityExtensions.GetEntityNameFromDatabaseID(theEntityTypeID);
+
+                        if (isLastUpdatedQuery)
+                        {
+                            entity.LastUpdated = DateTime.Parse(row["lastUpdated"].ToString());
+                        }
 
                         // for each entity, get list of ids from entity result set and filter on those ids 
                         string theIDs = row["listOfIDs"].ToString();

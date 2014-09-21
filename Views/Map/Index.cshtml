@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "News Before It Happens: Twitter Real-time Data Visualisation";
 }
-<div class="container-fluid">
+<div class="container-fluid" style="border-bottom: 1px solid #bbb;">
     <div class="row geocomplete">
         <div class="col-xs-7">
             <div class="input-group">
@@ -14,14 +14,14 @@
         <div class="col-xs-5">
             <span class="pull-right">
                 <button type="button" title="Reset the map to its original state and zoom level" id="reset-map" class="btn btn-default">
-                    Reset Map
+                    <i class="fa fa-refresh"></i>
                 </button>
-                <button type="button" id="startStream" class="btn btn-success" disabled="disabled">
-                    Start Stream
+                <button type="button" id="startStream" title="Start stream" class="btn btn-success" disabled="disabled">
+                    <i class="fa fa-rocket"></i>
                     <span class="progress"></span>
                 </button>
-                <button type="button" id="stopStream" class="btn btn-danger">
-                    Stop Stream
+                <button type="button" title="Stop stream" id="stopStream" class="btn btn-danger">
+                    <i class="fa fa-times-circle"></i>
                     <span class="progress"></span>
                 </button>
             </span>
@@ -42,14 +42,14 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid" style="border-top: 1px solid #bbb;">
     <div class="row switchoverlay">
         <div class="col-lg-12">
             <button type="button" id="switch" class="btn btn-warning">Switch to Trends</button>
         </div>
     </div>
 </div>
-<div class="ww">
+@*<div class="ww">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 centered">
@@ -64,85 +64,4 @@
             </div><!-- /col-lg-8 -->
         </div><!-- /row -->
     </div><!-- /ww -->
-</div>
-<div class="ww trend-stats">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 centered">
-                <h1>The Vital Statistics</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 centered">
-                <h2>Top Trends (Overall)</h2>
-                <div class="topTrends col-md-offset-1">
-                    <ol>
-                        @foreach (var entity in ViewBag.TopEntities)
-                        {
-                            <li>
-                                <a class="entity-tweets-link" href="#@entity.databaseID">@entity.Name</a> - <span class="tweet-count">@entity.tweets.Count tweets</span>
-                                <div style="display:none;" id="@entity.databaseID" class="entity-tweets">
-                                    <h3>Tweets for <strong>@entity.Name</strong></h3>
-                                    <div class="holder"></div>
-                                    <ol class="tweet-list" id="@entity.databaseID">
-                                        @for (int i = 0; i < entity.tweets.Count; i++) { 
-                                            if (i < 20) { 
-                                            <li>
-                                                <div class="tweet-avatar">
-                                                    <img alt="@entity.tweets[i].User" src="@entity.tweets[i].ImageUrl" />
-                                                </div>
-                                                <div class="tweet-main">
-                                                    <div class="tweet-text">
-                                                        @Html.Raw(entity.tweets[i].Text)
-                                                    </div>
-                                                    <div class="tweet-foot">
-                                                        @entity.tweets[i].User - @entity.tweets[i].CreatedAt
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            }
-                                        }
-                                    </ol>
-                                </div>
-                            </li>
-                        }
-                    </ol>
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <h3>Trends about <i>People</i></h3>
-                <div class="topTrends">
-                    <ol id="people-trends">
-                        @foreach (var entity in ViewBag.People)
-                        {
-                            <li>@entity.Name</li>
-                        }
-                    </ol>
-                </div>
-                    <h3>Trends about <i>Places</i></h3>
-                <div class="topTrends">
-                    <ol id="place-trends">
-                        @foreach (var entity in ViewBag.Places)
-                        {
-                            <li>@entity.Name</li>
-                        }
-                    </ol>
-                </div>
-                    <h3>Trends about <i>Organisations</i></h3>
-                <div class="topTrends">
-                    <ol id="organsation-trends">
-                        @foreach (var entity in ViewBag.Organisations)
-                        {
-                            <li>@entity.Name</li>
-                        }
-                    </ol>
-                 </div>
-             </div>
-            @*<div class="col-lg-12">
-                <h3>Local Trends</h3>
-                <input type="text" id="localSearch"/>
-            </div>*@
-        </div>
-    </div>
-</div>
+</div>*@

@@ -111,3 +111,4 @@ Z:\Dropbox\FinalUniProject\FinalUniProject\bin\tr\CronExpressionDescriptor.resou
 Z:\Dropbox\FinalUniProject\FinalUniProject\bin\zh-CHS\CronExpressionDescriptor.resources.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.dll
 Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.pdb
+Z:\Dropbox\FinalUniProject\FinalUniProject\obj\Debug\FinalUniProject.csprojResolveAssemblyReference.cache

@@ -11,11 +11,11 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/css\/demo.css": {
+	"\/css\/animate.css": {
 		"fileType": 16,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/css\/demo.css",
+		"inputAbbreviatedPath": "\/css\/animate.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -76,6 +76,15 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/css\/font-awesome.min.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/css\/github.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/github.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -170,6 +179,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/css\/style.css": {
+		"fileType": 16,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/css\/style.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/img\/bg-blue.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -210,17 +228,6 @@
 		"initialSize": 254429,
 		"inputAbbreviatedPath": "\/img\/bg-pink.jpg",
 		"outputAbbreviatedPath": "\/img\/bg-pink.jpg",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/img\/blog01.jpg": {
-		"fileType": 16384,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 132570,
-		"inputAbbreviatedPath": "\/img\/blog01.jpg",
-		"outputAbbreviatedPath": "\/img\/blog01.jpg",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -276,6 +283,17 @@
 		"initialSize": 2099,
 		"inputAbbreviatedPath": "\/img\/marker.png",
 		"outputAbbreviatedPath": "\/img\/marker.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/img\/preload.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 845,
+		"inputAbbreviatedPath": "\/img\/preload.png",
+		"outputAbbreviatedPath": "\/img\/preload.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
@@ -2482,50 +2500,6 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/Scripts\/vendor\/jquery\/plugins\/min\/infinite-scroll.min-ck.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/infinite-scroll.min-ck.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/min\/infinite-scroll.min-ck-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/Scripts\/vendor\/jquery\/plugins\/min\/jquery.geocomplete.min-ck.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/jquery.geocomplete.min-ck.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/min\/jquery.geocomplete.min-ck-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/min\/splitter-ck-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/Scripts\/vendor\/jquery\/plugins\/splitter.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/splitter.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/plugins\/min\/splitter-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
 	"\/Scripts\/vendor\/jquery\/signalr\/jquery.signalR-2.0.3.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -2565,28 +2539,6 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/ui\/jquery-ui-1.8.24.min.js",
 		"outputAbbreviatedPath": "\/Scripts\/vendor\/jquery\/ui\/min\/jquery-ui-1.8.24.min-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/Scripts\/vendor\/misc\/hover.zoom.conf.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/misc\/hover.zoom.conf.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/misc\/min\/hover.zoom.conf-ck.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 1,
-		"syntaxCheckerStyle": 1
-		},
-	"\/Scripts\/vendor\/misc\/hover.zoom.js": {
-		"fileType": 64,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Scripts\/vendor\/misc\/hover.zoom.js",
-		"outputAbbreviatedPath": "\/Scripts\/vendor\/misc\/min\/hover.zoom-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

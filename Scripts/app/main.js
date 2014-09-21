@@ -289,6 +289,7 @@ $(function () {
                var ne = resultBounds.getNorthEast();
                var nw = new google.maps.LatLng(ne.lat(), sw.lng());
                var se = new google.maps.LatLng(sw.lat(), ne.lng());
+               
                //alert(resultBounds);
                twitterHub.server.GetTopEntitiesGeo({ SouthEastLongitude: se.lng(), SouthEastLatitude: se.lat(), NorthWestLongitude: nw.lng(), NorthWestLatitude: nw.lat() }).done(function (result) {
                    console.log(result);

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Tweetinvi.Logic.Model;
-using FinalUniProject.Models;
 using System.Threading;
 namespace FinalUniProject
 {
