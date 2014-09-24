@@ -131,7 +131,13 @@ function Initialize() {
 
 /* Doc Ready stuff */
 $(function () {
-
+    $('.entity-tweets-link').fancybox({
+        helpers: {
+            overlay: {
+                locked: false
+            }
+        }
+    });
     Initialize();
 
             twitterHub.client.BroadcastNewUserToHub = function (user) {
@@ -206,13 +212,7 @@ $(function () {
            $('#reset-map').click(function () {
                fitToUKBounds(map);
            });
-           $('.entity-tweets-link').fancybox({
-               helpers: {
-                   overlay: {
-                       locked: false
-                   }
-               }
-           });
+
            $.connection.hub.start()
                .done(function () {
                    subscribeGlobalStream();
