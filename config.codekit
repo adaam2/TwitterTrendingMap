@@ -188,6 +188,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/img\/b29eb36104683d7019e7fa301f92861e.jpeg": {
+		"fileType": 16384,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 55370,
+		"inputAbbreviatedPath": "\/img\/b29eb36104683d7019e7fa301f92861e.jpeg",
+		"outputAbbreviatedPath": "\/img\/b29eb36104683d7019e7fa301f92861e.jpeg",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/img\/bg-blue.jpg": {
 		"fileType": 16384,
 		"ignore": 0,

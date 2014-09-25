@@ -30,7 +30,10 @@ a[href^="http://maps.google.com/maps"] {
 .gmnoprint a, .gmnoprint span {
     display: none;
 }
-
+.tweet-avatar img {
+    background-image:url('../img/noimage.gif');
+    background-repeat:no-repeat;
+}
 .gmnoprint div {
     background: none !important;
 }
@@ -484,7 +487,7 @@ main {
                 background: #f2f2f2;
                 border: 1px solid #e2e2e2;
                 padding: .4em;
-                max-width: 800px;
+                max-width: 630px;
                 margin: 10px;
             }
         }
