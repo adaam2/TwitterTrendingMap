@@ -140,9 +140,9 @@ $(function () {
     });
     Initialize();
 
-            twitterHub.client.BroadcastNewUserToHub = function (user) {
-                console.log(user);
-            };
+            //twitterHub.client.BroadcastNewUserToHub = function (user) {
+            //    //console.log(user);
+            //};
            twitterHub.client.broadcastTweetMessage = function (tweet) {
                counter++;
                $('#tweet-count').html(counter);
@@ -194,6 +194,11 @@ $(function () {
                        mc.setMap(null);
                        tweetLayer.hide();
                        trendLayer.show();
+
+                       // show trends
+                       $('.console h3.title').text('Live Trends');
+                       $('.live-tweets').addClass('hidden');
+                       $('.live-trends').removeClass('hidden');
                        $('#switch').removeClass('btn-warning');
                        $('#switch').addClass('btn-default');
                        $('#switch').html('Switch to Tweets');
@@ -202,6 +207,11 @@ $(function () {
                        mc.setMap(map);                  
                        trendLayer.hide();
                        tweetLayer.show();
+
+                       // hide trends
+                       $('.live-trends').addClass('hidden');
+                       $('.live-tweets').removeClass('hidden');
+                       $('.console h3.title').text('Live Tweets');
                        $('#switch').addClass('btn-warning');
                        $('#switch').removeClass('btn-default');
                        $('#switch').html('Switch to Trends');
@@ -253,8 +263,13 @@ $(function () {
                        notification.show();
                    });
                });
-           twitterHub.client.debug = function (message) {
-               alert(message);
+           //twitterHub.client.debug = function (message) {
+           //    alert(message);
+    //};
+           twitterHub.client.receiveTrendToConsole = function (entity) {
+               // add trend mention to console
+               var listitem = '<li>' + entity.Name + '<span class="plusone">+1 mention</span></li>';
+               $('.live-trends').prepend(listitem);
            };
            twitterHub.client.broadcastTrend = function (entity) {
                var marker = new google.maps.Marker({

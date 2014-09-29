@@ -103,7 +103,9 @@ div.trend-stats ol li {
     z-index: 9999;
     color: #fff;
 }
-
+.hidden {
+    display:none;
+}
 .stop {
     background-color: #CB2E25;
 }
@@ -366,16 +368,24 @@ main {
             min-height: 550px;
         }
         .console {
-            ul.live-tweets {
-                max-height: 530px;
+            ul.live-tweets, ul.live-trends {
+                max-height: 480px;
                 overflow-y: scroll;
                 overflow-x: hidden;
                 li {
                     border-radius: 15px;
                     padding: 1.2em;
-                    margin: 1em;
+                    margin: 10px 0 10px 0;
                     border: 1px solid #e2e2e2;
                     background-color: #f2f2f2;
+                    span.plusone {
+                        float: right;
+                        color: green;
+                        height: 100%;
+                        font-weight: bolder;
+                        font-size: 1em;
+                        text-transform: uppercase;
+                    }
                     &:after {
                         content: ' ';
                         display: table;
