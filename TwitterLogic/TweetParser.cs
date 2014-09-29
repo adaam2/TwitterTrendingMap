@@ -46,10 +46,10 @@ namespace FinalUniProject.TwitterLogic
         static TweetParser()
         {
             // setup recurring jobs
-            RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Daily);
-            RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
+            //RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Daily);
+            //RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
             //RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
-            RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(), Cron.Daily);
+            //RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(),"0 0 0 1/3 * ? *");
         }
         /// <summary>
         /// This method parses each tweet for its named entities and broadcasts entities that have reached the threshold number to the client (only if they haven't been broadcast before)
@@ -88,6 +88,10 @@ namespace FinalUniProject.TwitterLogic
                         {
                             namedEntityCollection.Add(entity);
                         }
+
+                        // finally, broadcast singular entity to console
+
+                        client.All.receiveTrendToConsole(entity);
                     }
                 }
             }
@@ -214,7 +218,8 @@ namespace FinalUniProject.TwitterLogic
 
             //if (namedEntityCollection.Count > 20)
             //{
-                topList = namedEntityCollection.Where(entity => entity.tweets.Count > 5);
+                //topList = namedEntityCollection.Where(entity => entity.tweets.Count > 5);
+            topList = namedEntityCollection;
             //}
             //else
             //{
