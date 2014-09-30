@@ -1,21 +1,6 @@
 ﻿/*-- Global variables --*/
 var map, mc, addedToMap = [], tweetLayer, trendLayer, counter = 0, bounds = new google.maps.LatLngBounds(), twitterHub = $.connection.geoFeedHub, startBtn = $('#startStream'), stopBtn = $('#stopStream'), iconBase = 'http://dev.wherelionsroam.co.uk/';
-var stylez = [{
-    "featureType": "road",
-    "stylers": [
-        {
-            "visibility": "off"
-        }
-    ]
-},
-    {
-        "featureType": "transit",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    }, { "featureType": "water", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "color": "#C6E2FF" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "color": "#C5E3BF" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "color": "#D1D1B8" }] }];
+var stylez = [{ "featureType": "water", "stylers": [{ "saturation": 43 }, { "lightness": -11 }, { "hue": "#0088ff" }] }, { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "hue": "#ff0000" }, { "saturation": -100 }, { "lightness": 99 }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "color": "#808080" }, { "lightness": 54 }] }, { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ece2d9" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "color": "#ccdca1" }] }, { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#767676" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] }, { "featureType": "poi", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#b8cb93" }] }, { "featureType": "poi.park", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.sports_complex", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.medical", "stylers": [{ "visibility": "on" }] }, { "featureType": "poi.business", "stylers": [{ "visibility": "simplified" }] }];
 var map_options = {
     backgroundColor: '#A3A3A3',
     disableDoubleClickZoom: true,
@@ -273,7 +258,7 @@ $(function () {
                var listitem = '<li class="trend ' + entity.entityType.toLowerCase() + '">' + entity.Name + '<span class="plusone">' + entity.tweets.length + ' Mentions (+1)</span></li>';
                $('.live-trends').prepend(listitem);
               
-               if (entity.tweets.length > 5 && $.inArray(entity.Name, addedToMap) == -1) {
+               if (entity.tweets.length >= 5 && $.inArray(entity.Name, addedToMap) == -1) {
                    addedToMap.push(entity.Name);
                var marker = new google.maps.Marker({
                    position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),

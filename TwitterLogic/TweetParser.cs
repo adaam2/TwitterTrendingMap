@@ -47,7 +47,7 @@ namespace FinalUniProject.TwitterLogic
         {
             // setup recurring jobs
             //RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Daily);
-            //RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Daily);
+            RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Hourly);
             //RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
             //RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(),"0 0 0 1/3 * ? *");
         }
