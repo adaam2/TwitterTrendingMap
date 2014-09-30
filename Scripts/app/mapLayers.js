@@ -34,7 +34,6 @@ CustomOverlay.prototype.hide = function () {
     this.setMap(null);
     this.hidden = true;
     for (var i = 0; i < this.overlays.length; i++) {
-        // this.overlays[i].setMap(null);
         this.overlays[i].setVisible(false);
     }
 };
@@ -42,7 +41,6 @@ CustomOverlay.prototype.show = function () {
     this.setMap(map);
     this.hidden = false;
     for (var i = 0; i < this.overlays.length; i++) {
-        // this.overlays[i].setMap(map);
         this.overlays[i].setVisible(true); // use setVisible as setMap is too verbose and decouples from DOM
     }
 };

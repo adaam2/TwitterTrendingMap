@@ -1,5 +1,5 @@
 ﻿/*-- Global variables --*/
-var map, mc, tweetLayer, trendLayer, counter = 0, bounds = new google.maps.LatLngBounds(), twitterHub = $.connection.geoFeedHub, startBtn = $('#startStream'), stopBtn = $('#stopStream'), iconBase = 'http://dev.wherelionsroam.co.uk/';
+var map, mc, addedToMap = [], tweetLayer, trendLayer, counter = 0, bounds = new google.maps.LatLngBounds(), twitterHub = $.connection.geoFeedHub, startBtn = $('#startStream'), stopBtn = $('#stopStream'), iconBase = 'http://dev.wherelionsroam.co.uk/';
 var stylez = [{
     "featureType": "road",
     "stylers": [
@@ -180,9 +180,6 @@ $(function () {
                    $('ul.live-tweets').prepend(list_item);
                }
            }
-           twitterHub.client.broadcastLog = function (message) {
-               console.log(message);
-           };
 
            $('#switch').click(function () {
                $('.loader').show('fade', 100);
@@ -266,12 +263,18 @@ $(function () {
            //twitterHub.client.debug = function (message) {
            //    alert(message);
     //};
-           twitterHub.client.receiveTrendToConsole = function (entity) {
-               // add trend mention to console
-               var listitem = '<li>' + entity.Name + '<span class="plusone">+1 mention</span></li>';
-               $('.live-trends').prepend(listitem);
-           };
+           //twitterHub.client.receiveTrendToConsole = function (entity) {
+           //    // add trend mention to console
+           //    var listitem = '<li>' + entity.Name + '<span class="plusone">+1 mention</span></li>';
+           //    $('.live-trends').prepend(listitem);
+           //};
            twitterHub.client.broadcastTrend = function (entity) {
+
+               var listitem = '<li class="trend ' + entity.entityType.toLowerCase() + '">' + entity.Name + '<span class="plusone">' + entity.tweets.length + ' Mentions (+1)</span></li>';
+               $('.live-trends').prepend(listitem);
+              
+               if (entity.tweets.length > 5 && $.inArray(entity.Name, addedToMap) == -1) {
+                   addedToMap.push(entity.Name);
                var marker = new google.maps.Marker({
                    position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),
                    title: entity.Name,
@@ -292,6 +295,7 @@ $(function () {
                    infowindow.open(map, marker);
                });
                trendLayer.addOverlay(marker);
+               }
            };
            $('#localSearch').geocomplete().bind("geocode:result", function (e, result) {
 

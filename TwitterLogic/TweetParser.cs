@@ -75,14 +75,14 @@ namespace FinalUniProject.TwitterLogic
                             var matched = namedEntityCollection.Find(item => item.Name.Trim().ToLower() == entity.Name.Trim().ToLower());
                             matched.tweets.AddRange(entity.tweets);
 
-                            if (matched.tweets.Count >= thresholdNumber)
-                            {
-                                if (!broadcastedEntities.Contains(matched.Name.ToString().Trim().ToLower()))
-                                {
+                            //if (matched.tweets.Count >= thresholdNumber)
+                            //{
+                                //if (!broadcastedEntities.Contains(matched.Name.ToString().Trim().ToLower()))
+                                //{
                                     broadcastedEntities.Add(matched.Name.ToString().Trim().ToLower());
-                                    BroadcastToHub(matched);
-                                }
-                            }
+                                    client.All.broadcastTrend(matched);
+                                //}
+                            //}
                         }
                         else
                         {
@@ -91,7 +91,7 @@ namespace FinalUniProject.TwitterLogic
 
                         // finally, broadcast singular entity to console
 
-                        client.All.receiveTrendToConsole(entity);
+                        //client.All.receiveTrendToConsole(entity);
                     }
                 }
             }
