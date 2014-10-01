@@ -37,19 +37,10 @@ namespace FinalUniProject.TwitterLogic
 
         public static readonly TimeSpan maxAge = new TimeSpan(0, 10, 0); // 10 minutes is the max age of tweets allowed in a named entity before it gets deleted
 
-        public static readonly int thresholdNumber = 5;
-        //public static readonly int thresholdNumber = 10; //number of matching tweets needed to broadcast "trend" to the hub
-
-        // array holding names of entities that have been broadcast already - pop this array every 5 minutes to ensure entities previously mentioned can be broadcast again.
-        public static List<string> broadcastedEntities = new List<string>();
-
         static TweetParser()
         {
-            // setup recurring jobs
-            //RecurringJob.AddOrUpdate(() => RemoveOldEntities(), Cron.Daily);
+            // setup recurring job
             RecurringJob.AddOrUpdate(() => SaveTopEntities(), Cron.Hourly);
-            //RecurringJob.AddOrUpdate(() => DeleteOldTweetsFromDatabase(), Cron.Weekly);
-            //RecurringJob.AddOrUpdate(() => ClearOutEntityMemory(),"0 0 0 1/3 * ? *");
         }
         /// <summary>
         /// This method parses each tweet for its named entities and broadcasts entities that have reached the threshold number to the client (only if they haven't been broadcast before)
@@ -63,35 +54,33 @@ namespace FinalUniProject.TwitterLogic
             {
                 if (namedEntityCollection.Count < 1)
                 {
-                    //Debug.WriteLine("entities added for first time");
+                    // if the named entity collection has not got any entities in it, then assign its value to current entity (this is for scenarios where the app pool has recycled)
                     namedEntityCollection = entitiesForCurrentTweet;
                 }
                 else
                 {
                     foreach (var entity in entitiesForCurrentTweet)
                     {
+                        // check to see if the collection contains an entity with the matching name already
                         if (namedEntityCollection.Any(item => item.Name.Trim().ToLower() == entity.Name.Trim().ToLower()))
                         {
+                            // obtain reference to matching entity in collection
                             var matched = namedEntityCollection.Find(item => item.Name.Trim().ToLower() == entity.Name.Trim().ToLower());
+
+                            // add new tweets to matched entity
                             matched.tweets.AddRange(entity.tweets);
 
-                            //if (matched.tweets.Count >= thresholdNumber)
-                            //{
-                                //if (!broadcastedEntities.Contains(matched.Name.ToString().Trim().ToLower()))
-                                //{
-                                    broadcastedEntities.Add(matched.Name.ToString().Trim().ToLower());
-                                    client.All.broadcastTrend(matched);
-                                //}
-                            //}
+                            // broadcast entity to client
+                            SignalRHelper.Broadcast(matched);
                         }
                         else
                         {
+                            // add the entity as a brand new entity to master collection
                             namedEntityCollection.Add(entity);
+
+                            // broadcast entity with singular tweet attached to client
+                            SignalRHelper.Broadcast(entity);
                         }
-
-                        // finally, broadcast singular entity to console
-
-                        //client.All.receiveTrendToConsole(entity);
                     }
                 }
             }

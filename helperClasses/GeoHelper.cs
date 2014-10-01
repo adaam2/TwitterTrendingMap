@@ -76,8 +76,10 @@ namespace FinalUniProject
         /// <returns></returns>
         public static bool IsInBounds(double lat, double lng, string connectionId)
         {
+           // if (lat == 0 || lng == 0) return true;
             SignalRUser user = SignalRUsers.Users.Find(e => e.ConnectionId == connectionId);
             BoundingBoxPoint userSetBounds = user.userBoundingBox;
+            if (userSetBounds == null) return true;
             if ((lat <= userSetBounds.NorthWestLatitude && lat >= userSetBounds.SouthEastLatitude) && (lng >= userSetBounds.NorthWestLongitude && lng <= userSetBounds.SouthEastLongitude))
             {
                 // The point is in the box

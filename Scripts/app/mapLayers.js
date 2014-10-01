@@ -12,9 +12,12 @@ function CustomOverlay(map,hidden) {
     }
 }
 CustomOverlay.prototype.addOverlay = function (overlay) {    
-    if (this.getMap() !== null) {
+    if (!this.hidden) {
         this.overlays.push(overlay);
         this.updateOverlays();
+    } else {
+        overlay.setVisible(false);
+        this.overlays.push(overlay);
     }
 };
 
@@ -35,6 +38,7 @@ CustomOverlay.prototype.hide = function () {
     this.hidden = true;
     for (var i = 0; i < this.overlays.length; i++) {
         this.overlays[i].setVisible(false);
+        
     }
 };
 CustomOverlay.prototype.show = function () {
@@ -42,6 +46,7 @@ CustomOverlay.prototype.show = function () {
     this.hidden = false;
     for (var i = 0; i < this.overlays.length; i++) {
         this.overlays[i].setVisible(true); // use setVisible as setMap is too verbose and decouples from DOM
+       
     }
 };
 CustomOverlay.prototype.draw = function () { };

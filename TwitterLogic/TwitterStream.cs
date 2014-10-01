@@ -122,28 +122,7 @@ namespace FinalUniProject.TwitterLogic
                             URL = "https://twitter.com/" + tweetargs.Creator.ScreenName.ToLower() + "/status/" + tweetargs.IdStr
                         };
                         // pass complex TweetModel object to the client
-                        SignalRUsers.Users.ForEach(user =>
-                        {
-                            // for each connected signalr user, get their location and check bounds, then broadcast
-                            var usersBounds = user.userBoundingBox;
-                            if (usersBounds != null)
-                            {
-                                if (GeoHelper.IsInBounds(tweet.Latitude, tweet.Longitude,user.ConnectionId))
-                                {
-                                    if (user.isStreamRunning) { 
-                                        clients.Client(user.ConnectionId).broadcastTweetMessage(tweet);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (user.isStreamRunning)
-                                {
-                                    // no bounds set, so therefore nationwide for this user
-                                    clients.Client(user.ConnectionId).broadcastTweetMessage(tweet);
-                                }
-                            }
-                        });
+                        SignalRHelper.Broadcast(tweet);
 
                         TweetParser.ProcessTweet(tweet);
                     }

@@ -17,10 +17,11 @@ var map_options = {
 };
 var buildTrendWindow = function(trend){
     var tweets = trend.tweets;
-    var html = "<div class='trendTweetsWrapper'><h3>Tweets for " + trend.title + "</h3><ul>";
-     $.each(trend.data.tweets,function(i,item){
-         
-         html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
+    var html = "<div class='trendTweetsWrapper' data-trend=\"" + trend.title.toLowerCase() + "\"><h3>Recent Tweets for " + trend.title + "</h3><ul>";
+     $.each(trend.data.tweets, function(i,item){
+         if (i <= 10) {
+             html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
+         }
     });
     html += "</ul></div>";
     return html;
@@ -123,11 +124,10 @@ $(function () {
             }
         }
     });
+
+    // initialize the map interface
     Initialize();
 
-            //twitterHub.client.BroadcastNewUserToHub = function (user) {
-            //    //console.log(user);
-            //};
            twitterHub.client.broadcastTweetMessage = function (tweet) {
                counter++;
                $('#tweet-count').html(counter);
@@ -136,9 +136,9 @@ $(function () {
                    position: new google.maps.LatLng(tweet.Latitude, tweet.Longitude),
                    title: tweet.Text + ' by @' + tweet.User
                });
-               if(tweetLayer.hidden){
-                  marker.setVisible(false);
-               }
+               //if(tweetLayer.hidden){
+               //   marker.setVisible(false);
+               //}
                tweetLayer.addOverlay(marker);
                //tweetLayer.setMap(map);
                var infowindow = new google.maps.InfoWindow({
@@ -153,7 +153,7 @@ $(function () {
                mc.repaint();
                // add to console, and clear out earliest list item if list size > arbitrary number
                var list_size = $('ul.live-tweets li').size();
-               var max_list_size = 50;
+               var max_list_size = 30;
                var list_item = '<li class="tweet-item"><span class="tweet-avatar"><a target="_blank" href="https://www.twitter.com/' + tweet.User + '"><img alt="' + tweet.User + 's profile picture" class="img-thumbnail" src="' + tweet.ImageUrl + '"/></a></span><span class="tweet-content">' + tweet.Text + '</span><span class="tweet-author">@' + tweet.User + '</span></li>';
 
                // randomize selection of tweets for display to ensure that tweets can be read.
@@ -186,6 +186,7 @@ $(function () {
                        $('#switch').html('Switch to Tweets');
                    } else {
                        mc.repaint();
+                       
                        mc.setMap(map);                  
                        trendLayer.hide();
                        tweetLayer.show();
@@ -198,8 +199,8 @@ $(function () {
                        $('#switch').removeClass('btn-default');
                        $('#switch').html('Switch to Trends');
                    }
-                   $('.loader').hide('fade', 100);
-               }, 300);
+                   $('.loader').hide('fade', 250);
+               }, 350);
            });
            $('#reset-map').click(function () {
                fitToUKBounds(map);
@@ -245,62 +246,47 @@ $(function () {
                        notification.show();
                    });
                });
-           //twitterHub.client.debug = function (message) {
-           //    alert(message);
-    //};
-           //twitterHub.client.receiveTrendToConsole = function (entity) {
-           //    // add trend mention to console
-           //    var listitem = '<li>' + entity.Name + '<span class="plusone">+1 mention</span></li>';
-           //    $('.live-trends').prepend(listitem);
-           //};
-           twitterHub.client.broadcastTrend = function (entity) {
 
-               var listitem = '<li class="trend ' + entity.entityType.toLowerCase() + '">' + entity.Name + '<span class="plusone">' + entity.tweets.length + ' Mentions (+1)</span></li>';
+           twitterHub.client.broadcastTrend = function (entity) {
+               var cssClass = '';
+               if (entity.tweets.length >= 5) {
+                   cssClass = 'broadcasted';
+               } else {
+                   cssClass = 'unbroadcasted';
+               }
+               var listitem = '<li class="trend trend-' + cssClass + ' ' + entity.entityType.toLowerCase() + '">' + entity.Name + '<span class="plusone">' + entity.tweets.length + ' Mentions (+1)</span></li>';
+
+               
                $('.live-trends').prepend(listitem);
               
-               if (entity.tweets.length >= 5 && $.inArray(entity.Name, addedToMap) == -1) {
-                   addedToMap.push(entity.Name);
-               var marker = new google.maps.Marker({
-                   position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),
-                   title: entity.Name,
-                   data: {
-                       tweets: entity.tweets,
-                       type: entity.entityType
-                   },
-                   icon: '/img/trends/' + entity.entityType + '.png'
-               });
-               //console.log(marker.data);
-               var infowindow = new google.maps.InfoWindow({
-                   content: buildTrendWindow(marker),
-                   maxWidth: 400,
-                   pixelOffset:new google.maps.Size(15,15)
-               });
-               google.maps.event.addListener(marker, 'click', function () {
-                   map.panTo(marker.getPosition());
-                   infowindow.open(map, marker);
-               });
-               trendLayer.addOverlay(marker);
+               if (entity.tweets.length >= 10) {
+                   if ($.inArray(entity.Name, addedToMap) == -1) {
+                       addedToMap.push(entity.Name);
+
+                       var marker = new google.maps.Marker({
+                           position: new google.maps.LatLng(entity.averageCenter.Longitude, entity.averageCenter.Latitude),
+                           title: entity.Name,
+                           data: {
+                               tweets: entity.tweets,
+                               type: entity.entityType
+                           },
+                           icon: '/img/trends/' + entity.entityType + '.png'
+                       });
+                       //console.log(marker.data);
+                       var infowindow = new google.maps.InfoWindow({
+                           content: buildTrendWindow(marker),
+                           maxWidth: 400,
+                           pixelOffset: new google.maps.Size(15, 15)
+                       });
+                       google.maps.event.addListener(marker, 'click', function () {
+                           map.panTo(marker.getPosition());
+                           infowindow.open(map, marker);
+                       });
+                       trendLayer.addOverlay(marker);
+                   } 
                }
            };
-           $('#localSearch').geocomplete().bind("geocode:result", function (e, result) {
 
-               var resultBounds = new google.maps.LatLngBounds(
-                   result.geometry.viewport.getSouthWest(),
-                   result.geometry.viewport.getNorthEast()
-               );
- 
-               var sw = resultBounds.getSouthWest();
-               var ne = resultBounds.getNorthEast();
-               var nw = new google.maps.LatLng(ne.lat(), sw.lng());
-               var se = new google.maps.LatLng(sw.lat(), ne.lng());
-               
-               //alert(resultBounds);
-               twitterHub.server.GetTopEntitiesGeo({ SouthEastLongitude: se.lng(), SouthEastLatitude: se.lat(), NorthWestLongitude: nw.lng(), NorthWestLatitude: nw.lat() }).done(function (result) {
-                   console.log(result);
-               }).fail(function (error) {
-                   console.log('Error: ' + error);
-               });
-           });
            google.maps.event.addListener(map, 'idle', function (event) {
                google.maps.event.addListener(map, 'bounds_changed', function () {
                    var bounds = this.getBounds();
