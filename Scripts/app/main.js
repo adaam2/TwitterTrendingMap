@@ -249,7 +249,7 @@ $(function () {
 
            twitterHub.client.broadcastTrend = function (entity) {
                var cssClass = '';
-               if (entity.tweets.length >= 5) {
+               if (entity.tweets.length >= 7) {
                    cssClass = 'broadcasted';
                } else {
                    cssClass = 'unbroadcasted';
@@ -259,7 +259,7 @@ $(function () {
                
                $('.live-trends').prepend(listitem);
               
-               if (entity.tweets.length >= 10) {
+               if (entity.tweets.length >= 7) {
                    if ($.inArray(entity.Name, addedToMap) == -1) {
                        addedToMap.push(entity.Name);
 
