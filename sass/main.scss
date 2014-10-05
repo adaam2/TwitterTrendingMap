@@ -136,6 +136,13 @@ div.trend-stats ol li {
             }
             .tweetmain {
                 width:75%;
+
+                span.tweetlink {
+                    top: 5px;
+                    position: relative;
+                    border-top: 1px solid #e2e2e2;
+                    font-weight: bold;
+                }
             }
             .tweetavatar {
                 width:25%;

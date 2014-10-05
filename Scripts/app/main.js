@@ -17,10 +17,17 @@ var map_options = {
 };
 var buildTrendWindow = function(trend){
     var tweets = trend.tweets;
+
     var html = "<div class='trendTweetsWrapper' data-trend=\"" + trend.title.toLowerCase() + "\"><h3>Recent Tweets for " + trend.title + "</h3><ul>";
      $.each(trend.data.tweets, function(i,item){
          if (i <= 10) {
-             html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
+              var date = new Date(item.CreatedAt);
+              var dd = date.getDate();
+              var mm = date.getMonth() + 1;
+              var yy = date.getFullYear();
+              var minutes = date.toTimeString();
+              var formatted_date = dd + '/' + mm + '/' + yy;
+             html += "<li class='cf'><div class='tweetmain'><div class='tweetbody'>" + item.Text + "</div><div class='tweetfoot'><span class='tweetlink'><time class='timeago' datetime='" + item.CreatedAt + "'>" + formatted_date + "</time> - <a target='_blank' href='" + item.URL + "'>View on Twitter</a></span></div></div><div class='tweetavatar'><img src='" + item.ImageUrl + "'/></div></li>";
          }
     });
     html += "</ul></div>";
@@ -278,6 +285,7 @@ $(function () {
                            maxWidth: 400,
                            pixelOffset: new google.maps.Size(15, 15)
                        });
+                       $('time.timeago').timeago();
                        google.maps.event.addListener(marker, 'click', function () {
                            map.panTo(marker.getPosition());
                            infowindow.open(map, marker);
