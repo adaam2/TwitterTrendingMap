@@ -5,4 +5,4 @@ Real time tweets displayed on a map using the Twitter Streaming API, ASP.NET MVC
 
 Trending is calculated using a combination of background tasks and a sorting algorithm to determine trend freshness
 
-Demo at http://dev.wherelionsroam.co.uk
+~~Demo at http://dev.wherelionsroam.co.uk~~ - temporarily offline
